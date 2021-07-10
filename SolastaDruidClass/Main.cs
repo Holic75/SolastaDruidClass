@@ -63,22 +63,8 @@ namespace SolastaDruidClass
 
         internal static void OnGameReady()
         {
-            // example: use the ModApi to get a skeleton blueprint
-            //
-            var skeleton = DatabaseHelper.MonsterDefinitions.Skeleton;
-
-            // example: how to add TEXTS to the game right
-            //
-            // . almost every game blueprint has a GuiPresentation attribute
-            // . GuiPresentation has a Title and a Description
-            // . Create an entry in Translations-en.txt for those (tab separated)
-            // . Refer to those entries when assigning values to these attributes
-            //
-            // . DON'T FORGET TO CLEAN UP THIS EXAMPLE AND Translations-en.txt file
-            // . ugly things will happen if you don't
-            //
-            skeleton.GuiPresentation.Title = "SolastaDruidClass/&FancySkeletonTitle";
-            skeleton.GuiPresentation.Description = "SolastaDruidClass/&FancySkeletonDescription";
+            DruidClassBuilder.BuildAndAddClassToDB();
+			
         }
     }
 }
