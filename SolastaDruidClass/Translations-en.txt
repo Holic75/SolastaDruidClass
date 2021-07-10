@@ -1,0 +1,2 @@
+SolastaDruidClass/&FancySkeletonTitle	Fancy Skeleton
+SolastaDruidClass/&FancySkeletonDescription	I'm a fancy skeleton
