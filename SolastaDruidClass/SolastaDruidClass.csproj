@@ -3,6 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>net472</TargetFramework>
 		<AssemblyVersion>0.0.2.0</AssemblyVersion>
+		<SolastaInstallDir Condition=" '$(SolastaInstallDir)' == '' ">C:\Program Files (x86)\Steam\steamapps\common\Slasta_COTM</SolastaInstallDir>
 		<FileVersion>0.0.2.0</FileVersion>
 		<Description></Description>
 		<PackageProjectUrl>https://github.com/DubhHerder/SolastaDruidClass</PackageProjectUrl>
@@ -12,7 +13,7 @@
 		<Authors>Zappastuff</Authors>
 		<Company />
 		<Product />
-		<Copyright>Copyright © 2020</Copyright>
+		<Copyright>Copyright Â© 2020</Copyright>
 		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 		<Version>0.0.2</Version>
 	</PropertyGroup>
