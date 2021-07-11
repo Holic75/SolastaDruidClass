@@ -151,44 +151,24 @@ namespace SolastaDruidClass
         public static void BuildAndAddClassToDB()
         {
             var DruidClass = new DruidClassBuilder(DruidClassName, DruidClassGuid).AddToDB();
-            //Might need to add subclasses after the class is in the DB?
-            CharacterSubclassDefinition characterSubclassDefinition = DruidSubClassCircleOfLand.Build();
+             CharacterSubclassDefinition characterSubclassDefinition = DruidSubClassCircleOfLand.Build();
             DruidFeatureDefinitionSubclassChoice.Subclasses.Add(characterSubclassDefinition.Name);
-            //CharacterSubclassDefinition characterSubclassDefinitionFrenzy = DruidSubclassPathOfFrenzy.Build();
-            //DruidFeatureDefinitionSubclassChoice.Subclasses.Add(characterSubclassDefinitionFrenzy.Name);
-            //CharacterSubclassDefinition characterSubclassDefinitionReaver = DruidSubclassPathOfTheReaver.Build();
-            //DruidFeatureDefinitionSubclassChoice.Subclasses.Add(characterSubclassDefinitionReaver.Name);
+            
+			//circle of aspects/shifter/lycanthropy (use conditions to alter PC's body in different ways for gish druid)
+			
+			//CharacterSubclassDefinition  = .Build();
+            //DruidFeatureDefinitionSubclassChoice.Subclasses.Add(.Name);
+			
+			// circle of summons/companion druid fey battle buddy using wildfire companion and primal companions as templates
+			
+            //CharacterSubclassDefinition  = .Build();
+            //DruidFeatureDefinitionSubclassChoice.Subclasses.Add(.Name);
         }
 
         private static FeatureDefinitionSubclassChoice DruidFeatureDefinitionSubclassChoice;
     }
 
-    public static class DruidSubClassCircleOfLand
-    {
-        const string DruidSubClassCircleOfLandName = "DruidSubclassCircleOfLand";
-        const string DruidSubClassCircleOfLandGuid = "9ff4743d-015b-4a89-b2e4-cacd5866b153";
-
-        public static CharacterSubclassDefinition Build()
-        {
-            var subclassGuiPresentation = new GuiPresentationBuilder(
-                    "Subclass/&DruidSubclassCircleOfLandDescription",
-                    "Subclass/&DruidSubclassCircleOfLandTitle")
-                    .SetSpriteReference(DatabaseHelper.CharacterSubclassDefinitions.TraditionGreenmage.GuiPresentation.SpriteReference)
-                    .Build();
-
-            CharacterSubclassDefinition definition = new CharacterSubclassDefinitionBuilder(DruidSubClassCircleOfLandName, DruidSubClassCircleOfLandGuid)
-                    .SetGuiPresentation(subclassGuiPresentation)
-                //    .AddFeatureAtLevel(DruidClassPathOfBearRageClassPowerBuilder.RageClassPower, 3) // Special rage and increase rage count to 3
-                //    //.AddFeatureAtLevel(DruidClassPathOfBearRageClassPowerBuilder.RageClassPower, 3) // TODO something more?
-                //    .AddFeatureAtLevel(DruidClassPathOfBearRageClassPowerLevel6Builder.RageClassPower, 6) //Up rage count to 4 - Do in subclass since BearRage has its own characteristics
-                //    .AddFeatureAtLevel(DatabaseHelper.FeatureDefinitionEquipmentAffinitys.EquipmentAffinityBullsStrength, 6) //Double carry cap
-                //    .AddFeatureAtLevel(DruidClassPathOfBearRageClassPowerLevel9Builder.RageClassPower, 9) //Up damage on rage - Do in subclass since BearRage has its own characteristics
-                //    .AddFeatureAtLevel(DatabaseHelper.FeatureDefinitionAbilityCheckAffinitys.AbilityCheckAffinityDwarvenPlateResistShove, 10) //TODO Extra feature totem has commune with nature but not sure what to add here.
-                    .AddToDB();
-
-            return definition;
-        }
-    }
+  
 
     internal class DruidClassSkillPointPoolBuilder : BaseDefinitionBuilder<FeatureDefinitionPointPool>
     {
@@ -213,222 +193,7 @@ namespace SolastaDruidClass
     }
 
 
-    internal class WildShapePowerBuilder : BaseDefinitionBuilder<FeatureDefinitionPower>
-    {
-        const string Name = "WildShapePowerBuilder";
-        const string Guid = "03851fd5-8481-4b60-91f6-0adb9c348d9d";
-
-        protected WildShapePowerBuilder(string name, string guid) : base(DatabaseHelper.FeatureDefinitionPowers.PowerClericDivineInterventionCleric, name, guid)
-        {
-            Definition.GuiPresentation.Title = "Feature/&WildShapePowerBuilderTitle";
-            Definition.GuiPresentation.Description = "Feature/&WildShapePowerBuilderDescription";
-
-            Definition.SetHasCastingFailure(false);
-            Definition.SetRechargeRate(RuleDefinitions.RechargeRate.ShortRest);
-            Definition.SetActivationTime(RuleDefinitions.ActivationTime.Action);
-            Definition.SetCostPerUse(1);
-            Definition.SetFixedUsesPerRecharge(2);
-            Definition.SetShortTitleOverride("Feature/&WildShapePowerBuilderTitle");
-
-            SummonForm SummonWildShape = new SummonForm();
-            SummonWildShape.SetMonsterDefinitionName(WildShaped_WolfBuilder.WildShaped_Wolf.Name);
-          //  SummonWildShape.SetItemDefinition(WandOfWildshapeBuilder.WandOfWildshape);
-            SummonWildShape.SetSummonType(SummonForm.Type.Creature);
-            SummonWildShape.SetNumber(1);
-            SummonWildShape.SetDecisionPackage(DatabaseHelper.DecisionPackageDefinitions.IdleGuard_Default);
-            SummonWildShape.SetEffectProxyDefinitionName("");
-           // SummonWildShape.SetConditionDefinition(DatabaseHelper.ConditionDefinitions.ConditionMindDominatedByCaster);
-
-            EffectForm WildShapeEffect = new EffectForm();
-            WildShapeEffect.SetApplyLevel(EffectForm.LevelApplianceType.No);
-            WildShapeEffect.SetLevelMultiplier(1);
-            WildShapeEffect.SetLevelType(RuleDefinitions.LevelSourceType.ClassLevel);
-            WildShapeEffect.SetCreatedByCharacter(true);
-            WildShapeEffect.FormType = EffectForm.EffectFormType.Summon;
-            WildShapeEffect.SetSummonForm(SummonWildShape);
-
-
-            ConditionForm casterwildshaped = new ConditionForm();
-            casterwildshaped.SetApplyToSelf(true);
-            casterwildshaped.SetForceOnSelf(true);
-            casterwildshaped.Operation = ConditionForm.ConditionOperation.Add;
-          //  casterwildshaped.SetConditionDefinitionName(CasterWhileWildshapedConditionBuilder.CasterWhileWildshapedCondition.Name);
-          //  casterwildshaped.ConditionDefinition = CasterWhileWildshapedConditionBuilder.CasterWhileWildshapedCondition;
-            casterwildshaped.SetConditionDefinitionName(DatabaseHelper.ConditionDefinitions.ConditionInvisibleGreater.Name);
-            casterwildshaped.ConditionDefinition = DatabaseHelper.ConditionDefinitions.ConditionInvisibleGreater;
-
-            EffectForm casterwildshapedEffect = new EffectForm();
-            casterwildshapedEffect.SetApplyLevel(EffectForm.LevelApplianceType.No);
-            casterwildshapedEffect.SetLevelMultiplier(1);
-            casterwildshapedEffect.SetLevelType(RuleDefinitions.LevelSourceType.ClassLevel);
-            casterwildshapedEffect.SetCreatedByCharacter(true);
-            casterwildshapedEffect.FormType = EffectForm.EffectFormType.Condition;
-            casterwildshapedEffect.ConditionForm = casterwildshaped;
-
-            ConditionForm casterRestrictedActions = new ConditionForm();
-            casterRestrictedActions.SetApplyToSelf(true);
-            casterRestrictedActions.SetForceOnSelf(true);
-            casterRestrictedActions.Operation = ConditionForm.ConditionOperation.Add;
-            //casterRestrictedActions.SetConditionDefinitionName(CasterWhileWildshapedConditionBuilder.CasterWhileWildshapedCondition.Name);
-            //casterRestrictedActions.ConditionDefinition = CasterWhileWildshapedConditionBuilder.CasterWhileWildshapedCondition;
-            casterRestrictedActions.SetConditionDefinitionName(DatabaseHelper.ConditionDefinitions.ConditionSlowed.Name);
-            casterRestrictedActions.ConditionDefinition = DatabaseHelper.ConditionDefinitions.ConditionSlowed;
-
-            EffectForm casterRestrictedActionsEffect = new EffectForm();
-            casterRestrictedActionsEffect.SetApplyLevel(EffectForm.LevelApplianceType.No);
-            casterRestrictedActionsEffect.SetLevelMultiplier(1);
-            casterRestrictedActionsEffect.SetLevelType(RuleDefinitions.LevelSourceType.ClassLevel);
-            casterRestrictedActionsEffect.SetCreatedByCharacter(true);
-            casterRestrictedActionsEffect.FormType = EffectForm.EffectFormType.Condition;
-            casterRestrictedActionsEffect.ConditionForm = casterRestrictedActions;
-
-
-            ConditionForm casterinvincible = new ConditionForm();
-            casterinvincible.SetApplyToSelf(true);
-            casterinvincible.SetForceOnSelf(true);
-            casterinvincible.Operation = ConditionForm.ConditionOperation.Add;
-            //casterinvincible.SetConditionDefinitionName(CasterWhileWildshapedConditionBuilder.CasterWhileWildshapedCondition.Name);
-            //casterinvincible.ConditionDefinition = CasterWhileWildshapedConditionBuilder.CasterWhileWildshapedCondition;
-            casterinvincible.SetConditionDefinitionName(DatabaseHelper.ConditionDefinitions.ConditionDebugInvicible.Name);
-            casterinvincible.ConditionDefinition = DatabaseHelper.ConditionDefinitions.ConditionDebugInvicible;
-        
-            EffectForm casterinvincibleEffect = new EffectForm();
-            casterinvincibleEffect.SetApplyLevel(EffectForm.LevelApplianceType.No);
-            casterinvincibleEffect.SetLevelMultiplier(1);
-            casterinvincibleEffect.SetLevelType(RuleDefinitions.LevelSourceType.ClassLevel);
-            casterinvincibleEffect.SetCreatedByCharacter(true);
-            casterinvincibleEffect.FormType = EffectForm.EffectFormType.Condition;
-            casterinvincibleEffect.ConditionForm = casterinvincible;
-
-
-            EffectDescription effectdescription = new EffectDescription();
-            effectdescription.EffectForms.Add(WildShapeEffect);
-            effectdescription.EffectForms.Add(casterwildshapedEffect);
-            effectdescription.EffectForms.Add(casterinvincibleEffect);
-            effectdescription.EffectForms.Add(casterRestrictedActionsEffect);
-            effectdescription.DurationType = RuleDefinitions.DurationType.Hour;
-            effectdescription.DurationParameter = 1;
-            effectdescription.SetRangeParameter(1);
-            effectdescription.SetRangeType(RuleDefinitions.RangeType.Self);
-            effectdescription.SetTargetType(RuleDefinitions.TargetType.Position);
-            effectdescription.SetTargetParameter(1);
-             
-
-
-
-            Definition.SetEffectDescription(effectdescription);
-        }
-
-        public static FeatureDefinitionPower CreateAndAddToDB(string name, string guid)
-            => new WildShapePowerBuilder(name, guid).AddToDB();
-
-        public static FeatureDefinitionPower WildShapePower     = CreateAndAddToDB(Name, Guid);
-    }
-
-
-    internal class CasterWhileWildshapedConditionBuilder : BaseDefinitionBuilder<ConditionDefinition>
-    {
-        const string CasterWhileWildshapedConditionName = "CasterWhileWildshapedCondition";
-        const string CasterWhileWildshapedConditionGuid = "ba4b231c-53ea-4d02-96d4-c4917f1535d2";
-
-        protected CasterWhileWildshapedConditionBuilder(string name, string guid) : base(DatabaseHelper.ConditionDefinitions.ConditionInvisibleGreater, name, guid)
-        {
-            Definition.GuiPresentation.Title = "Feature/&CasterWhileWildshapedConditionTitle";
-            Definition.GuiPresentation.Description = "Feature/&CasterWhileWildshapedConditionDescription";
-
-            Definition.SetAllowMultipleInstances(false);
-            Definition.SetDurationType(RuleDefinitions.DurationType.Dispelled);
-            Definition.SetDurationParameter(1);
-
-            Definition.Features.Clear();
-            //Definition.Features.Add(DatabaseHelper.)
-            
-        }
-
-        public static ConditionDefinition CreateAndAddToDB(string name, string guid)
-            => new CasterWhileWildshapedConditionBuilder(name, guid).AddToDB();
-
-        public static ConditionDefinition CasterWhileWildshapedCondition = CreateAndAddToDB(CasterWhileWildshapedConditionName, CasterWhileWildshapedConditionGuid);
-    }
-
-    internal class EndWildShapePowerBuilder : BaseDefinitionBuilder<FeatureDefinitionPower>
-    {
-        const string Name = "EndWildShapePowerBuilder";
-        const string Guid = "8ba254af-9711-46da-ae5f-1fc72ae9965f";
-
-        protected EndWildShapePowerBuilder(string name, string guid) : base(EndWildShapePowerBuilder.EndWildShapePower, name, guid)
-        {
-            Definition.GuiPresentation.Title = "Feature/&EndWildShapePowerBuilderTitle";
-            Definition.GuiPresentation.Description = "Feature/&EndWildShapePowerBuilderDescription";
-
-            Definition.SetRechargeRate(RuleDefinitions.RechargeRate.AtWill);
-            Definition.SetActivationTime(RuleDefinitions.ActivationTime.BonusAction);
-            Definition.SetCostPerUse(1);
-            Definition.SetFixedUsesPerRecharge(1);
-            Definition.SetShortTitleOverride("Feature/&EndWildShapePowerBuilderTitle");
-
-              
-
-            ConditionForm endcasterwildshaped = new ConditionForm();
-            endcasterwildshaped.SetApplyToSelf(true);
-            endcasterwildshaped.SetForceOnSelf(true);
-            endcasterwildshaped.Operation = ConditionForm.ConditionOperation.RemoveDetrimentalAll;
-            //casterinvincible.SetConditionDefinitionName(CasterWhileWildshapedConditionBuilder.CasterWhileWildshapedCondition.Name);
-            //casterinvincible.ConditionDefinition = CasterWhileWildshapedConditionBuilder.CasterWhileWildshapedCondition;
-            endcasterwildshaped.SetConditionDefinitionName(DatabaseHelper.ConditionDefinitions.ConditionDebugInvicible.Name);
-            endcasterwildshaped.ConditionDefinition = DatabaseHelper.ConditionDefinitions.ConditionDebugInvicible;
-            endcasterwildshaped.DetrimentalConditions .AddRange( new List<ConditionDefinition>
-            {
-                DatabaseHelper.ConditionDefinitions.ConditionDebugInvicible,
-                DatabaseHelper.ConditionDefinitions.ConditionInvisibleGreater,
-                DatabaseHelper.ConditionDefinitions.ConditionSlowed
-
-            });
-
-            EffectForm endcasterwildshapedEffect = new EffectForm();
-            endcasterwildshapedEffect.SetApplyLevel(EffectForm.LevelApplianceType.No);
-            endcasterwildshapedEffect.SetLevelMultiplier(1);
-            endcasterwildshapedEffect.SetLevelType(RuleDefinitions.LevelSourceType.ClassLevel);
-            endcasterwildshapedEffect.SetCreatedByCharacter(true);
-            endcasterwildshapedEffect.FormType = EffectForm.EffectFormType.Condition;
-            endcasterwildshapedEffect.ConditionForm = endcasterwildshaped;
-
-
-            CounterForm DismissWildshape = new CounterForm();
-            DismissWildshape.SetType(CounterForm.CounterType.DismissCreature);
-
-            EffectForm DismissWildshapeeffect = new EffectForm();
-            DismissWildshapeeffect.FormType = EffectForm.EffectFormType.Counter;//"summons";
-            DismissWildshapeeffect.SetCounterForm(DismissWildshape);
-            DismissWildshapeeffect.HasSavingThrow = false;
-            DismissWildshapeeffect.SetCreatedByCharacter(true);
-
-            EffectDescription effectdescription = new EffectDescription();
-            effectdescription.EffectForms.Add(endcasterwildshapedEffect);
-            effectdescription.EffectForms.Add(DismissWildshapeeffect);
-            effectdescription.DurationType = RuleDefinitions.DurationType.Hour;
-            effectdescription.DurationParameter = 1;
-            effectdescription.SetRangeParameter(12);
-            effectdescription.SetRangeType(RuleDefinitions.RangeType.Distance);
-            effectdescription.SetTargetType(RuleDefinitions.TargetType.Individuals);
-            effectdescription.SetTargetSide(RuleDefinitions.Side.Ally);
-            effectdescription.SetTargetParameter(1);
-
-
-
-
-            Definition.SetEffectDescription(effectdescription);
-
-
-
-        }
-
-        public static FeatureDefinitionPower CreateAndAddToDB(string name, string guid)
-            => new EndWildShapePowerBuilder(name, guid).AddToDB();
-
-        public static FeatureDefinitionPower EndWildShapePower = CreateAndAddToDB(Name, Guid);
-    }
-
+ 
 
 
 //    internal class WandOfWildshapeBuilder : BaseDefinitionBuilder<ItemDefinition>
