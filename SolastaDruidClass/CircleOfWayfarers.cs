@@ -18,6 +18,7 @@ Level 6 teleport allies (without fire damage so further distance to balance)
 
 Level 10 flight?
 
-Level 14 death ward to ends spirit?
+Level 14 death ward to ends spirit? 
+Or make caster harder to hit while spirit is active
 
 }
