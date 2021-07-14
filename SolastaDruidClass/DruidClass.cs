@@ -3,12 +3,14 @@ using SolastaModApi.Extensions;
 using System.Collections.Generic;
 using UnityEngine.AddressableAssets;
 using HarmonyLib;
+using UnityEngine;
+using System;
 
 namespace SolastaDruidClass
 {
     internal class DruidClassBuilder : CharacterClassDefinitionBuilder
     {
-        const string DruidClassName = "DruidClass";
+        const string DruidClassName = "Druid";
         const string DruidClassGuid = "a2112af0-636f-4b72-acdc-07c921bcea6d";
         const string DruidClassSubclassesGuid = "46ae0591-296d-4f6c-80b0-4e198c999076";
 
@@ -17,149 +19,169 @@ namespace SolastaDruidClass
         {
             Definition.GuiPresentation.Title = "Class/&DruidClassTitle";
             Definition.GuiPresentation.Description = "Class/&DruidClassDescription";
-            Definition.GuiPresentation.SetSpriteReference(DatabaseHelper.CharacterSubclassDefinitions.TraditionGreenmage.GuiPresentation.SpriteReference);
+            Definition.GuiPresentation.SetSpriteReference(DatabaseHelper.LocationDefinitions.EncounterWaterfall_LocationDB.GuiPresentation.SpriteReference);
 
+            // Druid
+            // [‒]
+            // Hit Dice: 1d8
             Definition.SetClassAnimationId(AnimationDefinitions.ClassAnimationId.Cleric);
             Definition.SetClassPictogramReference(DatabaseHelper.CharacterClassDefinitions.Cleric.ClassPictogramReference);
             Definition.SetDefaultBattleDecisions(DatabaseHelper.CharacterClassDefinitions.Cleric.DefaultBattleDecisions);
             Definition.SetHitDice(RuleDefinitions.DieType.D8);
             Definition.SetIngredientGatheringOdds(DatabaseHelper.CharacterClassDefinitions.Ranger.IngredientGatheringOdds);
             Definition.SetRequiresDeity(false);
+            Definition.SetDefaultBattleDecisions(DatabaseHelper.DecisionPackageDefinitions.DefaultSupportCasterWithBackupAttacksDecisions);
 
 
-// Druid
-// [‒]
-// Hit Points
-// Hit Dice: 1d8
-// Hit Points at 1st Level: 8 + your Constitution modifier
-// Hit Points at Higher Levels: 1d8 (or 5) + your Constitution modifier per Druid level after 1st
-// Proficiencies
-// Armor: light armor, medium armor, shields (druids will not wear armor or use shields made of metal)
-// Weapons: clubs, daggers, darts, javelins, maces, quarterstaffs, scimitars, sickles, slings, spears
-// Tools: Herbalism kit
-// Saving Throws: Intelligence, Wisdom
-// Skills: Choose 2 from Arcana, Animal Handling, Insight, Medicine, Nature, Perception, Religion, and Survival.
-// Starting Equipment
-// You start with the following items, plus anything provided by your background.
-// 
-// (a) a wooden shield or (b) any simple weapon
-// (a) a scimitar or (b) any simple melee weapon
-// Leather armor, an explorer's pack, and a druidic focus
-// Alternatively, you may start with 2d4 × 10 gp to buy your own equipment.
+            
+           
 
+            
 
-            Definition.AbilityScoresPriority.AddRange(DatabaseHelper.CharacterClassDefinitions.Cleric.AbilityScoresPriority);
-            Definition.FeatAutolearnPreference.AddRange(DatabaseHelper.CharacterClassDefinitions.Cleric.FeatAutolearnPreference);
+          
+
+            Definition.AbilityScoresPriority.Clear();
+            Definition.AbilityScoresPriority.AddRange(new List<string> 
+            {
+                DatabaseHelper.SmartAttributeDefinitions.Wisdom.Name,
+                DatabaseHelper.SmartAttributeDefinitions.Constitution.Name,
+                DatabaseHelper.SmartAttributeDefinitions.Dexterity.Name,
+                DatabaseHelper.SmartAttributeDefinitions.Intelligence.Name,
+                DatabaseHelper.SmartAttributeDefinitions.Strength.Name,
+                DatabaseHelper.SmartAttributeDefinitions.Charisma.Name
+            });
+            // Skills: Choose 2 from Arcana, Animal Handling, Insight, Medicine, Nature, Perception, Religion, and Survival.
+            Definition.SkillAutolearnPreference.AddRange(new List<string>
+            {
+                DatabaseHelper.SkillDefinitions.Perception.Name,
+                DatabaseHelper.SkillDefinitions.Arcana.Name,
+                DatabaseHelper.SkillDefinitions.Religion.Name,
+                DatabaseHelper.SkillDefinitions.Nature.Name,
+                DatabaseHelper.SkillDefinitions.Insight.Name,
+                DatabaseHelper.SkillDefinitions.Survival.Name,
+                DatabaseHelper.SkillDefinitions.Medecine.Name,
+                DatabaseHelper.SkillDefinitions.AnimalHandling.Name
+            });
+
+            Definition.FeatAutolearnPreference.AddRange(new List<string>
+            {
+                DatabaseHelper.FeatDefinitions.FlawlessConcentration.Name,
+                DatabaseHelper.FeatDefinitions.Creed_Of_Arun.Name,
+                DatabaseHelper.FeatDefinitions.FocusedSleeper.Name
+            });
+
             Definition.PersonalityFlagOccurences.AddRange(DatabaseHelper.CharacterClassDefinitions.Cleric.PersonalityFlagOccurences);
-            Definition.SkillAutolearnPreference.AddRange(DatabaseHelper.CharacterClassDefinitions.Cleric.SkillAutolearnPreference);
-            Definition.ToolAutolearnPreference.AddRange(DatabaseHelper.CharacterClassDefinitions.Cleric.ToolAutolearnPreference);
 
+            
+            Definition.ToolAutolearnPreference.AddRange(new List<string>
+            {
+                DatabaseHelper.ToolTypeDefinitions.HerbalismKitType.Name,
+             });
+
+            // Starting Equipment
+            // You start with the following items, plus anything provided by your background.
+            // (a) a wooden shield or (b) any simple weapon
+            // (a) a scimitar or (b) any simple melee weapon
+            // Leather armor, an explorer's pack, and a druidic focus
+            // Alternatively, you may start with 2d4 × 10 gp to buy your own equipment.
 
             Definition.EquipmentRows.AddRange(DatabaseHelper.CharacterClassDefinitions.Cleric.EquipmentRows);
             Definition.EquipmentRows.Clear();
             List<CharacterClassDefinition.HeroEquipmentOption> list = new List<CharacterClassDefinition.HeroEquipmentOption>();
             List<CharacterClassDefinition.HeroEquipmentOption> list2 = new List<CharacterClassDefinition.HeroEquipmentOption>();
-            list.Add(EquipmentOptionsBuilder.Option(DatabaseHelper.ItemDefinitions.Quarterstaff, EquipmentDefinitions.OptionWeapon, 1));
-            list2.Add(EquipmentOptionsBuilder.Option(DatabaseHelper.ItemDefinitions.Scimitar, EquipmentDefinitions.OptionWeaponMartialChoice, 1));
-            List<CharacterClassDefinition.HeroEquipmentOption> list3 = new List<CharacterClassDefinition.HeroEquipmentOption>();
-            List<CharacterClassDefinition.HeroEquipmentOption> list4 = new List<CharacterClassDefinition.HeroEquipmentOption>();
-            list3.Add(EquipmentOptionsBuilder.Option(DatabaseHelper.ItemDefinitions.Handaxe, EquipmentDefinitions.OptionWeapon, 2));
-            list4.Add(EquipmentOptionsBuilder.Option(DatabaseHelper.ItemDefinitions.Mace, EquipmentDefinitions.OptionWeaponSimpleChoice, 1));
+            list.Add(EquipmentOptionsBuilder.Option(DatabaseHelper.ItemDefinitions.Shield, EquipmentDefinitions.ShieldCategory, 1));
+            list2.Add(EquipmentOptionsBuilder.Option(DatabaseHelper.ItemDefinitions.Dagger, EquipmentDefinitions.OptionWeaponSimpleChoice, 1));
+           List<CharacterClassDefinition.HeroEquipmentOption> list3 = new List<CharacterClassDefinition.HeroEquipmentOption>();
+           List<CharacterClassDefinition.HeroEquipmentOption> list4 = new List<CharacterClassDefinition.HeroEquipmentOption>();
+           list3.Add(EquipmentOptionsBuilder.Option(DatabaseHelper.ItemDefinitions.Scimitar, EquipmentDefinitions.MartialWeaponCategory, 1));
+           list4.Add(EquipmentOptionsBuilder.Option(DatabaseHelper.ItemDefinitions.Dagger, EquipmentDefinitions.OptionWeaponSimpleMeleeChoice, 1));
             this.AddEquipmentRow(list, list2);
             this.AddEquipmentRow(list3, list4);
             this.AddEquipmentRow(new List<CharacterClassDefinition.HeroEquipmentOption>
             {
-                EquipmentOptionsBuilder.Option(DatabaseHelper.ItemDefinitions.Javelin, EquipmentDefinitions.OptionWeapon, 4),
+                EquipmentOptionsBuilder.Option(DatabaseHelper.ItemDefinitions.Leather, EquipmentDefinitions.OptionArmor, 1),
                 EquipmentOptionsBuilder.Option(DatabaseHelper.ItemDefinitions.ExplorerPack, EquipmentDefinitions.OptionStarterPack, 1),
-             //   EquipmentOptionsBuilder.Option(DummyItemBuilder.HideClothes, EquipmentDefinitions.OptionStarterPack, 1),
+                EquipmentOptionsBuilder.Option(DatabaseHelper.ItemDefinitions.ComponentPouch, EquipmentDefinitions.OptionFocus, 1)
+          
             });
 
 
-// Level                           - cantrip
-// 	                               - 2
-// 1st	Druidic,                   -
-// 		Spellcasting               -
-// 2nd	Wild Shape,                -
-// 		Wild Companion,            -
-// 		Druid Circle               -
-// 3rd	—                          -
-// 4th	Wild Shape Improvement,    - 3
-// 		Ability Score Improvement, -
-// 		Cantrip Versatility        -
-// 5th	—                          -
-// 6th	Druid Circle feature       -
-// 7th	—                          -
-// 8th	Wild Shape Improvement,    -
-// 	 	Ability Score Improvement  -
-// 9th	—                          -
-// 10th	Druid Circle feature       - 4
-// 11th	—                          -
-// 12th	Ability Score Improvement  -
-// 13th	—                          -
-// 14th	Druid Circle feature       -
-// 15th	—                          -
-// 16th	Ability Score Improvement  -
-// 17th	—                          -
-// 18th	Timeless Body,             -
-// 		Beast Spells               -
-// 19th	Ability Score Improvement  -
-// 20th	Archdruid                  -
-	
+           Definition.FeatureUnlocks.Clear();
 
 
-            Definition.FeatureUnlocks.Clear();
-        //    Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionProficiencys., 1));  
-        //    Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionProficiencys.ProficiencyClericArmor, 1));  
-        //    Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionProficiencys., 1));  
-        //    Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DruidClassSkillPointPoolBuilder.DruidClassSkillPointPool, 1));  
-        //    Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DummyPowerBuilder.DummyPower, 1));
-        //    Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DummyFightingStyleBuilder., 1));
-        //    Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionPowers., 2));
-        //    Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(., 2));  
-            
-			//Subclass feature at level 3
+            // Proficiencies
+            // Armor: light armor, medium armor, shields (druids will not wear armor or use shields made of metal)
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionProficiencys.ProficiencyClericArmor, 1));
+       //     // weapon profs
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DruidProficienciesBuilder.DruidProficiencies, 1));
+       //     // Saving Throws: Intelligence, Wisdom
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionProficiencys.ProficiencyWizardSavingThrow, 1)); 
+       //     // Tools: Herbalism kit
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionProficiencys.ProficiencyPhilosopherTools, 1));
+            //     // skill choice
+               Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DruidClassSkillPointPoolBuilder.DruidClassSkillPointPool, 1));
+           // Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionPointPools.PointPoolRangerSkillPoints, 1));
+
+
+
+
+
+
+            // druid casting
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DruidCastingAbilityBuilder.DruidCastingAbility, 1));
+            // wild shape 
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(WildshapeFeatureSetBuilder.WildshapeFeatureSet,2));
+
+            //Subclass circle at level 2
             var subclassChoicesGuiPresentation = new GuiPresentation();
             subclassChoicesGuiPresentation.Title = "Subclass/&DruidSubclassCircleTitle";
             subclassChoicesGuiPresentation.Description = "Subclass/&DruidSubclassCircleDescription";
             DruidFeatureDefinitionSubclassChoice = this.BuildSubclassChoice(2, "Circle", false, "SubclassChoiceDruidCircleArchetypes", subclassChoicesGuiPresentation, DruidClassSubclassesGuid);
-            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(WildShapePowerBuilder.WildShapePower, 2));
-            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(EndWildShapePowerBuilder.EndWildShapePower, 2));
 
+
+            // wildshape improvement at level 4 and ability improvement
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionFeatureSets.FeatureSetAbilityScoreChoice, 4));
-            //    Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionAttributeModifiers., 5));
-            //    Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DruidClassBuilder., 5));
-            //    Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(WildShapePowerBuilder, 2));
-            //    
-            //	//SubclassFeature at level 6
-            //    Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.., 7));
-            //    Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(., 7));
-            //    Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.., 7)); 
-            //    Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionFeatureSets.FeatureSetAbilityScoreChoice, 8));
-            //    Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.., 9)); // 
-            //Subclass feature at level 10
+           Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(Wildshape_level4FeatureSetBuilder.Wildshape_level4FeatureSet, 4));
+          
+            //circle at level 6
 
-            //Above level 10 features 
+            // wildshape improvement at level 8 and ability improvement
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionFeatureSets.FeatureSetAbilityScoreChoice, 8));
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(Wildshape_level8FeatureSetBuilder.Wildshape_level8FeatureSet, 8));
+
+            //circle at level 10
+
+            // ability improvement at 12
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionFeatureSets.FeatureSetAbilityScoreChoice, 12));
-             
-            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionFeatureSets.FeatureSetAbilityScoreChoice, 16));
-             
-            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionFeatureSets.FeatureSetAbilityScoreChoice, 19));
-             
 
+            //circle at level 14
+
+            // ability improvement at 16
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionFeatureSets.FeatureSetAbilityScoreChoice, 16));
+            // 18th	 	Beast Spells
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(BeastSpellsFeatureSetBuilder.BeastSpellsFeatureSet, 18));
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionMagicAffinitys.MagicAffinityBattleMagic, 18));
+            // 19th	Ability Score Improvement  -
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionFeatureSets.FeatureSetAbilityScoreChoice, 19));
+             // 20th	Archdruid                  -
+            // ?? turn off materials in the rule settings??
         }
 
         public static void BuildAndAddClassToDB()
         {
             var DruidClass = new DruidClassBuilder(DruidClassName, DruidClassGuid).AddToDB();
-             CharacterSubclassDefinition characterSubclassDefinition = DruidSubClassCircleOfLand.Build();
-            DruidFeatureDefinitionSubclassChoice.Subclasses.Add(characterSubclassDefinition.Name);
+
+             DruidSubClassCircleOfLand.BuildandAddSubclass();
+        //
+            CharacterSubclassDefinition CircleOfLand = DatabaseRepository.GetDatabase<CharacterSubclassDefinition>().TryGetElement("DruidSubclassCircleOfLand", "9ff4743d-015b-4a89-b2e4-cacd5866b153");
+            DruidFeatureDefinitionSubclassChoice.Subclasses.Add(CircleOfLand.Name);
             
-			//circle of aspects/shifter/lycanthropy (use conditions to alter PC's body in different ways for gish druid)
+			//circle of shifters/aspects/lycanthropy (use conditions to alter PC's body in different ways for gish druid)
 			
 			//CharacterSubclassDefinition  = .Build();
             //DruidFeatureDefinitionSubclassChoice.Subclasses.Add(.Name);
 			
-			// circle of summons/companion druid fey battle buddy using wildfire companion and primal companions as templates
+			// circle of wayfarers/summons/companion druid fey battle buddy using wildfire companion and primal companions as templates
 			
             //CharacterSubclassDefinition  = .Build();
             //DruidFeatureDefinitionSubclassChoice.Subclasses.Add(.Name);
@@ -168,8 +190,38 @@ namespace SolastaDruidClass
         private static FeatureDefinitionSubclassChoice DruidFeatureDefinitionSubclassChoice;
     }
 
-  
 
+    internal class DruidProficienciesBuilder : BaseDefinitionBuilder<FeatureDefinitionProficiency>
+    {
+        const string DruidProficienciesName = "DruidProficiencies";
+        const string DruidProficienciesGuid = "5b0c5413-79ae-4898-b993-85cf3619a938";
+
+        protected DruidProficienciesBuilder(string name, string guid) : base(DatabaseHelper.FeatureDefinitionProficiencys.ProficiencyWizardWeapon, name, guid)
+        {
+            Definition.GuiPresentation.Title = "Feat/&DruidProficienciesTitle"; //Feature/&NoContentTitle
+            Definition.GuiPresentation.Description = "Feat/&DruidProficienciesDescription";//Feature/&NoContentTitle
+
+            Definition.SetProficiencyType(RuleDefinitions.ProficiencyType.Weapon);
+            Definition.Proficiencies.Clear();
+
+            // Weapons: clubs, daggers, darts, javelins, maces, quarterstaffs, scimitars, sickles, slings, spears
+
+            Definition.Proficiencies.Add(DatabaseHelper.WeaponTypeDefinitions.ClubType.Name);
+            Definition.Proficiencies.Add(DatabaseHelper.WeaponTypeDefinitions.DaggerType.Name);
+            Definition.Proficiencies.Add(DatabaseHelper.WeaponTypeDefinitions.DartType.Name);
+            Definition.Proficiencies.Add(DatabaseHelper.WeaponTypeDefinitions.JavelinType.Name);
+            Definition.Proficiencies.Add(DatabaseHelper.WeaponTypeDefinitions.MaceType.Name);
+            Definition.Proficiencies.Add(DatabaseHelper.WeaponTypeDefinitions.QuarterstaffType.Name);
+            Definition.Proficiencies.Add(DatabaseHelper.WeaponTypeDefinitions.ScimitarType.Name);
+            Definition.Proficiencies.Add(DatabaseHelper.WeaponTypeDefinitions.SpearType.Name);
+
+        }
+
+        public static FeatureDefinitionProficiency CreateAndAddToDB(string name, string guid)
+            => new DruidProficienciesBuilder(name, guid).AddToDB();
+
+        public static FeatureDefinitionProficiency DruidProficiencies = CreateAndAddToDB(DruidProficienciesName, DruidProficienciesGuid);
+    }
     internal class DruidClassSkillPointPoolBuilder : BaseDefinitionBuilder<FeatureDefinitionPointPool>
     {
         const string DruidClassSkillPointPoolName = "DruidClassSkillPointPool";
@@ -180,11 +232,23 @@ namespace SolastaDruidClass
             Definition.GuiPresentation.Title = "Feature/&DruidClassSkillPointPoolTitle";
             Definition.GuiPresentation.Description = "Feature/&DruidClassSkillPointPoolDescription";
 
+           // Definition.SetPoolAmount(2);
+           // Definition.SetPoolType("Skill");
+        //   Definition.RestrictedChoices.Clear();
+        //   Definition.RestrictedChoices.Add("Arcana");
+        //   Definition.RestrictedChoices.Add("AnimalHandling");
+        //   Definition.RestrictedChoices.Add("Insight");
+        //   Definition.RestrictedChoices.Add("Medicine");
+        //   Definition.RestrictedChoices.Add("Nature");
+        //   Definition.RestrictedChoices.Add("Perception");
+        //   Definition.RestrictedChoices.Add("Religion");
+        //   Definition.RestrictedChoices.Add("Survival" );
+
             Definition.SetPoolAmount(2);
             Definition.SetPoolType(HeroDefinitions.PointsPoolType.Skill);
             Definition.RestrictedChoices.Clear();
-            Definition.RestrictedChoices.AddRange(new string[] { "AnimalHandling", "Athletics", "Intimidation", "Nature", "Perception", "Survival", });
-        }
+            Definition.RestrictedChoices.AddRange(new string[] { "AnimalHandling", "Arcana", "Insight","Medecine", "Nature", "Perception", "Religion","Survival", });
+        }                               //// Skills: Choose 2 from Arcana, Animal Handling, Insight, Medicine, Nature, Perception, Religion, and Survival.
 
         public static FeatureDefinitionPointPool CreateAndAddToDB(string name, string guid)
             => new DruidClassSkillPointPoolBuilder(name, guid).AddToDB();
@@ -192,58 +256,240 @@ namespace SolastaDruidClass
         public static FeatureDefinitionPointPool DruidClassSkillPointPool = CreateAndAddToDB(DruidClassSkillPointPoolName, DruidClassSkillPointPoolGuid);
     }
 
+    internal class DruidCastingAbilityBuilder : BaseDefinitionBuilder<FeatureDefinitionCastSpell>
+    {
+        const string DruidCastingAbilityName = "DruidCastingAbility";
+        const string DruidCastingAbilityGuid = "64e9ce25-cbbc-4ff2-9fd2-0e4ad1d32a67";
 
- 
+        protected DruidCastingAbilityBuilder(string name, string guid) : base(DatabaseHelper.FeatureDefinitionCastSpells.CastSpellCleric, name, guid)
+        {
+            Definition.GuiPresentation.Title = "Feature/&DruidCastingAbilityTitle";
+            Definition.GuiPresentation.Description = "Feature/&DruidCastingAbilityDescription";
+
+           
+            Definition.SetSpellListDefinition(DruidSpellListBuilder.DruidSpellList);
+
+            Definition.KnownCantrips.Clear();
+           Definition.KnownCantrips.AddRange( new List<int> { 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 });
 
 
-//    internal class WandOfWildshapeBuilder : BaseDefinitionBuilder<ItemDefinition>
-//    {
-//        const string WandOfWildshapeName = "WandOfWildshape";
-//        const string WandOfWildshapeGuid = "12ec71f9-5e79-46aa-8683-f948f2540a2d";
-//
-//        protected WandOfWildshapeBuilder(string name, string guid) : base(DatabaseHelper.ItemDefinitions.WandMagicMissile, name, guid)
-//        {
-//            Definition.GuiPresentation.Title = "Item/&WandOfWildshapeTitle";
-//            Definition.GuiPresentation.Description = "Item/&WandOfWildshapeDescription";
-//
-//            Definition.SetInDungeonEditor(true);
-//
-//            DeviceFunctionDescription wildshapefunction = new DeviceFunctionDescription();
-//            wildshapefunction.SetCanOverchargeSpell(false);
-//            wildshapefunction.SetDurationType(RuleDefinitions.DurationType.UntilLongRest);
-//            wildshapefunction.SetFeatureDefinitionPower(WildShapePowerBuilder.WildShapePower);
-//            wildshapefunction.SetParentUsage(EquipmentDefinitions.ItemUsage.ByFunction);
-//            wildshapefunction.SetRechargeRate(RuleDefinitions.RechargeRate.LongRest);
-//            wildshapefunction.SetType(DeviceFunctionDescription.FunctionType.Power);
-//            wildshapefunction.SetUseAffinity(DeviceFunctionDescription.FunctionUseAffinity.IterationPerRecharge);
-//            wildshapefunction.SetUseAmount(6);
-//
-//            UsableDeviceDescription usableDeviceDescription = new UsableDeviceDescription();
-//            usableDeviceDescription.SetUsage(EquipmentDefinitions.ItemUsage.ByFunction);
-//            usableDeviceDescription.SetChargesCapitalNumber(5);
-//            usableDeviceDescription.SetRechargeRate(RuleDefinitions.RechargeRate.LongRest);
-//            usableDeviceDescription.SetRechargeNumber(0);
-//            usableDeviceDescription.SetRechargeDie(RuleDefinitions.DieType.D1);
-//            usableDeviceDescription.SetRechargeBonus(5);
-//            usableDeviceDescription.SetOutOfChargesConsequence(EquipmentDefinitions.ItemOutOfCharges.Persist);
-//            usableDeviceDescription.SetMagicAttackBonus(5);
-//            usableDeviceDescription.SetSaveDC(13);
-//
-//            Traverse.Create(usableDeviceDescription).Field("deviceFunctions").SetValue(new List<DeviceFunctionDescription> { wildshapefunction });
-//
-//            Traverse.Create(usableDeviceDescription).Field("itemTags").SetValue(new List<string> { "Consumable" });
-//
-//            Definition.UsableDeviceDescription.DeviceFunctions.Clear();
-//            Definition.UsableDeviceDescription.DeviceFunctions.Add(wildshapefunction);
-//
-//             
-//        }
-//
-//        public static ItemDefinition CreateAndAddToDB(string name, string guid)
-//            => new WandOfWildshapeBuilder(name, guid).AddToDB();
-//
-//        public static ItemDefinition WandOfWildshape = CreateAndAddToDB(WandOfWildshapeName, WandOfWildshapeGuid);
-//    }
+
+        }
+
+        public static FeatureDefinitionCastSpell CreateAndAddToDB(string name, string guid)
+            => new DruidCastingAbilityBuilder(name, guid).AddToDB();
+
+        public static FeatureDefinitionCastSpell DruidCastingAbility = CreateAndAddToDB(DruidCastingAbilityName, DruidCastingAbilityGuid);
+    }
+
+    internal class DruidSpellListBuilder : BaseDefinitionBuilder<SpellListDefinition>
+    {
+        const string DruidSpellListName = "DruidSpellList";
+        const string DruidSpellListGuid = "19ef0624-ede3-4612-b636-6479dd8f4e2e";
+
+        protected DruidSpellListBuilder(string name, string guid) : base(DatabaseHelper.SpellListDefinitions.SpellListCleric, name, guid)
+        {
+            Definition.GuiPresentation.Title = "Feature/&DruidSpellListTitle";
+            Definition.GuiPresentation.Description = "Feature/&DruidSpellListDescription";
+
+            SpellListDefinition.SpellsByLevelDuplet DruidSpell_Cantrips = new SpellListDefinition.SpellsByLevelDuplet();
+            DruidSpell_Cantrips.Spells = new List<SpellDefinition>();
+            //DruidSpell_Cantrips.Level = 1;
+            DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.Guidance);
+            DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.PoisonSpray);
+            DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.Resistance);
+           // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.ProduceFlame);
+           // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.Shillelagh);
+           // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.Druidcraft);
+            DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.Sparkle);
+            DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.Dazzle);
+            DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.Shine);
+            DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.AnnoyingBee);    // added solasta's cantrips to give more than 3 srd options
+            DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.ShadowArmor);
+            DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.ShadowDagger);
+           // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.Gust);
+           // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.shapewater);
+           // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.controlflames);
+           // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.moldearth);
+           // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.thornwhip);
+           // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.thunderclap);
+           // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.primalsavgery);
+
+            SpellListDefinition.SpellsByLevelDuplet DruidSpell_level_1 = new SpellListDefinition.SpellsByLevelDuplet();
+            DruidSpell_level_1.Spells = new List<SpellDefinition>();
+            DruidSpell_level_1.Level = 1;
+            DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.AnimalFriendship);
+            DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.CharmPerson);
+            DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.CreateDestroyWater);
+            DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.CureWounds);
+            DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.DetectMagic);
+            DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.DetectPoisonAndDisease);
+            DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.Entangle);
+            DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.FaerieFire);
+            DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.FogCloud);
+            DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.Goodberry);
+            DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.HealingWord);
+            DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.Jump);
+            DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.Longstrider);
+            DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.ProtectionFromEvilGood);
+            DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.PurifyFood);
+            DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.Thunderwave);
+            //DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.);
+
+            SpellListDefinition.SpellsByLevelDuplet DruidSpell_level_2 = new SpellListDefinition.SpellsByLevelDuplet();
+            DruidSpell_level_2.Spells = new List<SpellDefinition>();
+            DruidSpell_level_2.Level = 2;
+            DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.Barkskin);
+            DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.Darkvision);
+            DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.EnhanceAbility);
+            DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.FindTraps);
+            DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.FlameBlade);
+            DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.FlamingSphere);
+            DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.GustOfWind);
+        //    DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.heatmetal);
+            DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.HoldPerson);
+            DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.LesserRestoration);
+            DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.PassWithoutTrace);
+            DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.ProtectionFromPoison);
+        //    DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.spikegrowth);
+        //    DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.);
+        //    DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.);
+        //    DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.);
+        //    DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.);
+
+            SpellListDefinition.SpellsByLevelDuplet DruidSpell_level_3 = new SpellListDefinition.SpellsByLevelDuplet();
+            DruidSpell_level_3.Spells = new List<SpellDefinition>();
+            DruidSpell_level_3.Level = 3;
+       //     DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.CallLightning);
+            DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.ConjureAnimals);
+            DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.Daylight);
+            DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.DispelMagic);
+            DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.ProtectionFromEnergy);
+            DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.Revivify);
+            DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.SleetStorm);
+            DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.WaterBreathing);
+            DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.WaterWalk);
+            DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.WindWall);
+        //    DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.);
+        //    DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.);
+        //    DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.);
+        //    DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.);
+        //    DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.);
+        //    DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.);
+        //    DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.);
+
+            SpellListDefinition.SpellsByLevelDuplet DruidSpell_level_4 = new SpellListDefinition.SpellsByLevelDuplet();
+            DruidSpell_level_4.Spells = new List<SpellDefinition>();
+            DruidSpell_level_4.Level = 4;
+            DruidSpell_level_4.Spells.Add(DatabaseHelper.SpellDefinitions.Blight);
+            DruidSpell_level_4.Spells.Add(DatabaseHelper.SpellDefinitions.Confusion);
+            DruidSpell_level_4.Spells.Add(DatabaseHelper.SpellDefinitions.ConjureMinorElementals);
+            DruidSpell_level_4.Spells.Add(DatabaseHelper.SpellDefinitions.FireShield);
+            DruidSpell_level_4.Spells.Add(DatabaseHelper.SpellDefinitions.FreedomOfMovement);
+            DruidSpell_level_4.Spells.Add(DatabaseHelper.SpellDefinitions.GiantInsect);
+            DruidSpell_level_4.Spells.Add(DatabaseHelper.SpellDefinitions.IceStorm);
+            DruidSpell_level_4.Spells.Add(DatabaseHelper.SpellDefinitions.Stoneskin);
+            DruidSpell_level_4.Spells.Add(DatabaseHelper.SpellDefinitions.WallOfFire);
+        //    DruidSpell_level_4.Spells.Add(DatabaseHelper.SpellDefinitions.);
+        //    DruidSpell_level_4.Spells.Add(DatabaseHelper.SpellDefinitions.);
+        //    DruidSpell_level_4.Spells.Add(DatabaseHelper.SpellDefinitions.);
+        //    DruidSpell_level_4.Spells.Add(DatabaseHelper.SpellDefinitions.);
+        //    DruidSpell_level_4.Spells.Add(DatabaseHelper.SpellDefinitions.);
+        //    DruidSpell_level_4.Spells.Add(DatabaseHelper.SpellDefinitions.);
+        //    DruidSpell_level_4.Spells.Add(DatabaseHelper.SpellDefinitions.);
+        //    DruidSpell_level_4.Spells.Add(DatabaseHelper.SpellDefinitions.);
+
+            SpellListDefinition.SpellsByLevelDuplet DruidSpell_level_5 = new SpellListDefinition.SpellsByLevelDuplet();
+            DruidSpell_level_5.Spells = new List<SpellDefinition>();
+            DruidSpell_level_5.Level = 5;
+            DruidSpell_level_5.Spells.Add(DatabaseHelper.SpellDefinitions.ConeOfCold);
+            DruidSpell_level_5.Spells.Add(DatabaseHelper.SpellDefinitions.ConjureElemental);
+            DruidSpell_level_5.Spells.Add(DatabaseHelper.SpellDefinitions.Contagion);
+            DruidSpell_level_5.Spells.Add(DatabaseHelper.SpellDefinitions.GreaterRestoration);
+            DruidSpell_level_5.Spells.Add(DatabaseHelper.SpellDefinitions.InsectPlague);
+            DruidSpell_level_5.Spells.Add(DatabaseHelper.SpellDefinitions.MassCureWounds);
+         //  DruidSpell_level_5.Spells.Add(DatabaseHelper.SpellDefinitions.);
+         //  DruidSpell_level_5.Spells.Add(DatabaseHelper.SpellDefinitions.);
+         //  DruidSpell_level_5.Spells.Add(DatabaseHelper.SpellDefinitions.);
+         //  DruidSpell_level_5.Spells.Add(DatabaseHelper.SpellDefinitions.);
+         //  DruidSpell_level_5.Spells.Add(DatabaseHelper.SpellDefinitions.);
+         //  DruidSpell_level_5.Spells.Add(DatabaseHelper.SpellDefinitions.);
+         //  DruidSpell_level_5.Spells.Add(DatabaseHelper.SpellDefinitions.);
+         //  DruidSpell_level_5.Spells.Add(DatabaseHelper.SpellDefinitions.);
+         //  DruidSpell_level_5.Spells.Add(DatabaseHelper.SpellDefinitions.);
+         //  DruidSpell_level_5.Spells.Add(DatabaseHelper.SpellDefinitions.);
+         //  DruidSpell_level_5.Spells.Add(DatabaseHelper.SpellDefinitions.);
+
+
+            Definition.SpellsByLevel.Clear();
+            Definition.SpellsByLevel.AddRange(new List<SpellListDefinition.SpellsByLevelDuplet> 
+            { 
+                DruidSpell_Cantrips, 
+                DruidSpell_level_1 ,
+                DruidSpell_level_2,
+                DruidSpell_level_3,
+                DruidSpell_level_4,
+                DruidSpell_level_5
+            });
+
+
+        }
+
+        public static SpellListDefinition CreateAndAddToDB(string name, string guid)
+            => new DruidSpellListBuilder(name, guid).AddToDB();
+
+        public static SpellListDefinition DruidSpellList = CreateAndAddToDB(DruidSpellListName, DruidSpellListGuid);
+    }
+
+   
+    //    internal class WandOfWildshapeBuilder : BaseDefinitionBuilder<ItemDefinition>
+    //    {
+    //        const string WandOfWildshapeName = "WandOfWildshape";
+    //        const string WandOfWildshapeGuid = "12ec71f9-5e79-46aa-8683-f948f2540a2d";
+    //
+    //        protected WandOfWildshapeBuilder(string name, string guid) : base(DatabaseHelper.ItemDefinitions.WandMagicMissile, name, guid)
+    //        {
+    //            Definition.GuiPresentation.Title = "Item/&WandOfWildshapeTitle";
+    //            Definition.GuiPresentation.Description = "Item/&WandOfWildshapeDescription";
+    //
+    //            Definition.SetInDungeonEditor(true);
+    //
+    //            DeviceFunctionDescription wildshapefunction = new DeviceFunctionDescription();
+    //            wildshapefunction.SetCanOverchargeSpell(false);
+    //            wildshapefunction.SetDurationType(RuleDefinitions.DurationType.UntilLongRest);
+    //            wildshapefunction.SetFeatureDefinitionPower(WildShapePowerBuilder.WildShapePower);
+    //            wildshapefunction.SetParentUsage(EquipmentDefinitions.ItemUsage.ByFunction);
+    //            wildshapefunction.SetRechargeRate(RuleDefinitions.RechargeRate.LongRest);
+    //            wildshapefunction.SetType(DeviceFunctionDescription.FunctionType.Power);
+    //            wildshapefunction.SetUseAffinity(DeviceFunctionDescription.FunctionUseAffinity.IterationPerRecharge);
+    //            wildshapefunction.SetUseAmount(6);
+    //
+    //            UsableDeviceDescription usableDeviceDescription = new UsableDeviceDescription();
+    //            usableDeviceDescription.SetUsage(EquipmentDefinitions.ItemUsage.ByFunction);
+    //            usableDeviceDescription.SetChargesCapitalNumber(5);
+    //            usableDeviceDescription.SetRechargeRate(RuleDefinitions.RechargeRate.LongRest);
+    //            usableDeviceDescription.SetRechargeNumber(0);
+    //            usableDeviceDescription.SetRechargeDie(RuleDefinitions.DieType.D1);
+    //            usableDeviceDescription.SetRechargeBonus(5);
+    //            usableDeviceDescription.SetOutOfChargesConsequence(EquipmentDefinitions.ItemOutOfCharges.Persist);
+    //            usableDeviceDescription.SetMagicAttackBonus(5);
+    //            usableDeviceDescription.SetSaveDC(13);
+    //
+    //            Traverse.Create(usableDeviceDescription).Field("deviceFunctions").SetValue(new List<DeviceFunctionDescription> { wildshapefunction });
+    //
+    //            Traverse.Create(usableDeviceDescription).Field("itemTags").SetValue(new List<string> { "Consumable" });
+    //
+    //            Definition.UsableDeviceDescription.DeviceFunctions.Clear();
+    //            Definition.UsableDeviceDescription.DeviceFunctions.Add(wildshapefunction);
+    //
+    //             
+    //        }
+    //
+    //        public static ItemDefinition CreateAndAddToDB(string name, string guid)
+    //            => new WandOfWildshapeBuilder(name, guid).AddToDB();
+    //
+    //        public static ItemDefinition WandOfWildshape = CreateAndAddToDB(WandOfWildshapeName, WandOfWildshapeGuid);
+    //    }
 
     //  internal class DummySavingThrowAffinityBuilder : BaseDefinitionBuilder<FeatureDefinitionSavingThrowAffinity>
     //  {

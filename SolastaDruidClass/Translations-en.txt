@@ -1,2 +1,95 @@
-SolastaDruidClass/&FancySkeletonTitle	Fancy Skeleton
-SolastaDruidClass/&FancySkeletonDescription	I'm a fancy skeleton
+Subclass/&DruidSubclassCircleOfLandDescription he Circle of the Land is made up of mystics and sages who safeguard ancient knowledge and rites through a vast oral tradition. These druids meet within sacred circles of trees or standing stones to whisper primal secrets in Druidic. The circle's wisest members preside as the chief priests of communities that hold to the Old Faith and serve as advisors to the rulers of those folk. As a member of this circle, your magic is influenced by the land where you were initiated into the circle's mysterious rites.
+Subclass/&DruidSubclassCircleOfLandTitle Circle of the Land
+Feature/&NaturalRecoveryBuilderTitle Natural Recovery
+Feature/&NaturalRecoveryBuilderDescription Starting at 2nd level, you can regain some of your magical energy by sitting in meditation and communing with nature. During a short rest, you choose expended spell slots to recover. The spell slots can have a combined level that is equal to or less than half your druid level (rounded up), and none of the slots can be 6th level or higher. You can't use this feature again until you finish a long rest. For example, when you are a 4th-level druid, you can recover up to two levels worth of spell slots. You can recover either a 2nd-level slot or two 1st-level slots.
+Feat/&SubclassExtraCantripTitle Bonus Cantrip
+Feat/&SubclassExtraCantripDescription You learn one additional druid cantrip of your choice.
+Feat/&CircleOfLandCantripsTitle Nature's Sanctuary
+Feat/&CircleOfLandCantripsDescription When you reach 14th level, creatures of the natural world sense your connection to nature and become hesitant to attack you. When a beast or plant creature attacks you, You can use your reaction to force the creature to make a Wisdom saving throw against your druid spell save DC. On a failed save, the creature is charmed. On a successful save, the creature is immune to this effect for 24 hours.
+Feat/&SubclassCircleSpellsTitle Circle Spells
+Feat/&SubclassCircleSpellsDescription Your mystical connection to the land infuses you with the ability to cast certain spells. At 3rd, 5th, 7th, and 9th level you gain access to circle spells connected to the land where you became a druid. Choose that land - arctic, coast, desert, forest, grassland, mountain, swamp, or Underdark - and consult the associated list of spells.Once you gain access to a circle spell, you always have it prepared, and it doesn't count against the number of spells you can prepare each day. If you gain access to a spell that doesn't appear on the druid spell list, the spell is nonetheless a druid spell for you.
+Feat/&LandsStrideFeatureSetTitle Land's Stride
+Feat/&LandsStrideFeatureSetDescription Starting at 6th level, moving through nonmagical difficult terrain costs you no extra movement. You can also pass through nonmagical plants without being slowed by them and without taking damage from them if they have thorns, spines, or a similar hazard. In addition, you have advantage on saving throws against plants that are magically created or manipulated to impede movement, such those created by the entangle spell. 
+Feat/&LandSubclassMovementTitle Land's Stride - difficult terrain
+Feat/&LandSubclassMovementDescription Starting at 6th level, moving through nonmagical difficult terrain costs you no extra movement. You can also pass through nonmagical plants without being slowed by them and without taking damage from them if they have thorns, spines, or a similar hazard.
+Feat/&SubclassEntangleImmunityTitle Land's Stride - magical plants
+Feat/&SubclassEntangleImmunityDescription In addition, you have advantage on saving throws against plants that are magically created or manipulated to impede movement, such those created by the entangle spell.
+Feat/&NaturesWardFeatureSetTitle Nature's Ward 
+Feat/&NaturesWardFeatureSetDescription  When you reach 10th level, you can't be charmed or frightened by elementals or fey, and you are immune to poison and disease.
+Feat/&SubclassCharmImmunityTitle Nature's Ward 
+Feat/&SubclassCharmImmunityDescription When you reach 10th level, you can't be charmed or frightened by elementals or fey, and you are immune to poison and disease.
+Feat/&SubclassFrightenedImmunityTitle Nature's Ward 
+Feat/&SubclassFrightenedImmunityDescription When you reach 10th level, you can't be charmed or frightened by elementals or fey, and you are immune to poison and disease.
+Feat/&NaturesWardCantripTitle Nature's Sanctuary
+Feat/&NaturesWardCantripDescription When you reach 14th level, creatures of the natural world sense your connection to nature and become hesitant to attack you. When a beast or plant creature attacks you, You can use your reaction to force the creature to make a Wisdom saving throw against your druid spell save DC. On a failed save, the creature is charmed. On a successful save, the creature is immune to this effect for 24 hours.
+Feat/&ArcticAutopreparedSpellsTitle Artic
+Feat/&ArcticAutopreparedSpellsDescription Circle Spells
+Feat/&CoastAutoPreparedSpellsTitle Coast
+Feat/&CoastAutoPreparedSpellsDescription Circle Spells
+Feat/&DesertAutoPreparedSpellsTitle Desert
+Feat/&DesertAutoPreparedSpellsDescription Circle Spells
+Feat/&ForestAutoPreparedSpellsTitle Forest
+Feat/&ForestAutoPreparedSpellsDescription Circle Spells
+Feat/&GrasslandAutoPreparedSpellsTitle Grassland
+Feat/&GrasslandAutoPreparedSpellsDescription Circle Spells
+Feat/&MountainAutoPreparedSpellsTitle Moutain
+Feat/&MountainAutoPreparedSpellsDescription Circle Spells
+Feat/&SwampAutoPreparedSpellsTitle Swamp
+Feat/&SwampAutoPreparedSpellsDescription Circle Spells
+Feat/&UnderdarkAutoPreparedSpellsTitle Underdark
+Feat/&UnderdarkAutoPreparedSpellsDescription Circle Spells
+Class/&DruidClassTitle Druid
+Class/&DruidClassDescription Druids revere nature above all, gaining their spells and other magical powers either from the force of nature itself or from a nature deity. Many druids pursue a mystic spirituality of transcendent union with nature rather than devotion to a divine entity, while others serve gods of wild nature, animals, or elemental forces. The ancient druidic traditions are sometimes called the Old Faith, in contrast to the worship of gods in temples and shrines.Druid spells are oriented toward nature and animals—the power of tooth and claw, of sun and moon, of fire and storm. Druids also gain the ability to take on animal forms, and some druids make a particular study of this practice, even to the point where they prefer animal form to their natural form.
+Subclass/&DruidSubclassCircleTitle Circle
+Subclass/&DruidSubclassCircleDescription At 2nd level, you choose to identify with a circle of druids from the list of available circles. Your choice grants you features at 2nd level and again at 6th, 10th, and 14th level.
+Feat/&DruidProficienciesTitle Druid Weapon Proficiencies 
+Feat/&DruidProficienciesDescription Druids are proficient with clubs, daggers, darts, javelins, maces, quarterstaffs, scimitars, sickles, slings, spears
+Feature/&DruidClassSkillPointPoolTitle  Druid Skill Proficiencies
+Feature/&DruidClassSkillPointPoolDescription Choose 2 from Arcana, Animal Handling, Insight, Medicine, Nature, Perception, Religion, and Survival.
+Feature/&DruidCastingAbilityTitle Spellcasting
+Feature/&DruidCastingAbilityDescription Drawing on the divine essence of nature itself, you can cast spells to shape that essence to your will. 
+Feature/&DruidSpellListTitle Druid SpellList
+Feature/&DruidSpellListDescription 
+Feat/&WildshapeChargesPoolTitle Wildshape Charges
+Feat/&WildshapeChargesPoolDescription 2 uses, recharge on short rest
+Feat/&WildshapeFeatureSetTitle  WildShape
+Feat/&WildshapeFeatureSetDescription you can use your action to magically assume the shape of a beast that you have seen before. You can use this feature twice. You regain expended uses when you finish a short or long rest.Your druid level determines the beasts you can transform into.
+Feat/&Wildshape_level4FeatureSetTitle Improved Wildshapes
+Feat/&Wildshape_level4FeatureSetDescription Alpha wolf and badlands spider
+Feat/&Wildshape_level8FeatureSetTitle Improved Wildshapes
+Feat/&Wildshape_level8FeatureSetDescription Direwolf and giant eagle
+Feat/&BeastSpellsFeatureSetTitle Beast Spells
+Feat/&BeastSpellsFeatureSetDescription You can now cast while wildshaped
+Feature/&WildShapePowerBuilderTitle WildShape Wolf
+Feature/&WildShapePowerBuilderDescription Transform into a wolf for melee
+Feature/&CasterWhileWildshapedConditionTitle Wildshaped
+Feature/&CasterWhileWildshapedConditionDescription Druid cannot cast spells or use equipment while wildshaped
+Feature/&EndWildShapePowerBuilderTitle Dismiss Wildshape (Beast Alive)
+Feature/&EndWildShapePowerBuilderDescription Return to your normal form
+Feature/&EndWildShapePowerDeadBeastBuilderTitle End wildshape (Beast Dead)
+Feature/&EndWildShapePowerDeadBeastBuilderDescription Return to you normal form if you wild shape has died
+Feature/&WildshapedCasterActionAffinityBuilderTitle WildshapedActions
+Feature/&WildshapedCasterActionAffinityBuilderDescription Limited actions while wildshaped
+Feature/&WildShapePower_AlphaWolfBuilderTitle WildShape Alpha-Wolf
+Feature/&WildShapePower_AlphaWolfBuilderDescription Transform into an Alpha-Wolf
+Feature/&WildShapePower_BadlandsspiderBuilderTitle WildShape Spider
+Feature/&WildShapePower_BadlandsspiderBuilderDescription Transform into a Badlands-Spider
+Feature/&WildShapePower_BlackBearBuilderTitle Wildshape Black Bear
+Feature/&WildShapePower_BlackBearBuilderDescription Transform into Black Bear
+Feature/&WildShapePower_DirewolfBuilderTitle WildShape Direwolf
+Feature/&WildShapePower_DirewolfBuilderDescription Transform into Direwolf
+Feature/&WildShapePower_Giant_EagleBuilderTitle WildShape Giant Eagle
+Feature/&WildShapePower_Giant_EagleBuilderDescription Transform into Giant Eagle
+Feature/&WildShapePower_BrownBearBuilderTitle WildShape Brown Bear
+Feature/&WildShapePower_BrownBearBuilderDescription Transform into Brown Bear
+Feature/&BeastSpellsConditionTitle Beast Spells Condition
+Feature/&BeastSpellsConditionDescription Can cast spells while in wildshape
+Feature/&WildShapePower_Direwolf_BeastSpellsBuilderTitle  WildShape Direwolf (Beast Spells)
+Feature/&WildShapePower_Direwolf_BeastSpellsBuilderDescription Transform into Direwolf while retaining ability to cast spells
+Feature/&WildShapePower_Giant_Eagle_BeastSpellsBuilderTitle WildShape Giant Eagle (Beast Spells)
+Feature/&WildShapePower_Giant_Eagle_BeastSpellsBuilderDescription Transform into Giant Eagle while retaining ability to cast spells
+Stage/&SubclassSelectionStageCircleTitle Select Druid Circle
+Stage/&SubclassSelectionStageCircleDescription Description  Your druid circle guides your interactions with the world and the methods you use to maintain the balance
+Stage/&SubclassSelectionStageCircleHeader Druid Circles
+Stage/&SubclassSelectionStageCircleFeatures Circle Features
+Stage/&SubclassSelectionStageCircleNoneDescription Circle None Desscription

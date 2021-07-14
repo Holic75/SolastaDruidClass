@@ -7,15 +7,36 @@ using HarmonyLib;
 
 namespace SolastaDruidClass
 {
-	
-										// CR 0.125:  poisonous_snake, flying snake, eagle matriarch, 
-// CR 0.25 : wolf, 						//starving wolf
-// CR 0.50 : AlphaWolf, BadlandsSpider, 
-// CR 1.00 : Dire wolf, giant eagle,
-										// CR 2.00 : tiger_drake, deepspider,
 
-	
-	
+    // CR 0.125:  poisonous_snake, flying snake, eagle matriarch, 
+    // CR 0.25 : wolf, 						//starving wolf
+    // CR 0.50 : AlphaWolf, BadlandsSpider, black bear
+    // CR 1.00 : Dire wolf, giant eagle, brown bear
+    // CR 2.00 : tiger_drake, deepspider, giant beetle
+
+    internal class WildshapeOptionFamilyBuilder : BaseDefinitionBuilder<CharacterFamilyDefinition>
+    {
+        const string WildshapeOptionFamilyName = "WildshapeOption";
+        const string WildshapeOptionFamilyGuid = "3cd1ea83-3cd4-4c13-8be6-83bb778063b4";
+
+        protected WildshapeOptionFamilyBuilder(string name, string guid) : base(DatabaseHelper.CharacterFamilyDefinitions.Beast, name, guid)
+        {
+
+             
+
+
+        }
+
+        public static CharacterFamilyDefinition CreateAndAddToDB(string name, string guid)
+            => new WildshapeOptionFamilyBuilder(name, guid).AddToDB();
+
+        public static CharacterFamilyDefinition WildshapeOptionFamily = CreateAndAddToDB(WildshapeOptionFamilyName, WildshapeOptionFamilyGuid);
+
+
+    }
+
+
+
     internal class WildShaped_WolfBuilder : BaseDefinitionBuilder<MonsterDefinition>
     {
         const string WildShaped_WolfName = "WildShaped_Wolf";
@@ -26,6 +47,7 @@ namespace SolastaDruidClass
             Definition.SetDefaultFaction(DatabaseHelper.FactionDefinitions.Party.Name);
             Definition.SetFullyControlledWhenAllied(true);
             //   
+            Definition.SetCharacterFamily(WildshapeOptionFamilyBuilder.WildshapeOptionFamily.Name);
 
         }
 
@@ -48,7 +70,24 @@ namespace SolastaDruidClass
             Definition.SetDefaultFaction(DatabaseHelper.FactionDefinitions.Party.Name);
             Definition.SetFullyControlledWhenAllied(true);
             //   
+            Definition.SetCharacterFamily(WildshapeOptionFamilyBuilder.WildshapeOptionFamily.Name);
 
+
+            Definition.Features.Clear();
+            Definition.Features.Add(DatabaseHelper.FeatureDefinitionSenses.SenseNormalVision);
+            Definition.Features.Add(DatabaseHelper.FeatureDefinitionMoveModes.MoveModeMove8);
+            Definition.Features.Add(DatabaseHelper.FeatureDefinitionAbilityCheckAffinitys.AbilityCheckAffinityKeenHearing);
+            Definition.Features.Add(DatabaseHelper.FeatureDefinitionAbilityCheckAffinitys.AbilityCheckAffinityKeenSmell);
+            Definition.Features.Add(DatabaseHelper.FeatureDefinitionCombatAffinitys.CombatAffinityPackTactics);
+
+            Definition.AttackIterations.Clear();
+            MonsterAttackIteration monsterAttackIteration = new MonsterAttackIteration();
+
+            Traverse.Create(monsterAttackIteration).Field("monsterAttackDefinition").SetValue(DatabaseHelper.MonsterAttackDefinitions.Attack_Wolf_Bite);
+
+            Traverse.Create(monsterAttackIteration).Field("number").SetValue(1);
+
+            Definition.AttackIterations.AddRange(new List<MonsterAttackIteration> { monsterAttackIteration });
         }
 
         public static MonsterDefinition CreateAndAddToDB(string name, string guid)
@@ -69,6 +108,7 @@ namespace SolastaDruidClass
             Definition.SetDefaultFaction(DatabaseHelper.FactionDefinitions.Party.Name);
             Definition.SetFullyControlledWhenAllied(true);
             //   
+            Definition.SetCharacterFamily(WildshapeOptionFamilyBuilder.WildshapeOptionFamily.Name);
 
         }
 
@@ -79,10 +119,31 @@ namespace SolastaDruidClass
 
 
     }
-	
-	
-	
-	internal class WildShaped_DirewolfBuilder : BaseDefinitionBuilder<MonsterDefinition>
+
+    internal class WildShaped_BlackBearBuilder : BaseDefinitionBuilder<MonsterDefinition>
+    {
+        const string WildShaped_BlackBearName = "WildShaped_BlackBear";
+        const string WildShaped_BlackBearGuid = "e1f3d2bb-7a93-4e52-b137-4da57c8f30b3";
+
+        protected WildShaped_BlackBearBuilder(string name, string guid) : base(DatabaseHelper.MonsterDefinitions.BlackBear, name, guid)
+        {
+            Definition.SetDefaultFaction(DatabaseHelper.FactionDefinitions.Party.Name);
+            Definition.SetFullyControlledWhenAllied(true);
+            //   
+            Definition.SetCharacterFamily(WildshapeOptionFamilyBuilder.WildshapeOptionFamily.Name);
+
+        }
+
+        public static MonsterDefinition CreateAndAddToDB(string name, string guid)
+            => new WildShaped_BlackBearBuilder(name, guid).AddToDB();
+
+        public static MonsterDefinition WildShaped_BlackBear = CreateAndAddToDB(WildShaped_BlackBearName, WildShaped_BlackBearGuid);
+
+
+    }
+
+
+    internal class WildShaped_DirewolfBuilder : BaseDefinitionBuilder<MonsterDefinition>
     {
         const string WildShaped_DirewolfName = "WildShaped_Direwolf";
         const string WildShaped_DirewolfGuid = "a7f0e7e3-1f93-449e-8ba2-717b9f883169";
@@ -92,7 +153,10 @@ namespace SolastaDruidClass
             Definition.SetDefaultFaction(DatabaseHelper.FactionDefinitions.Party.Name);
             Definition.SetFullyControlledWhenAllied(true);
             //   
+            Definition.SetCharacterFamily(WildshapeOptionFamilyBuilder.WildshapeOptionFamily.Name);
 
+           
+            
         }
 
         public static MonsterDefinition CreateAndAddToDB(string name, string guid)
@@ -115,6 +179,7 @@ namespace SolastaDruidClass
             Definition.SetDefaultFaction(DatabaseHelper.FactionDefinitions.Party.Name);
             Definition.SetFullyControlledWhenAllied(true);
             //   
+            Definition.SetCharacterFamily(WildshapeOptionFamilyBuilder.WildshapeOptionFamily.Name);
 
         }
 
@@ -125,9 +190,29 @@ namespace SolastaDruidClass
 
 
     }
-	
-	
 
+
+    internal class WildShaped_BrownBearBuilder : BaseDefinitionBuilder<MonsterDefinition>
+    {
+        const string WildShaped_BrownBearName = "WildShaped_BrownBear";
+        const string WildShaped_BrownBearGuid = "3fd71b7e-794b-491b-8116-c7ff6da387ea";
+
+        protected WildShaped_BrownBearBuilder(string name, string guid) : base(DatabaseHelper.MonsterDefinitions.BrownBear, name, guid)
+        {
+            Definition.SetDefaultFaction(DatabaseHelper.FactionDefinitions.Party.Name);
+            Definition.SetFullyControlledWhenAllied(true);
+            //   
+            Definition.SetCharacterFamily(WildshapeOptionFamilyBuilder.WildshapeOptionFamily.Name);
+
+        }
+
+        public static MonsterDefinition CreateAndAddToDB(string name, string guid)
+            => new WildShaped_BrownBearBuilder(name, guid).AddToDB();
+
+        public static MonsterDefinition WildShaped_BrownBear = CreateAndAddToDB(WildShaped_BrownBearName, WildShaped_BrownBearGuid);
+
+
+    }
 
 
 }
