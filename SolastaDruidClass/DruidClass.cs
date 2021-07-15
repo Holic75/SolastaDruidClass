@@ -172,19 +172,22 @@ namespace SolastaDruidClass
             var DruidClass = new DruidClassBuilder(DruidClassName, DruidClassGuid).AddToDB();
 
              DruidSubClassCircleOfLand.BuildandAddSubclass();
-        //
+            DruidSubClassCircleOfWanderers.BuildandAddSubclass();
+            DruidSubClassCircleOfShifters.BuildandAddSubclass();
+
+            //
             CharacterSubclassDefinition CircleOfLand = DatabaseRepository.GetDatabase<CharacterSubclassDefinition>().TryGetElement("DruidSubclassCircleOfLand", "9ff4743d-015b-4a89-b2e4-cacd5866b153");
             DruidFeatureDefinitionSubclassChoice.Subclasses.Add(CircleOfLand.Name);
+
             
-			//circle of shifters/aspects/lycanthropy (use conditions to alter PC's body in different ways for gish druid)
-			
-			//CharacterSubclassDefinition  = .Build();
-            //DruidFeatureDefinitionSubclassChoice.Subclasses.Add(.Name);
-			
-			// circle of wayfarers/summons/companion druid fey battle buddy using wildfire companion and primal companions as templates
-			
-            //CharacterSubclassDefinition  = .Build();
-            //DruidFeatureDefinitionSubclassChoice.Subclasses.Add(.Name);
+            // circle of wayfarers/summons/companion druid fey battle buddy using wildfire companion and primal companions as templates
+            CharacterSubclassDefinition CircleOfWanderers = DatabaseRepository.GetDatabase<CharacterSubclassDefinition>().TryGetElement("DruidSubclassCircleOfWanderers", "3d08c24e-f16f-4c57-ae30-ce02084c5077");
+            DruidFeatureDefinitionSubclassChoice.Subclasses.Add(CircleOfWanderers.Name);
+
+
+            //circle of shifters/aspects/lycanthropy (use conditions to alter PC's body in different ways for gish druid)
+            CharacterSubclassDefinition CircleOfShifters = DatabaseRepository.GetDatabase<CharacterSubclassDefinition>().TryGetElement("DruidSubclassCircleOfShifters", "fed33975-da89-482d-bd4c-3b95ab914d8a");
+            DruidFeatureDefinitionSubclassChoice.Subclasses.Add(CircleOfShifters.Name);
         }
 
         private static FeatureDefinitionSubclassChoice DruidFeatureDefinitionSubclassChoice;
