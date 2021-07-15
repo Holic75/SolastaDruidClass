@@ -285,6 +285,100 @@ namespace SolastaDruidClass
         public static FeatureDefinitionCastSpell DruidCastingAbility = CreateAndAddToDB(DruidCastingAbilityName, DruidCastingAbilityGuid);
     }
 
+
+
+	 internal class ProduceFlameCantripBuilder : BaseDefinitionBuilder<SpellDefinition>
+    {
+        const string ProduceFlameCantripName = "ProduceFlameCantrip";
+        const string ProduceFlameCantripGuid = "705b0353-a64c-4b27-809f-fff6d828f372";
+
+        protected ProduceFlameCantripBuilder(string name, string guid) : base(DatabaseHelper.SpellDefinitions.Firebolt, name, guid)
+        {
+            Definition.GuiPresentation.Title = "Feat/&ProduceFlameCantripTitle";
+            Definition.GuiPresentation.Description = "Feat/&ProduceFlameCantripDescription";
+             
+			 
+            Definition.SetUniqueInstance(true);
+            Definition.SetSpellsBundle(true);
+
+            Traverse.Create(Definition).Field("subspellsList").SetValue(new List<SpellDefinition>
+            {
+                ProduceFlame_Light_CantripBuilder.ProduceFlame_Light_Cantrip , 
+                ProduceFlame_Mote_CantripBuilder.ProduceFlame_Mote_Cantrip
+            });
+
+             
+
+
+
+            Definition.EffectDescription.Clear();
+
+
+        }
+
+        public static SpellDefinition CreateAndAddToDB(string name, string guid)
+            => new ProduceFlameCantripBuilder(name, guid).AddToDB();
+
+        public static SpellDefinition ProduceFlameCantrip = CreateAndAddToDB(ProduceFlameCantripName, ProduceFlameCantripGuid);
+    }
+	
+	 internal class ProduceFlame_Light_CantripBuilder : BaseDefinitionBuilder<SpellDefinition>
+    {
+        const string ProduceFlame_Light_CantripName = "ProduceFlame_Light_Cantrip";
+        const string ProduceFlame_Light_CantripGuid = "808cfdbf-3d39-410c-bde6-7e27b347174e";
+
+        protected ProduceFlame_Light_CantripBuilder(string name, string guid) : base(DatabaseHelper.SpellDefinitions.Light, name, guid)
+        {
+            Definition.GuiPresentation.Title = "Feat/&ProduceFlame_Light_CantripTitle";
+            Definition.GuiPresentation.Description = "Feat/&ProduceFlame_Light_CantripDescription";
+             
+			 
+            
+            Definition.SetRequiresConcentration(false);
+			Definition.SetDurationParameter(10);
+             
+
+
+ 
+
+
+        }
+
+        public static SpellDefinition CreateAndAddToDB(string name, string guid)
+            => new ProduceFlame_Light_CantripBuilder(name, guid).AddToDB();
+
+        public static SpellDefinition ProduceFlame_Light_Cantrip = CreateAndAddToDB(ProduceFlame_Light_CantripName, ProduceFlame_Light_CantripGuid);
+    }
+	
+	
+	 internal class ProduceFlame_Mote_CantripBuilder : BaseDefinitionBuilder<SpellDefinition>
+    {
+        const string ProduceFlame_Mote_CantripName = "ProduceFlame_Mote_Cantrip";
+        const string ProduceFlame_Mote_CantripGuid = "44aca644-4b07-4e76-b37b-296a844b96ae";
+
+        protected ProduceFlame_Mote_CantripBuilder(string name, string guid) : base(DatabaseHelper.SpellDefinitions.Firebolt, name, guid)
+        {
+            Definition.GuiPresentation.Title = "Feat/&ProduceFlame_Mote_CantripTitle";
+            Definition.GuiPresentation.Description = "Feat/&ProduceFlame_Mote_CantripDescription";
+             
+			 
+             
+             
+
+
+ 
+
+
+        }
+
+        public static SpellDefinition CreateAndAddToDB(string name, string guid)
+            => new ProduceFlame_Mote_CantripBuilder(name, guid).AddToDB();
+
+        public static SpellDefinition ProduceFlame_Mote_Cantrip = CreateAndAddToDB(ProduceFlame_Mote_CantripName, ProduceFlame_Mote_CantripGuid);
+    }
+	
+
+
     internal class DruidSpellListBuilder : BaseDefinitionBuilder<SpellListDefinition>
     {
         const string DruidSpellListName = "DruidSpellList";
@@ -301,7 +395,7 @@ namespace SolastaDruidClass
             DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.Guidance);
             DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.PoisonSpray);
             DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.Resistance);
-           // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.ProduceFlame);
+            DruidSpell_Cantrips.Spells.Add(ProduceFlameCantripBuilder.ProduceFlameCantrip);
            // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.Shillelagh);
            // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.Druidcraft);
             DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.Sparkle);

@@ -202,6 +202,10 @@ namespace SolastaDruidClass
 
         public static SpellDefinition EnhanceAbilityCantrip = CreateAndAddToDB(EnhanceAbilityCantripName, EnhanceAbilityCantripGuid);
     }
+	
+	
+	
+	
     public class ShiftersAutopreparedSpellsBuilder : BaseDefinitionBuilder<FeatureDefinitionAutoPreparedSpells>
     {
         const string ShiftersAutopreparedSpellsName = "ShiftersAutopreparedSpells";

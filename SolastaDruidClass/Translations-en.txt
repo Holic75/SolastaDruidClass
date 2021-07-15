@@ -93,3 +93,80 @@ Stage/&SubclassSelectionStageCircleDescription Description  Your druid circle gu
 Stage/&SubclassSelectionStageCircleHeader Druid Circles
 Stage/&SubclassSelectionStageCircleFeatures Circle Features
 Stage/&SubclassSelectionStageCircleNoneDescription Circle None Desscription
+Feat/&WandererSpiritTitle Wanderer Spirit
+Feat/&WandererSpiritDescription A spirit formed from  lingering energies of thr Rift and an air elemental that is bonded the Wanderer Druid and aids during combat
+Feat/&WandererSpiritTitle_2 Wanderer Spirit
+Feat/&WandererSpiritDescription_3 A spirit formed from  lingering energies of thr Rift and an air elemental that is bonded the Wanderer Druid and aids during combat
+Feat/&WandererSpiritTitle_3 Wanderer Spirit Greater                                                                                  
+Feat/&WandererSpiritDescription_3 A spirit formed from  lingering energies of thr Rift and an air elemental that is bonded the Wanderer Druid and aids during combat
+Feat/&WandererSpiritTitle_4 Wanderer Spirit Greater                                                                                  
+Feat/&WandererSpiritDescription_4 A spirit formed from  lingering energies of thr Rift and an air elemental that is bonded the Wanderer Druid and aids during combat
+Feat/&WandererSpiritTitle_5 Wanderer Spirit Greater                                                                                  
+Feat/&WandererSpiritDescription_5 A spirit formed from  lingering energies of thr Rift and an air elemental that is bonded the Wanderer Druid and aids during combat
+Feat/&WandererSpiritAttackTitle Gust
+Feat/&WandererSpiritAttackDescription Deals 1D6+ PB damage and pushs 10ft
+Feat/&WandererSpiritSwapPositionsTitle Rift Switch
+Feat/&WandererSpiritSwapPositionsDescription Switch positions with ally
+Feat/&RiftJumpTitle Rift Jump
+Feat/&RiftJumpDescription Teleport 25ft (with optional ally)
+Feat/&SummonWandererSpiritTitle Summon Wanderer Spirit
+Feat/&SummonWandererSpiritDescription A spirit formed from  lingering energies of thr Rift and an air elemental that is bonded the Wanderder Druid and aids during combat
+Feat/&SummonWandererSpiritTitle_2 Summon Wanderer Spirit
+Feat/&SummonWandererSpiritDescription_2 A spirit formed from  lingering energies of thr Rift and an air elemental that is bonded the Wanderer Druid and aids during combat
+Feat/&SummonWandererSpiritTitle_3 Summon Greater Wanderer Spirit
+Feat/&SummonWandererSpiritDescription_3 A spirit formed from  lingering energies of thr Rift and an air elemental that is bonded the Wanderer Druid and aids during combat
+Feat/&SummonWandererSpiritTitle_4 Summon Greater Wanderer Spirit
+Feat/&SummonWandererSpiritDescription_4 A spirit formed from  lingering energies of thr Rift and an air elemental that is bonded the Wanderer Druid and aids during combat
+Feat/&SummonWandererSpiritTitle_5 Summon Greater Wanderer Spirit
+Feat/&SummonWandererSpiritDescription_5 A spirit formed from  lingering energies of thr Rift and an air elemental that is bonded the Wanderer Druid and aids during combat
+Subclass/&DruidSubclassCircleOfShiftersDescription The Circle of Spirit Shifting, also known as the Shifter Druids, seek shape their spirit rather than their form when channelling the spirits of beasts.
+Subclass/&DruidSubclassCircleOfShiftersTitle The Circle of Spirit Shifting
+Feat/&ShiftersFeatureSetTitle Spirit Forms of the Shifters
+Feat/&ShiftersFeatureSetDescription You gain three spirit forms, Wolf Form, Bear Form and Stag Form. Wolf Form grants agressive nimble combat abilities. Bear Form increases attack and defense. Stag Form protects the group.
+Feat/&ShiftersFeatureSet_level6Title Spirit Abilities
+Feat/&ShiftersFeatureSet_level6Description Your connection with the shifter spirits has increased to the point where you benefit from their power even when you are not shifted. Your attacks count as magical for overcoming resistenances. Your insticts grant you bonus in ability checks for Survival, Nature and Perception
+Feat/&ShiftersFeatureSet_level10Title Fused Forms
+Feat/&ShiftersFeatureSet_level10Description You can now channel two forms with a single use of wildshape 
+Feat/&ShiftersFeatureSet_level14Title Shifted Allies
+Feat/&ShiftersFeatureSet_level14Description Your mastery of spirit shifting now allows you to increase the abilities of your allies by channelling beast spirits  
+Feat/&CircleOfShiftersCantripsTitle Shifter Enchance Ability
+Feat/&CircleOfShiftersCantripsDescription You touch a creature and bestow upon it a magical enhancement. Choose one of the following effects; the target gains that effect until the spell ends.
+Feat/&EnhanceAbilityCantripTitle Shifter Enchance Ability
+Feat/&EnhanceAbilityCantripDescription You touch a creature and bestow upon it a magical enhancement. Choose one of the following effects; the target gains that effect until the spell ends.
+Feat/&ShiftersAutoPreparedSpellsTitle Shifter Auto-Prepared Spells
+Feat/&ShiftersAutoPreparedSpellsDescription Once you gain access to a circle spell, you always have it prepared, and it doesn't count against the number of spells you can prepare each day. If you gain access to a spell that doesn't appear on the druid spell list, the spell is nonetheless a druid spell for you.
+Subclass/&DruidSubclassCircleOfWanderersDescriptionThe druids that maintain constant watch for signs of another Rift Cataclysm are known as Rift Wanderers. They use a combination of air and lingering rift engeries to flow freely and wander between the planes 
+Subclass/&DruidSubclassCircleOfWanderersTitle The Circle of Rift Wanderers
+Feat/&WanderersFeatureSetTitle Wayfarer Movement
+Feat/&WanderersFeatureSetDescription Your walking speed becomes 30 feet, unless your walking speed is higher, and your speed isn't reduced if you are encumbered or wearing heavy armor. In addition, you can jump farther than normal distance. You are immune to being restrained
+Feat/&WanderersFeatureSet_level10Title Flight
+Feat/&WanderersFeatureSet_level10Description You gain the ability to fly when you summon your Wanderer Spirit
+Feat/&WanderersFeatureSet_level14Title Semi Incorporeal
+Feat/&WanderersFeatureSet_level14Description Your Wanderer Spirit brings you partially into a different plane making you harder to hurt. You gain resistence to damage.
+Feat/&WanderersAutoPreparedSpellsTitle Wanderer Auto=Prepared Spells
+Feat/&WanderersAutoPreparedSpellsDescription Once you gain access to a circle spell, you always have it prepared, and it doesn't count against the number of spells you can prepare each day. If you gain access to a spell that doesn't appear on the druid spell list, the spell is nonetheless a druid spell for you.
+Feat/&SummonShifterForm_WolfFormTitle Wolf Form
+Feat/&SummonShifterForm_WolfFormDescription You deal an extra 1D8 to injured enemies. You can disengage or dash as a bonus action. You gain advantage on attacks when other allies are within 5ft of target
+Feature/&WolfFormConditionTitle Wolf Form Condition
+Feature/&WolfFormConditionDescription You deal an extra 1D8 to injured enemies. You can disengage or dash as a bonus action. You gain advantage on attacks when other allies are within 5ft of target
+Feat/&SummonShifterForm_BearFormTitle Bear Form
+Feat/&SummonShifterForm_BearFormDescription You gain a multiattack and increase you attack and defense 
+Feature/&BearFormConditionTitle Bear Form Condition
+Feature/&BearFormConditionDescription You gain a multiattack and increase you attack and defense 
+Feat/&SummonShifterForm_StagFormTitle Stag Form
+Feat/&SummonShifterForm_StagFormDescription You grant +1 armor and 1D8 tempHp to allies in range every round for a minute
+Feature/&StagFormConditionTitle Stag Form Condition
+Feature/&StagFormConditionDescription You grant +1 armor and 1D8 tempHp to allies in range every round for a minute
+Feat/&SummonShifterForm_WolfAndBearFormTitle Fused Form - Bear and Wolf
+Feat/&SummonShifterForm_WolfAndBearFormDescription Gain the benefits of both Bear and Wolf Forms at the same time
+Feat/&SummonShifterForm_WolfAndStagFormTitle Fused Form - Stag and Wolf
+Feat/&SummonShifterForm_WolfAndStagFormDescription Gain the benefits of both Stag and Wolf Forms at the same time
+Feat/&SummonShifterForm_BearAndStagFormTitle Fused Form - Bear and Stag
+Feat/&SummonShifterForm_BearAndStagFormDescription Gain the benefits of both Bear and Stag Forms at the same time
+Feat/&ProduceFlame_Mote_CantripTitle
+Feat/&ProduceFlame_Mote_CantripDescription
+Feat/&ProduceFlame_Light_CantripTitle
+Feat/&ProduceFlame_Light_CantripDescription
+Feat/&ProduceFlameCantripTitle
+Feat/&ProduceFlameCantripDescription
+
