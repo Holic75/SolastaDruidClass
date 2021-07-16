@@ -143,7 +143,7 @@ namespace SolastaDruidClass
 
               Definition.SetMonsterPresentation(DatabaseHelper.MonsterDefinitions.Air_Elemental.MonsterPresentation);
               Definition.GuiPresentation.SetSpriteReference(DatabaseHelper.MonsterDefinitions.Air_Elemental.GuiPresentation.SpriteReference);
-
+            Definition.Features.Add(RiftJump_2Builder.RiftJump_2);
         //  Definition.Features.Add(RiftJumpBuilder.RiftJump);
 
               Definition.AttackIterations.Clear(); 
@@ -443,6 +443,7 @@ namespace SolastaDruidClass
 
             Definition.GuiPresentation.Title = "Feat/&RiftJumpTitle";
             Definition.GuiPresentation.Description = "Feat/&RiftJumpDescription";
+            Definition.GuiPresentation.SetSpriteReference(DatabaseHelper.SpellDefinitions.DimensionDoor.GuiPresentation.SpriteReference);
             Definition.SetShortTitleOverride("Feat/&RiftJumpTitle");
 
             Definition.SetRechargeRate(RuleDefinitions.RechargeRate.AtWill);
@@ -454,6 +455,28 @@ namespace SolastaDruidClass
             => new RiftJumpBuilder(name, guid).AddToDB();
 
         public static FeatureDefinitionPower RiftJump = CreateAndAddToDB(RiftJumpName, RiftJumpNameGuid);
+
+
+    }
+
+    internal class RiftJump_2Builder : BaseDefinitionBuilder<FeatureDefinitionPower>
+    {
+        const string RiftJump_2Name = "RiftJump_2";
+        const string RiftJump_2NameGuid = "6041b7be-2ce9-446e-bcbf-77ea8ccc1138";
+
+        protected RiftJump_2Builder(string name, string guid) : base(RiftJumpBuilder.RiftJump, name, guid)
+        {
+
+            Definition.SetOverriddenPower(RiftJumpBuilder.RiftJump);
+            Definition.EffectDescription.SetRangeParameter(12);
+
+
+        }
+
+        public static FeatureDefinitionPower CreateAndAddToDB(string name, string guid)
+            => new RiftJump_2Builder(name, guid).AddToDB();
+
+        public static FeatureDefinitionPower RiftJump_2 = CreateAndAddToDB(RiftJump_2Name, RiftJump_2NameGuid);
 
 
     }
@@ -473,7 +496,7 @@ namespace SolastaDruidClass
             Definition.GuiPresentation.Description = "Feat/&SummonWandererSpiritDescription";
             Definition.GuiPresentation.SetSpriteReference(DatabaseHelper.SpellDefinitions.ConjureElementalAir.GuiPresentation.SpriteReference);
 
-            Definition.SetActivationTime(RuleDefinitions.ActivationTime.Action);
+            Definition.SetActivationTime(RuleDefinitions.ActivationTime.BonusAction);
             Definition.SetRechargeRate(RuleDefinitions.RechargeRate.ChannelDivinity);
             Definition.SetFixedUsesPerRecharge(1);
             Definition.SetCostPerUse(1);
@@ -492,6 +515,8 @@ namespace SolastaDruidClass
             EffectForm summoneffect = new EffectForm();
             summoneffect.FormType = EffectForm.EffectFormType.Summon;//"summons";
             summoneffect.SetSummonForm(summonprotector);
+
+
 
             //Add to our new effect
             EffectDescription newEffectDescription = new EffectDescription();

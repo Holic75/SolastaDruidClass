@@ -54,7 +54,7 @@ namespace SolastaDruidClass
             .AddFeatureAtLevel(ShiftersFeatureSetBuilder.ShiftersFeatureSet, 2)
 
             // Shifters's  level 6
-            .AddFeatureAtLevel(ShiftersFeatureSetBuilder.ShiftersFeatureSet, 6)
+            .AddFeatureAtLevel(ShiftersFeatureSet_level6Builder.ShiftersFeatureSet_level6, 6)
             //   level 10
             .AddFeatureAtLevel(ShiftersFeatureSet_level10Builder.ShiftersFeatureSet_level10, 10)
              //    level 14

@@ -135,7 +135,7 @@ Feat/&EnhanceAbilityCantripTitle Shifter Enchance Ability
 Feat/&EnhanceAbilityCantripDescription You touch a creature and bestow upon it a magical enhancement. Choose one of the following effects; the target gains that effect until the spell ends.
 Feat/&ShiftersAutoPreparedSpellsTitle Shifter Auto-Prepared Spells
 Feat/&ShiftersAutoPreparedSpellsDescription Once you gain access to a circle spell, you always have it prepared, and it doesn't count against the number of spells you can prepare each day. If you gain access to a spell that doesn't appear on the druid spell list, the spell is nonetheless a druid spell for you.
-Subclass/&DruidSubclassCircleOfWanderersDescriptionThe druids that maintain constant watch for signs of another Rift Cataclysm are known as Rift Wanderers. They use a combination of air and lingering rift engeries to flow freely and wander between the planes 
+Subclass/&DruidSubclassCircleOfWanderersDescription The druids that maintain constant watch for signs of another Rift Cataclysm are known as Rift Wanderers. They use a combination of air and lingering rift engeries to flow freely and wander between the planes 
 Subclass/&DruidSubclassCircleOfWanderersTitle The Circle of Rift Wanderers
 Feat/&WanderersFeatureSetTitle Wayfarer Movement
 Feat/&WanderersFeatureSetDescription Your walking speed becomes 30 feet, unless your walking speed is higher, and your speed isn't reduced if you are encumbered or wearing heavy armor. In addition, you can jump farther than normal distance. You are immune to being restrained
@@ -163,10 +163,23 @@ Feat/&SummonShifterForm_WolfAndStagFormTitle Fused Form - Stag and Wolf
 Feat/&SummonShifterForm_WolfAndStagFormDescription Gain the benefits of both Stag and Wolf Forms at the same time
 Feat/&SummonShifterForm_BearAndStagFormTitle Fused Form - Bear and Stag
 Feat/&SummonShifterForm_BearAndStagFormDescription Gain the benefits of both Bear and Stag Forms at the same time
-Feat/&ProduceFlame_Mote_CantripTitle
-Feat/&ProduceFlame_Mote_CantripDescription
-Feat/&ProduceFlame_Light_CantripTitle
-Feat/&ProduceFlame_Light_CantripDescription
-Feat/&ProduceFlameCantripTitle
-Feat/&ProduceFlameCantripDescription
-
+Feat/&ProduceFlame_Mote_CantripTitle Produce Flame - Hurl Mote
+Feat/&ProduceFlame_Mote_CantripDescription Hurl a mote of flame at enemies for 1D8 damage, increases 1 die at levels 5, 11 and 17
+Feat/&ProduceFlame_Light_CantripTitle Produce Flame - Light
+Feat/&ProduceFlame_Light_CantripDescription Place a light source on an item
+Feat/&ProduceFlameCantripTitle Produce Flame
+Feat/&ProduceFlameCantripDescription Create a light source or hurl a flame at enemies
+Feat/&shillelaghCantripTitle Shillelagh
+Feat/&shillelaghCantripDescription Add wisdom to attack and damage rolls, increase damage by 1D4
+Feature/&shillelaghAttackModifierTitle Shillelagh attack modifier
+Feature/&shillelaghAttackModifierDescription Add your wisdom to attack roll
+Feature/&ShillelaghAdditionalDamageTitle Shillelagh additional daamge
+Feature/&ShillelaghAdditionalDamageDescription Add wisdom and 1D4 to damage rolls
+Feat/&HeatMetalSpellTitle Heat Metal Armor
+Feat/&HeatMetalSpellDescription Inflict 2D6 fire damage and disadvantage on attack rolls to enemies wearing metal armor
+Feature/&HeatMetalConditionTitle Heated Metal Condition
+Feature/&HeatMetalConditionDescription Suffers 2D6 fire damage and has disadvantage on attack rolls when wearing metal armor
+Feature/&HeatMetalAdditionalDamageTitle Heat Metal additional damage
+Feature/&HeatMetalAdditionalDamageDescription 2d6 fire damage
+Feature/&MetalDisadvantageTitle Heat metal disadvantage 
+Feature/&MetalDisadvantageDescription  isadvantage to attack rolls

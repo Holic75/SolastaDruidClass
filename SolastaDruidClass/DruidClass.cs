@@ -93,7 +93,7 @@ namespace SolastaDruidClass
             list2.Add(EquipmentOptionsBuilder.Option(DatabaseHelper.ItemDefinitions.Dagger, EquipmentDefinitions.OptionWeaponSimpleChoice, 1));
            List<CharacterClassDefinition.HeroEquipmentOption> list3 = new List<CharacterClassDefinition.HeroEquipmentOption>();
            List<CharacterClassDefinition.HeroEquipmentOption> list4 = new List<CharacterClassDefinition.HeroEquipmentOption>();
-           list3.Add(EquipmentOptionsBuilder.Option(DatabaseHelper.ItemDefinitions.Scimitar, EquipmentDefinitions.MartialWeaponCategory, 1));
+           list3.Add(EquipmentOptionsBuilder.Option(DatabaseHelper.ItemDefinitions.Quarterstaff, EquipmentDefinitions.MartialWeaponCategory, 1));
            list4.Add(EquipmentOptionsBuilder.Option(DatabaseHelper.ItemDefinitions.Dagger, EquipmentDefinitions.OptionWeaponSimpleMeleeChoice, 1));
             this.AddEquipmentRow(list, list2);
             this.AddEquipmentRow(list3, list4);
@@ -101,7 +101,7 @@ namespace SolastaDruidClass
             {
                 EquipmentOptionsBuilder.Option(DatabaseHelper.ItemDefinitions.Leather, EquipmentDefinitions.OptionArmor, 1),
                 EquipmentOptionsBuilder.Option(DatabaseHelper.ItemDefinitions.ExplorerPack, EquipmentDefinitions.OptionStarterPack, 1),
-                EquipmentOptionsBuilder.Option(DatabaseHelper.ItemDefinitions.ComponentPouch, EquipmentDefinitions.OptionFocus, 1)
+                EquipmentOptionsBuilder.Option(DatabaseHelper.ItemDefinitions.ComponentPouch_Belt, EquipmentDefinitions.OptionFocus, 1)
           
             });
 
@@ -271,7 +271,8 @@ namespace SolastaDruidClass
 
            
             Definition.SetSpellListDefinition(DruidSpellListBuilder.DruidSpellList);
-
+            Definition.SetSpellCastingOrigin(FeatureDefinitionCastSpell.CastingOrigin.Class);
+            
             Definition.KnownCantrips.Clear();
            Definition.KnownCantrips.AddRange( new List<int> { 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 });
 
@@ -286,97 +287,6 @@ namespace SolastaDruidClass
     }
 
 
-
-	 internal class ProduceFlameCantripBuilder : BaseDefinitionBuilder<SpellDefinition>
-    {
-        const string ProduceFlameCantripName = "ProduceFlameCantrip";
-        const string ProduceFlameCantripGuid = "705b0353-a64c-4b27-809f-fff6d828f372";
-
-        protected ProduceFlameCantripBuilder(string name, string guid) : base(DatabaseHelper.SpellDefinitions.Firebolt, name, guid)
-        {
-            Definition.GuiPresentation.Title = "Feat/&ProduceFlameCantripTitle";
-            Definition.GuiPresentation.Description = "Feat/&ProduceFlameCantripDescription";
-             
-			 
-            Definition.SetUniqueInstance(true);
-            Definition.SetSpellsBundle(true);
-
-            Traverse.Create(Definition).Field("subspellsList").SetValue(new List<SpellDefinition>
-            {
-                ProduceFlame_Light_CantripBuilder.ProduceFlame_Light_Cantrip , 
-                ProduceFlame_Mote_CantripBuilder.ProduceFlame_Mote_Cantrip
-            });
-
-             
-
-
-
-            Definition.EffectDescription.Clear();
-
-
-        }
-
-        public static SpellDefinition CreateAndAddToDB(string name, string guid)
-            => new ProduceFlameCantripBuilder(name, guid).AddToDB();
-
-        public static SpellDefinition ProduceFlameCantrip = CreateAndAddToDB(ProduceFlameCantripName, ProduceFlameCantripGuid);
-    }
-	
-	 internal class ProduceFlame_Light_CantripBuilder : BaseDefinitionBuilder<SpellDefinition>
-    {
-        const string ProduceFlame_Light_CantripName = "ProduceFlame_Light_Cantrip";
-        const string ProduceFlame_Light_CantripGuid = "808cfdbf-3d39-410c-bde6-7e27b347174e";
-
-        protected ProduceFlame_Light_CantripBuilder(string name, string guid) : base(DatabaseHelper.SpellDefinitions.Light, name, guid)
-        {
-            Definition.GuiPresentation.Title = "Feat/&ProduceFlame_Light_CantripTitle";
-            Definition.GuiPresentation.Description = "Feat/&ProduceFlame_Light_CantripDescription";
-             
-			 
-            
-            Definition.SetRequiresConcentration(false);
-			Definition.SetDurationParameter(10);
-             
-
-
- 
-
-
-        }
-
-        public static SpellDefinition CreateAndAddToDB(string name, string guid)
-            => new ProduceFlame_Light_CantripBuilder(name, guid).AddToDB();
-
-        public static SpellDefinition ProduceFlame_Light_Cantrip = CreateAndAddToDB(ProduceFlame_Light_CantripName, ProduceFlame_Light_CantripGuid);
-    }
-	
-	
-	 internal class ProduceFlame_Mote_CantripBuilder : BaseDefinitionBuilder<SpellDefinition>
-    {
-        const string ProduceFlame_Mote_CantripName = "ProduceFlame_Mote_Cantrip";
-        const string ProduceFlame_Mote_CantripGuid = "44aca644-4b07-4e76-b37b-296a844b96ae";
-
-        protected ProduceFlame_Mote_CantripBuilder(string name, string guid) : base(DatabaseHelper.SpellDefinitions.Firebolt, name, guid)
-        {
-            Definition.GuiPresentation.Title = "Feat/&ProduceFlame_Mote_CantripTitle";
-            Definition.GuiPresentation.Description = "Feat/&ProduceFlame_Mote_CantripDescription";
-             
-			 
-             
-             
-
-
- 
-
-
-        }
-
-        public static SpellDefinition CreateAndAddToDB(string name, string guid)
-            => new ProduceFlame_Mote_CantripBuilder(name, guid).AddToDB();
-
-        public static SpellDefinition ProduceFlame_Mote_Cantrip = CreateAndAddToDB(ProduceFlame_Mote_CantripName, ProduceFlame_Mote_CantripGuid);
-    }
-	
 
 
     internal class DruidSpellListBuilder : BaseDefinitionBuilder<SpellListDefinition>
@@ -396,8 +306,8 @@ namespace SolastaDruidClass
             DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.PoisonSpray);
             DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.Resistance);
             DruidSpell_Cantrips.Spells.Add(ProduceFlameCantripBuilder.ProduceFlameCantrip);
-           // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.Shillelagh);
-           // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.Druidcraft);
+         //   DruidSpell_Cantrips.Spells.Add(shillelaghCantripBuilder.shillelaghCantrip);
+            // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.Druidcraft);
             DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.Sparkle);
             DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.Dazzle);
             DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.Shine);
@@ -407,7 +317,7 @@ namespace SolastaDruidClass
            // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.Gust);
            // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.shapewater);
            // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.controlflames);
-           // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.moldearth);
+           // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.moldearth);     // non srd cantrips
            // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.thornwhip);
            // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.thunderclap);
            // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.primalsavgery);
@@ -417,7 +327,7 @@ namespace SolastaDruidClass
             DruidSpell_level_1.Level = 1;
             DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.AnimalFriendship);
             DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.CharmPerson);
-            DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.CreateDestroyWater);
+        //    DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.CreateDestroyWater);
             DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.CureWounds);
             DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.DetectMagic);
             DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.DetectPoisonAndDisease);
@@ -429,7 +339,7 @@ namespace SolastaDruidClass
             DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.Jump);
             DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.Longstrider);
             DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.ProtectionFromEvilGood);
-            DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.PurifyFood);
+       //     DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.PurifyFood);
             DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.Thunderwave);
             //DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.);
 
@@ -440,10 +350,10 @@ namespace SolastaDruidClass
             DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.Darkvision);
             DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.EnhanceAbility);
             DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.FindTraps);
-            DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.FlameBlade);
+        //    DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.FlameBlade);
             DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.FlamingSphere);
             DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.GustOfWind);
-        //    DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.heatmetal);
+       //     DruidSpell_level_2.Spells.Add(HeatMetalSpellBuilder.HeatMetalSpell);
             DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.HoldPerson);
             DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.LesserRestoration);
             DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.PassWithoutTrace);
@@ -464,8 +374,8 @@ namespace SolastaDruidClass
             DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.ProtectionFromEnergy);
             DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.Revivify);
             DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.SleetStorm);
-            DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.WaterBreathing);
-            DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.WaterWalk);
+        //    DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.WaterBreathing);
+        //    DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.WaterWalk);
             DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.WindWall);
         //    DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.);
         //    DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.);

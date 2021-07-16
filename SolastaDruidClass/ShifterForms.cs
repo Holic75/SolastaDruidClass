@@ -41,27 +41,27 @@ namespace SolastaDruidClass
         const string SummonShifterForm_WolfFormName = "SummonShifterForm_WolfForm_WolfForm";
         const string SummonShifterForm_WolfFormNameGuid = "e86ca115-ab3c-4bb8-a963-8356ea9c3a01";
 
-        protected SummonShifterForm_WolfFormPowerBuilder(string name, string guid) : base(DatabaseHelper.FeatureDefinitionPowers.PowerFighterActionSurge, name, guid)
+        protected SummonShifterForm_WolfFormPowerBuilder(string name, string guid) : base(DatabaseHelper.FeatureDefinitionPowers.PowerClericDivineInterventionCleric, name, guid)
         {
 
             Definition.GuiPresentation.Title = "Feat/&SummonShifterForm_WolfFormTitle";
             Definition.GuiPresentation.Description = "Feat/&SummonShifterForm_WolfFormDescription";
             Definition.GuiPresentation.SetSpriteReference(DatabaseHelper.SpellDefinitions.Heroism.GuiPresentation.SpriteReference);
-
+        
             Definition.SetActivationTime(RuleDefinitions.ActivationTime.Action);
             Definition.SetRechargeRate(RuleDefinitions.RechargeRate.ChannelDivinity);
             Definition.SetFixedUsesPerRecharge(1);
             Definition.SetCostPerUse(1);
             Definition.SetHasCastingFailure(false);
             Definition.SetUniqueInstance(true);
-
+        
             ConditionForm WolfCondition = new ConditionForm();
             WolfCondition.SetApplyToSelf(true);
             WolfCondition.SetForceOnSelf(true);
             WolfCondition.Operation = ConditionForm.ConditionOperation.Add;
             WolfCondition.SetConditionDefinitionName(WolfFormConditionBuilder.WolfFormCondition.Name);
             WolfCondition.ConditionDefinition = WolfFormConditionBuilder.WolfFormCondition;
-
+        
             EffectForm WolfFormEffect = new EffectForm();
             WolfFormEffect.SetApplyLevel(EffectForm.LevelApplianceType.No);
             WolfFormEffect.SetLevelMultiplier(1);
@@ -69,7 +69,7 @@ namespace SolastaDruidClass
             WolfFormEffect.SetCreatedByCharacter(true);
             WolfFormEffect.FormType = EffectForm.EffectFormType.Condition;
             WolfFormEffect.ConditionForm = WolfCondition;
-
+        
             //Add to our new effect
             EffectDescription newEffectDescription = new EffectDescription();
             newEffectDescription.Copy(Definition.EffectDescription);
@@ -79,9 +79,9 @@ namespace SolastaDruidClass
             newEffectDescription.SetTargetType(RuleDefinitions.TargetType.Self);
             newEffectDescription.DurationType = RuleDefinitions.DurationType.Minute;
             newEffectDescription.DurationParameter = 10;
-
-
-
+        
+        
+        
             Definition.SetEffectDescription(newEffectDescription);
 
 
@@ -110,6 +110,7 @@ namespace SolastaDruidClass
             Definition.Features.Add(DatabaseHelper.FeatureDefinitionActionAffinitys.ActionAffinityNimbleEscape);
             Definition.Features.Add(DatabaseHelper.FeatureDefinitionCombatAffinitys.CombatAffinityPackTactics);
             Definition.Features.Add(DatabaseHelper.FeatureDefinitionActionAffinitys.ActionAffinityAggressive);
+            Definition.Features.Add(ShifterFormCasterActionAffinityBuilder.ShifterFormCasterActionAffinity);
 
             Definition.SetDurationType(RuleDefinitions.DurationType.Minute);
             Definition.SetDurationParameter(1);
@@ -127,7 +128,7 @@ namespace SolastaDruidClass
         const string SummonShifterForm_BearFormName = "SummonShifterForm_BearForm_BearForm";
         const string SummonShifterForm_BearFormNameGuid = "d91bb65d-58c1-4af6-a201-3da98c6243e8";
 
-        protected SummonShifterForm_BearFormPowerBuilder(string name, string guid) : base(DatabaseHelper.FeatureDefinitionPowers.PowerFighterActionSurge, name, guid)
+        protected SummonShifterForm_BearFormPowerBuilder(string name, string guid) : base(DatabaseHelper.FeatureDefinitionPowers.PowerClericDivineInterventionCleric, name, guid)
         {
 
             Definition.GuiPresentation.Title = "Feat/&SummonShifterForm_BearFormTitle";
@@ -195,6 +196,7 @@ namespace SolastaDruidClass
             Definition.Features.Add(DatabaseHelper.FeatureDefinitionAttributeModifiers.AttributeModifierArmorPlus2);
             Definition.Features.Add(DatabaseHelper.FeatureDefinitionAdditionalActions.AdditionalActionHasted);
             Definition.Features.Add(DatabaseHelper.FeatureDefinitionAttackModifiers.AttackModifierWeaponPlus2);
+            Definition.Features.Add(ShifterFormCasterActionAffinityBuilder.ShifterFormCasterActionAffinity);
 
             Definition.SetDurationType(RuleDefinitions.DurationType.Minute);
             Definition.SetDurationParameter(1);
@@ -213,7 +215,7 @@ namespace SolastaDruidClass
         const string SummonShifterForm_StagFormName = "SummonShifterForm_StagForm_StagForm";
         const string SummonShifterForm_StagFormNameGuid = "8370d085-b46b-4655-a2f4-5eb9f47fdef3";
 
-        protected SummonShifterForm_StagFormPowerBuilder(string name, string guid) : base(DatabaseHelper.FeatureDefinitionPowers.PowerFighterActionSurge, name, guid)
+        protected SummonShifterForm_StagFormPowerBuilder(string name, string guid) : base(DatabaseHelper.FeatureDefinitionPowers.PowerClericDivineInterventionCleric, name, guid)
         {
 
             Definition.GuiPresentation.Title = "Feat/&SummonShifterForm_StagFormTitle";
@@ -247,13 +249,13 @@ namespace SolastaDruidClass
             newEffectDescription.Copy(Definition.EffectDescription);
             newEffectDescription.EffectForms.Clear();
             newEffectDescription.EffectForms.Add(StagFormEffect);
-            newEffectDescription.SetRangeParameter(6);
+            newEffectDescription.SetRangeParameter(2);
             newEffectDescription.SetRangeType(RuleDefinitions.RangeType.Self);
             newEffectDescription.SetTargetType(RuleDefinitions.TargetType.Sphere);
             newEffectDescription.SetTargetSide(RuleDefinitions.Side.Ally);
             newEffectDescription.DurationType = RuleDefinitions.DurationType.Minute;
-
-            newEffectDescription.DurationParameter = 10;
+            newEffectDescription.SetTargetParameter(2);
+            newEffectDescription.DurationParameter = 1;
 
 
 
@@ -282,12 +284,13 @@ namespace SolastaDruidClass
             Definition.SetAllowMultipleInstances(false);
             Definition.Features.Clear();
             Definition.Features.Add(DatabaseHelper.FeatureDefinitionAttributeModifiers.AttributeModifierArmorPlus1);
-       //     Definition.Features.Add(DatabaseHelper.);
-       //     Definition.Features.Add(DatabaseHelper.);
+            //     Definition.Features.Add(DatabaseHelper.);
+            //     Definition.Features.Add(DatabaseHelper.);
+            Definition.Features.Add(ShifterFormCasterActionAffinityBuilder.ShifterFormCasterActionAffinity);
 
             Definition.SetDurationType(RuleDefinitions.DurationType.Minute);
             Definition.SetDurationParameter(1);
-
+            
 
 
             EffectForm healingEffect = new EffectForm();
@@ -322,7 +325,7 @@ namespace SolastaDruidClass
         const string SummonShifterForm_WolfAndBearFormName = "SummonShifterForm_WolfAndBearForm_WolfAndBearForm";
         const string SummonShifterForm_WolfAndBearFormNameGuid = "ab0ec75c-2961-4625-92d6-c0d5196add1c";
 
-        protected SummonShifterForm_WolfAndBearFormPowerBuilder(string name, string guid) : base(DatabaseHelper.FeatureDefinitionPowers.PowerFighterActionSurge, name, guid)
+        protected SummonShifterForm_WolfAndBearFormPowerBuilder(string name, string guid) : base(DatabaseHelper.FeatureDefinitionPowers.PowerClericDivineInterventionCleric, name, guid)
         {
 
             Definition.GuiPresentation.Title = "Feat/&SummonShifterForm_WolfAndBearFormTitle";
@@ -398,7 +401,7 @@ namespace SolastaDruidClass
         const string SummonShifterForm_WolfAndStagFormName = "SummonShifterForm_WolfAndStagForm_WolfAndStagForm";
         const string SummonShifterForm_WolfAndStagFormNameGuid = "7049aca0-29aa-4269-ab5f-fbd5bdf55372";
 
-        protected SummonShifterForm_WolfAndStagFormPowerBuilder(string name, string guid) : base(DatabaseHelper.FeatureDefinitionPowers.PowerFighterActionSurge, name, guid)
+        protected SummonShifterForm_WolfAndStagFormPowerBuilder(string name, string guid) : base(DatabaseHelper.FeatureDefinitionPowers.PowerClericDivineInterventionCleric, name, guid)
         {
 
             Definition.GuiPresentation.Title = "Feat/&SummonShifterForm_WolfAndStagFormTitle";
@@ -489,7 +492,7 @@ namespace SolastaDruidClass
         const string SummonShifterForm_BearAndStagFormName = "SummonShifterForm_BearAndStagForm_BearAndStagForm";
         const string SummonShifterForm_BearAndStagFormNameGuid = "64c561dd-4dff-43ac-9f56-cb3b58b62bab";
 
-        protected SummonShifterForm_BearAndStagFormPowerBuilder(string name, string guid) : base(DatabaseHelper.FeatureDefinitionPowers.PowerFighterActionSurge, name, guid)
+        protected SummonShifterForm_BearAndStagFormPowerBuilder(string name, string guid) : base(DatabaseHelper.FeatureDefinitionPowers.PowerClericDivineInterventionCleric, name, guid)
         {
 
             Definition.GuiPresentation.Title = "Feat/&SummonShifterForm_BearAndStagFormTitle";
@@ -561,7 +564,54 @@ namespace SolastaDruidClass
 
 
 
+    internal class ShifterFormCasterActionAffinityBuilder : BaseDefinitionBuilder<FeatureDefinitionActionAffinity>
+    {
+        const string Name = "ShifterFormCasterActionAffinity";
+        const string Guid = "fbb93589-8cd8-4507-a1b4-d89aff81794e";
 
+        protected ShifterFormCasterActionAffinityBuilder(string name, string guid) : base(DatabaseHelper.FeatureDefinitionActionAffinitys.ActionAffinityConditionSlowed, name, guid)
+        {
+            Definition.GuiPresentation.Title = "Feature/&ShifterFormCasterActionAffinityBuilderTitle";
+            Definition.GuiPresentation.Description = "Feature/&ShifterFormCasterActionAffinityBuilderDescription";
+
+
+
+            //    Definition.AuthorizedActions.Add(ActionDefinitions.Id.ExplorationMove);
+            //    Definition.AuthorizedActions.Add(ActionDefinitions.Id.TacticalMove);
+            //    //    Definition.AuthorizedActions.Add(ActionDefinitions.Id.PowerBonus);
+            //    Definition.AuthorizedActions.Add(ActionDefinitions.Id.Cautious);
+            //    Definition.AuthorizedActions.Add(ActionDefinitions.Id.Climb);
+            //    Definition.AuthorizedActions.Add(ActionDefinitions.Id.DashMain);
+            //    Definition.AuthorizedActions.Add(ActionDefinitions.Id.Jump);
+            //    //    Definition.AuthorizedActions.Add(ActionDefinitions.Id.PowerNoCost);
+            //    //    Definition.AuthorizedActions.Add(ActionDefinitions.Id.SpendPower);
+            //    //   Definition.AuthorizedActions.Add(ActionDefinitions.Id.PowerMain);
+            //    //      Definition.AuthorizedActions.Add(ActionDefinitions.Id.PowerNoCost);
+            //
+            //    Definition.RestrictedActions.Add(ActionDefinitions.Id.ExplorationMove);
+            //    Definition.RestrictedActions.Add(ActionDefinitions.Id.TacticalMove);
+            //    //    Definition.RestrictedActions.Add(ActionDefinitions.Id.PowerBonus);
+            //    Definition.RestrictedActions.Add(ActionDefinitions.Id.Cautious);
+            //    Definition.RestrictedActions.Add(ActionDefinitions.Id.Climb);
+            //    Definition.RestrictedActions.Add(ActionDefinitions.Id.DashMain);
+            //    Definition.RestrictedActions.Add(ActionDefinitions.Id.Jump);
+
+
+
+                Definition.ForbiddenActions.Add(ActionDefinitions.Id.PowerNoCost);
+                Definition.ForbiddenActions.Add(ActionDefinitions.Id.SpendPower);
+                Definition.ForbiddenActions.Add(ActionDefinitions.Id.PowerMain);
+                 Definition.ForbiddenActions.Add(ActionDefinitions.Id.PowerNoCost);
+            Definition.ForbiddenActions.Add(ActionDefinitions.Id.PowerBonus);
+
+
+        }
+
+        public static FeatureDefinitionActionAffinity CreateAndAddToDB(string name, string guid)
+            => new ShifterFormCasterActionAffinityBuilder(name, guid).AddToDB();
+
+        public static FeatureDefinitionActionAffinity ShifterFormCasterActionAffinity = CreateAndAddToDB(Name, Guid);
+    }
 
 
 }

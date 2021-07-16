@@ -180,9 +180,7 @@ namespace SolastaDruidClass
             casterwildshaped.Operation = ConditionForm.ConditionOperation.Add;
             casterwildshaped.SetConditionDefinitionName(CasterWhileWildshapedConditionBuilder.CasterWhileWildshapedCondition.Name);
             casterwildshaped.ConditionDefinition = CasterWhileWildshapedConditionBuilder.CasterWhileWildshapedCondition;
-        //    casterwildshaped.SetConditionDefinitionName(DatabaseHelper.ConditionDefinitions.ConditionInvisibleGreater.Name);
-        //    casterwildshaped.ConditionDefinition = DatabaseHelper.ConditionDefinitions.ConditionInvisibleGreater;
-
+      
             EffectForm casterwildshapedEffect = new EffectForm();
             casterwildshapedEffect.SetApplyLevel(EffectForm.LevelApplianceType.No);
             casterwildshapedEffect.SetLevelMultiplier(1);
@@ -461,30 +459,41 @@ namespace SolastaDruidClass
             //   {  
             //   });
 
-            Definition.AuthorizedActions.Add(ActionDefinitions.Id.ExplorationMove);
-            Definition.AuthorizedActions.Add(ActionDefinitions.Id.TacticalMove);
-        //    Definition.AuthorizedActions.Add(ActionDefinitions.Id.PowerBonus);
-            Definition.AuthorizedActions.Add(ActionDefinitions.Id.Cautious);
-            Definition.AuthorizedActions.Add(ActionDefinitions.Id.Climb);
-            Definition.AuthorizedActions.Add(ActionDefinitions.Id.DashMain);
-            Definition.AuthorizedActions.Add(ActionDefinitions.Id.Jump);
-        //    Definition.AuthorizedActions.Add(ActionDefinitions.Id.PowerNoCost);
-        //    Definition.AuthorizedActions.Add(ActionDefinitions.Id.SpendPower);
-           Definition.AuthorizedActions.Add(ActionDefinitions.Id.PowerMain);
-        //      Definition.AuthorizedActions.Add(ActionDefinitions.Id.PowerNoCost);
+            //        Definition.AuthorizedActions.Add(ActionDefinitions.Id.ExplorationMove);
+            //        Definition.AuthorizedActions.Add(ActionDefinitions.Id.TacticalMove);
+            //    //    Definition.AuthorizedActions.Add(ActionDefinitions.Id.PowerBonus);
+            //        Definition.AuthorizedActions.Add(ActionDefinitions.Id.Cautious);
+            //        Definition.AuthorizedActions.Add(ActionDefinitions.Id.Climb);
+            //        Definition.AuthorizedActions.Add(ActionDefinitions.Id.DashMain);
+            //        Definition.AuthorizedActions.Add(ActionDefinitions.Id.Jump);
+            //    //    Definition.AuthorizedActions.Add(ActionDefinitions.Id.PowerNoCost);
+            //    //    Definition.AuthorizedActions.Add(ActionDefinitions.Id.SpendPower);
+            //       Definition.AuthorizedActions.Add(ActionDefinitions.Id.PowerMain);
+            //    //      Definition.AuthorizedActions.Add(ActionDefinitions.Id.PowerNoCost);
+            //
+            //        Definition.RestrictedActions.Add(ActionDefinitions.Id.ExplorationMove);
+            //        Definition.RestrictedActions.Add(ActionDefinitions.Id.TacticalMove);
+            //    //    Definition.RestrictedActions.Add(ActionDefinitions.Id.PowerBonus);
+            //        Definition.RestrictedActions.Add(ActionDefinitions.Id.Cautious);
+            //        Definition.RestrictedActions.Add(ActionDefinitions.Id.Climb);
+            //        Definition.RestrictedActions.Add(ActionDefinitions.Id.DashMain);
+            //        Definition.RestrictedActions.Add(ActionDefinitions.Id.Jump);
+            //   //     Definition.RestrictedActions.Add(ActionDefinitions.Id.PowerNoCost);
+            //   //     Definition.RestrictedActions.Add(ActionDefinitions.Id.SpendPower);
+            //        Definition.RestrictedActions.Add(ActionDefinitions.Id.PowerMain);
+            //    //    Definition.RestrictedActions.Add(ActionDefinitions.Id.PowerNoCost);
 
-            Definition.RestrictedActions.Add(ActionDefinitions.Id.ExplorationMove);
-            Definition.RestrictedActions.Add(ActionDefinitions.Id.TacticalMove);
-        //    Definition.RestrictedActions.Add(ActionDefinitions.Id.PowerBonus);
-            Definition.RestrictedActions.Add(ActionDefinitions.Id.Cautious);
-            Definition.RestrictedActions.Add(ActionDefinitions.Id.Climb);
-            Definition.RestrictedActions.Add(ActionDefinitions.Id.DashMain);
-            Definition.RestrictedActions.Add(ActionDefinitions.Id.Jump);
-       //     Definition.RestrictedActions.Add(ActionDefinitions.Id.PowerNoCost);
-       //     Definition.RestrictedActions.Add(ActionDefinitions.Id.SpendPower);
-            Definition.RestrictedActions.Add(ActionDefinitions.Id.PowerMain);
-        //    Definition.RestrictedActions.Add(ActionDefinitions.Id.PowerNoCost);
 
+            Definition.ForbiddenActions.Add(ActionDefinitions.Id.PowerNoCost);
+            Definition.ForbiddenActions.Add(ActionDefinitions.Id.SpendPower);
+          //  Definition.ForbiddenActions.Add(ActionDefinitions.Id.PowerMain);
+            Definition.ForbiddenActions.Add(ActionDefinitions.Id.PowerNoCost);
+            Definition.ForbiddenActions.Add(ActionDefinitions.Id.PowerBonus);
+
+            Definition.ForbiddenActions.Add(ActionDefinitions.Id.CastMain);
+            Definition.ForbiddenActions.Add(ActionDefinitions.Id.CastBonus);
+            Definition.ForbiddenActions.Add(ActionDefinitions.Id.CastReaction);
+            Definition.ForbiddenActions.Add(ActionDefinitions.Id.CastNoCost);
         }
 
         public static FeatureDefinitionActionAffinity CreateAndAddToDB(string name, string guid)
@@ -502,7 +511,7 @@ namespace SolastaDruidClass
         {
             Definition.GuiPresentation.Title = "Feature/&WildShapePower_AlphaWolfBuilderTitle";
             Definition.GuiPresentation.Description = "Feature/&WildShapePower_AlphaWolfBuilderDescription";
-            
+            Definition.SetShortTitleOverride(Definition.GuiPresentation.Title);
             Definition.GuiPresentation.SetSpriteReference(DatabaseHelper.MonsterDefinitions.AlphaWolf.GuiPresentation.SpriteReference);
             Definition.SetOverriddenPower(WildShapePowerBuilder.WildShapePower);
 
@@ -527,7 +536,7 @@ namespace SolastaDruidClass
             Definition.GuiPresentation.Title = "Feature/&WildShapePower_BadlandsspiderBuilderTitle";
             Definition.GuiPresentation.Description = "Feature/&WildShapePower_BadlandsspiderBuilderDescription";
             Definition.GuiPresentation.SetSpriteReference(DatabaseHelper.MonsterDefinitions.BadlandsSpider.GuiPresentation.SpriteReference);
-
+            Definition.SetShortTitleOverride(Definition.GuiPresentation.Title);
 
             Definition.EffectDescription.EffectForms[0].SummonForm.SetMonsterDefinitionName(WildShaped_BadlandsSpiderBuilder.WildShaped_BadlandsSpider.Name);
             Definition.EffectDescription.DurationParameter = (2);
@@ -550,7 +559,7 @@ namespace SolastaDruidClass
             Definition.GuiPresentation.Title = "Feature/&WildShapePower_BlackBearBuilderTitle";
             Definition.GuiPresentation.Description = "Feature/&WildShapePower_BlackBearBuilderDescription";
             Definition.GuiPresentation.SetSpriteReference(DatabaseHelper.MonsterDefinitions.BlackBear.GuiPresentation.SpriteReference);
-
+            Definition.SetShortTitleOverride(Definition.GuiPresentation.Title);
 
             Definition.EffectDescription.EffectForms[0].SummonForm.SetMonsterDefinitionName(WildShaped_BlackBearBuilder.WildShaped_BlackBear.Name);
             Definition.EffectDescription.DurationParameter = (2);
@@ -572,7 +581,7 @@ namespace SolastaDruidClass
             Definition.GuiPresentation.Title = "Feature/&WildShapePower_DirewolfBuilderTitle";
             Definition.GuiPresentation.Description = "Feature/&WildShapePower_DirewolfBuilderDescription";
             Definition.GuiPresentation.SetSpriteReference(DatabaseHelper.MonsterDefinitions.Direwolf.GuiPresentation.SpriteReference);
-
+            Definition.SetShortTitleOverride(Definition.GuiPresentation.Title);
             Definition.SetOverriddenPower(WildShapePower_AlphaWolfBuilder.WildShapePower_AlphaWolf);
 
             Definition.EffectDescription.EffectForms[0].SummonForm.SetMonsterDefinitionName(WildShaped_DirewolfBuilder.WildShaped_Direwolf.Name);
@@ -597,7 +606,7 @@ namespace SolastaDruidClass
             Definition.GuiPresentation.Title = "Feature/&WildShapePower_Giant_EagleBuilderTitle";
             Definition.GuiPresentation.Description = "Feature/&WildShapePower_Giant_EagleBuilderDescription";
             Definition.GuiPresentation.SetSpriteReference(DatabaseHelper.MonsterDefinitions.Giant_Eagle.GuiPresentation.SpriteReference);
-
+            Definition.SetShortTitleOverride(Definition.GuiPresentation.Title);
 
             Definition.EffectDescription.EffectForms[0].SummonForm.SetMonsterDefinitionName(WildShaped_Giant_EagleBuilder.WildShaped_Giant_Eagle.Name);
             Definition.EffectDescription.DurationParameter = (4);
@@ -620,7 +629,7 @@ namespace SolastaDruidClass
             Definition.GuiPresentation.Title = "Feature/&WildShapePower_BrownBearBuilderTitle";
             Definition.GuiPresentation.Description = "Feature/&WildShapePower_BrownBearBuilderDescription";
             Definition.GuiPresentation.SetSpriteReference(DatabaseHelper.MonsterDefinitions.BrownBear.GuiPresentation.SpriteReference);
-
+            Definition.SetShortTitleOverride(Definition.GuiPresentation.Title);
             Definition.SetOverriddenPower(WildShapePower_BlackBearBuilder.WildShapePower_BlackBear);
             Definition.EffectDescription.EffectForms[0].SummonForm.SetMonsterDefinitionName(WildShaped_BrownBearBuilder.WildShaped_BrownBear.Name);
             Definition.EffectDescription.DurationParameter = (4);
@@ -643,7 +652,7 @@ namespace SolastaDruidClass
         {
             Definition.GuiPresentation.Title = "Feature/&BeastSpellsConditionTitle";
             Definition.GuiPresentation.Description = "Feature/&BeastSpellsConditionDescription";
-
+             
 
             Definition.SetAllowMultipleInstances(false);
             Definition.SetDurationType(RuleDefinitions.DurationType.Dispelled);
@@ -688,7 +697,7 @@ namespace SolastaDruidClass
             Definition.GuiPresentation.Title = "Feature/&WildShapePower_Direwolf_BeastSpellsBuilderTitle";
             Definition.GuiPresentation.Description = "Feature/&WildShapePower_Direwolf_BeastSpellsBuilderDescription";
             Definition.GuiPresentation.SetSpriteReference(DatabaseHelper.MonsterDefinitions.Direwolf.GuiPresentation.SpriteReference);
-
+            Definition.SetShortTitleOverride(Definition.GuiPresentation.Title);
 
             Definition.SetOverriddenPower(WildShapePower_DirewolfBuilder.WildShapePower_Direwolf);
 
@@ -714,7 +723,7 @@ namespace SolastaDruidClass
             Definition.GuiPresentation.Title = "Feature/&WildShapePower_Giant_Eagle_BeastSpellsBuilderTitle";
             Definition.GuiPresentation.Description = "Feature/&WildShapePower_Giant_Eagle_BeastSpellsBuilderDescription";
             Definition.GuiPresentation.SetSpriteReference(DatabaseHelper.MonsterDefinitions.Giant_Eagle.GuiPresentation.SpriteReference);
-
+            Definition.SetShortTitleOverride(Definition.GuiPresentation.Title);
             Definition.SetOverriddenPower(WildShapePower_Giant_EagleBuilder.WildShapePower_Giant_Eagle);
 
             Definition.EffectDescription.EffectForms[0].SummonForm.SetMonsterDefinitionName(WildShaped_Giant_EagleBuilder.WildShaped_Giant_Eagle.Name);
