@@ -1,6 +1,8 @@
 # SolastaDruidClass
 
-Mod to add Druid (with SRD circle of land) to Solasta. 
+Mod to add Druid (with SRD circle of land) to Solasta. It's more jury-rigged/jank than most because of wildshapes so it's possible to slightly abuse/unbalance so that's for the player to limit rather than the mod.
+
+Think of it as a intermediate beta version of the druid class until somebody more competent gets around to it.
 
 There's 3 circles, Land, and two homebrew Circle of Spirit Shifting (Shifters) and Circle of Rift Wanderers (Wanderers). Shifters get melee boosts as an alternative to wildshapes and is mechanically a mix between Moon and Stars subclass. Wanderer gets a spirit that focuses on movement and is mechanically similar to the Wildfire subclass (which  focuses on fire) with a bit of the features of Stars subclass at higher levels.
 
