@@ -2,7 +2,7 @@
 
 Mod to add Druid (with SRD circle of land) to Solasta. Should work as intended but needs more circles and spells. wildshape works but isnt a perfect implemention, the caster is invincible and hidden from sight with limited actions not transformed, that means damage isn't carried over and requires two methods for dismissing wildshapes, one when the beast is alive and one where the beast is dead. Need to look at how long the wildshapes persist for. 
 
-Might end up reworking wildshapes to work not via summons but via changing presentations / conditions (that grant temp hp and add monster attacks) so it is actually the caster on the frontline or even via proxy (seems less likely). 
+Might end up reworking wildshapes to work not via summons but via changing presentations / conditions (that grant temp hp and add monster attacks) so it is actually the caster on the frontline or even via proxy (seems less likely). Manipulation of character and monster presentations would be needed and I'm not sure they are compatible
 
 interruptionDamageThreshold might be key if using condition based approach
 
