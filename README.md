@@ -21,3 +21,5 @@ Homebrew subclass features are a mix and match of official subclass features tha
 ******************
 
 Might end up reworking wildshapes to work not via summons but via changing presentations / conditions (that grant temp hp and add monster attacks) so it is actually the caster on the frontline or even via proxy (seems less likely). Manipulation of character and monster presentations would be needed and I'm not sure they are compatible. The `forcedbeard` of belt of dwarvenkind and `featuredefinitioncharacterpresentation` could be a template to follow. it would require `rulesetcharacterhero` patch but it should be possible for people more comfortable with patching. `interruptionDamageThreshold` might be key for ending wildshape if using condition based approach
+
+Any help or advice would be appreciated. 
