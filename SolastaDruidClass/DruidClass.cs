@@ -10,7 +10,7 @@ namespace SolastaDruidClass
 {
     internal class DruidClassBuilder : CharacterClassDefinitionBuilder
     {
-        const string DruidClassName = "Druid";
+        const string DruidClassName = "DHDruid";
         const string DruidClassGuid = "a2112af0-636f-4b72-acdc-07c921bcea6d";
         const string DruidClassSubclassesGuid = "46ae0591-296d-4f6c-80b0-4e198c999076";
 
