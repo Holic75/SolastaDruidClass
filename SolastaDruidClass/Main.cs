@@ -27,13 +27,14 @@ namespace SolastaDruidClass
         {
             try
             {
+                var assembly = Assembly.GetExecutingAssembly();
+
                 Logger = modEntry.Logger;
 
-                Mod = new ModManager<Core, Settings>();
-                Menu = new MenuManager();
-                modEntry.OnToggle = OnToggle;
-
                 Translations.Load(MOD_FOLDER);
+
+                Mod = new ModManager<Core, Settings>();
+                Mod.Enable(modEntry, assembly);
             }
             catch (Exception ex)
             {
@@ -44,27 +45,9 @@ namespace SolastaDruidClass
             return true;
         }
 
-        static bool OnToggle(UnityModManager.ModEntry modEntry, bool enabled)
-        {
-            if (enabled)
-            {
-                Assembly assembly = Assembly.GetExecutingAssembly();
-                Mod.Enable(modEntry, assembly);
-                Menu.Enable(modEntry, assembly);
-            }
-            else
-            {
-                Menu.Disable(modEntry);
-                Mod.Disable(modEntry, false);
-                ReflectionCache.Clear();
-            }
-            return true;
-        }
-
         internal static void OnGameReady()
         {
             DruidClassBuilder.BuildAndAddClassToDB();
-			
         }
     }
 }
