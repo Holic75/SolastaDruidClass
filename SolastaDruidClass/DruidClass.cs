@@ -111,7 +111,7 @@ namespace SolastaDruidClass
 
             // Proficiencies
             // Armor: light armor, medium armor, shields (druids will not wear armor or use shields made of metal)
-            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionProficiencys.ProficiencyClericArmor, 1));
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DruidArmorProficienciesBuilder.DruidArmorProficiencies, 1));
        //     // weapon profs
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DruidProficienciesBuilder.DruidProficiencies, 1));
        //     // Saving Throws: Intelligence, Wisdom
@@ -224,6 +224,24 @@ namespace SolastaDruidClass
             => new DruidProficienciesBuilder(name, guid).AddToDB();
 
         public static FeatureDefinitionProficiency DruidProficiencies = CreateAndAddToDB(DruidProficienciesName, DruidProficienciesGuid);
+    }
+    internal class DruidArmorProficienciesBuilder : BaseDefinitionBuilder<FeatureDefinitionProficiency>
+    {
+        const string DruidArmorProficienciesName = "DruidArmorProficiencies";
+        const string DruidArmorProficienciesGuid = "eb0d5b55-b878-4828-aaca-e4aa95a2a9db";
+
+        protected DruidArmorProficienciesBuilder(string name, string guid) : base(DatabaseHelper.FeatureDefinitionProficiencys.ProficiencyClericArmor, name, guid)
+        {
+            Definition.GuiPresentation.Title = "Feat/&DruidArmorProficienciesTitle"; //Feature/&NoContentTitle
+            Definition.GuiPresentation.Description = "Feat/&DruidArmorProficienciesDescription";//Feature/&NoContentTitle
+
+
+        }
+
+        public static FeatureDefinitionProficiency CreateAndAddToDB(string name, string guid)
+            => new DruidArmorProficienciesBuilder(name, guid).AddToDB();
+
+        public static FeatureDefinitionProficiency DruidArmorProficiencies = CreateAndAddToDB(DruidArmorProficienciesName, DruidArmorProficienciesGuid);
     }
     internal class DruidClassSkillPointPoolBuilder : BaseDefinitionBuilder<FeatureDefinitionPointPool>
     {

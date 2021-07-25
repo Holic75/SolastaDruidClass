@@ -182,4 +182,6 @@ Feature/&HeatMetalConditionDescription Suffers 2D6 fire damage and has disadvant
 Feature/&HeatMetalAdditionalDamageTitle Heat Metal additional damage
 Feature/&HeatMetalAdditionalDamageDescription 2d6 fire damage
 Feature/&MetalDisadvantageTitle Heat metal disadvantage 
-Feature/&MetalDisadvantageDescription  isadvantage to attack rolls
+Feature/&MetalDisadvantageDescription  Disadvantage to attack rolls
+Feat/&DruidArmorProficienciesTitle Druid Armor Proficiencies
+Feat/&DruidArmorProficienciesDescription Light Armor, Medium Armor, Shield
