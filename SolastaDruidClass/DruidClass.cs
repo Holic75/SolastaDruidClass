@@ -340,13 +340,20 @@ namespace SolastaDruidClass
             DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.AnnoyingBee);    // added solasta's cantrips to give more than 3 srd options
             DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.ShadowArmor);
             DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.ShadowDagger);
-           // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.Gust);
-           // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.shapewater);
-           // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.controlflames);
-           // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.moldearth);     // non srd cantrips
-           // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.thornwhip);
-           // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.thunderclap);
-           // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.primalsavgery);
+            // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.Gust);
+            // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.shapewater);
+            // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.controlflames);
+            // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.moldearth);     // non srd cantrips
+            // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.thornwhip);
+            // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.thunderclap);
+            // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.primalsavgery);
+
+            SpellDefinition shillelagh = DatabaseRepository.GetDatabase<SpellDefinition>().TryGetElement("ShillelaghSpell", "8ccfb62d-5119-4a1c-afc4-042e18fb02ca");
+
+            if (shillelagh != null)
+            {
+                DruidSpell_Cantrips.Spells.Add(shillelagh);
+            }
 
             SpellListDefinition.SpellsByLevelDuplet DruidSpell_level_1 = new SpellListDefinition.SpellsByLevelDuplet();
             DruidSpell_level_1.Spells = new List<SpellDefinition>();
