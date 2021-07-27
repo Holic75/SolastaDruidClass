@@ -340,6 +340,13 @@ namespace SolastaDruidClass
            // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.thunderclap);
            // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.primalsavgery);
 
+            SpellDefinition shillelagh = DatabaseRepository.GetDatabase<SpellDefinition>().TryGetElement("ShillelaghSpell", "8ccfb62d-5119-4a1c-afc4-042e18fb02ca");
+
+            if (shillelagh != null)
+            {
+                DruidSpell_Cantrips.Spells.Add(shillelagh);
+            }
+
             SpellListDefinition.SpellsByLevelDuplet DruidSpell_level_1 = new SpellListDefinition.SpellsByLevelDuplet();
             DruidSpell_level_1.Spells = new List<SpellDefinition>();
             DruidSpell_level_1.Level = 1;
