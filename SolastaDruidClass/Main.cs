@@ -47,7 +47,12 @@ namespace SolastaDruidClass
 
         internal static void OnGameReady()
         {
+
+            SummoningWildshapes.Create();
             DruidClassBuilder.BuildAndAddClassToDB();
         }
+
+        public static Guid ModGuidNamespace = new Guid("4e224e9c-dbee-44a0-b6b3-47bff8be8ec0");
+
     }
 }

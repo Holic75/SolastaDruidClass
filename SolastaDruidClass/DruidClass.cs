@@ -130,7 +130,8 @@ namespace SolastaDruidClass
             // druid casting
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DruidCastingAbilityBuilder.DruidCastingAbility, 1));
             // wild shape 
-            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(WildshapeFeatureSetBuilder.WildshapeFeatureSet,2));
+    //        Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(WildshapeFeatureSetBuilder.WildshapeFeatureSet,2));
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(SummoningWildshapes.WildshapeFeatureSet_level_2, 2));
 
             //Subclass circle at level 2
             var subclassChoicesGuiPresentation = new GuiPresentation();
@@ -141,13 +142,17 @@ namespace SolastaDruidClass
 
             // wildshape improvement at level 4 and ability improvement
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionFeatureSets.FeatureSetAbilityScoreChoice, 4));
-           Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(Wildshape_level4FeatureSetBuilder.Wildshape_level4FeatureSet, 4));
-          
+    //      Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(Wildshape_level4FeatureSetBuilder.Wildshape_level4FeatureSet, 4));
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(SummoningWildshapes.WildshapeFeatureSet_level_4, 4));
+
             //circle at level 6
 
             // wildshape improvement at level 8 and ability improvement
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionFeatureSets.FeatureSetAbilityScoreChoice, 8));
-            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(Wildshape_level8FeatureSetBuilder.Wildshape_level8FeatureSet, 8));
+    //        Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(Wildshape_level8FeatureSetBuilder.Wildshape_level8FeatureSet, 8));
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(SummoningWildshapes.WildshapeFeatureSet_level_8, 8));
+
+
 
             //circle at level 10
 
@@ -159,8 +164,11 @@ namespace SolastaDruidClass
             // ability improvement at 16
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionFeatureSets.FeatureSetAbilityScoreChoice, 16));
             // 18th	 	Beast Spells
-            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(BeastSpellsFeatureSetBuilder.BeastSpellsFeatureSet, 18));
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionMagicAffinitys.MagicAffinityBattleMagic, 18));
+    //       Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(BeastSpellsFeatureSetBuilder.BeastSpellsFeatureSet, 18));
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(SummoningWildshapes.BeastSpellsFeatureSet, 18));
+
+
             // 19th	Ability Score Improvement  -
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionFeatureSets.FeatureSetAbilityScoreChoice, 19));
              // 20th	Archdruid                  -
