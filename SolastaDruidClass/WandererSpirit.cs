@@ -505,7 +505,7 @@ namespace SolastaDruidClass
 
 
             SummonForm summonprotector = new SummonForm();
-          //  summonprotector.SetMonsterDefinitionName(DatabaseHelper.MonsterDefinitions.WindSnake.Name);
+            //summonprotector.SetMonsterDefinitionName(DatabaseHelper.MonsterDefinitions.Poisonous_Snake.Name);
             summonprotector.SetMonsterDefinitionName(WandererSpiritBuilder.WandererSpirit.Name);
             summonprotector.SetSummonType(SummonForm.Type.Creature);
             summonprotector.SetNumber(1);

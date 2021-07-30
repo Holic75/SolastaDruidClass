@@ -79,9 +79,10 @@ namespace SolastaDruidClass
             newEffectDescription.SetTargetType(RuleDefinitions.TargetType.Self);
             newEffectDescription.DurationType = RuleDefinitions.DurationType.Minute;
             newEffectDescription.DurationParameter = 10;
-        
-        
-        
+            newEffectDescription.SetEffectParticleParameters(DatabaseHelper.SpellDefinitions.Aid.EffectDescription.EffectParticleParameters);
+
+
+
             Definition.SetEffectDescription(newEffectDescription);
 
 
@@ -114,6 +115,9 @@ namespace SolastaDruidClass
 
             Definition.SetDurationType(RuleDefinitions.DurationType.Minute);
             Definition.SetDurationParameter(1);
+
+            Definition.SetCharacterShaderReference(DatabaseHelper.MonsterDefinitions.Fire_Jester.MonsterPresentation.CustomShaderReference);
+            Definition.SetTimeToWaitBeforeRemovingShader(1);
         }
 
         public static ConditionDefinition CreateAndAddToDB(string name, string guid)
@@ -166,12 +170,13 @@ namespace SolastaDruidClass
             newEffectDescription.SetTargetType(RuleDefinitions.TargetType.Self);
             newEffectDescription.DurationType = RuleDefinitions.DurationType.Minute;
             newEffectDescription.DurationParameter = 10;
+            newEffectDescription.SetEffectParticleParameters(DatabaseHelper.SpellDefinitions.Aid.EffectDescription.EffectParticleParameters);
 
 
 
             Definition.SetEffectDescription(newEffectDescription);
 
-
+           
         }
 
         public static FeatureDefinitionPower CreateAndAddToDB(string name, string guid)
@@ -200,6 +205,9 @@ namespace SolastaDruidClass
 
             Definition.SetDurationType(RuleDefinitions.DurationType.Minute);
             Definition.SetDurationParameter(1);
+         
+            Definition.SetCharacterShaderReference(DatabaseHelper.MonsterDefinitions.SpectralDragon_Magister.MonsterPresentation.CustomShaderReference);
+            Definition.SetTimeToWaitBeforeRemovingShader(1);
         }
 
         public static ConditionDefinition CreateAndAddToDB(string name, string guid)
@@ -256,7 +264,7 @@ namespace SolastaDruidClass
             newEffectDescription.DurationType = RuleDefinitions.DurationType.Minute;
             newEffectDescription.SetTargetParameter(2);
             newEffectDescription.DurationParameter = 1;
-
+            newEffectDescription.SetEffectParticleParameters(DatabaseHelper.SpellDefinitions.SpiderClimb.EffectDescription.EffectParticleParameters);
 
 
             Definition.SetEffectDescription(newEffectDescription);
@@ -311,6 +319,9 @@ namespace SolastaDruidClass
 
 
             Definition.RecurrentEffectForms.Add(healingEffect);
+            //  Definition.SetCharacterShaderReference(DatabaseHelper.MonsterDefinitions.WizardTower_Servant_NPC_Variant.MonsterPresentation.CustomShaderReference);
+           // Definition.SetConditionParticleReference(DatabaseHelper.ConditionDefinitions.ConditionAided.ConditionParticle[0]);
+            Definition.SetTimeToWaitBeforeRemovingShader(1);
         }
 
         public static ConditionDefinition CreateAndAddToDB(string name, string guid)
@@ -380,6 +391,7 @@ namespace SolastaDruidClass
             newEffectDescription.SetTargetType(RuleDefinitions.TargetType.Self);
             newEffectDescription.DurationType = RuleDefinitions.DurationType.Minute;
             newEffectDescription.DurationParameter = 10;
+            newEffectDescription.SetEffectParticleParameters(DatabaseHelper.SpellDefinitions.Aid.EffectDescription.EffectParticleParameters);
 
 
 
@@ -457,18 +469,19 @@ namespace SolastaDruidClass
             newEffectDescription.SetTargetType(RuleDefinitions.TargetType.Sphere);
             newEffectDescription.SetTargetSide(RuleDefinitions.Side.Ally);
             newEffectDescription.DurationType = RuleDefinitions.DurationType.Minute;
+            newEffectDescription.SetEffectParticleParameters(DatabaseHelper.SpellDefinitions.Aid.EffectDescription.EffectParticleParameters);
 
 
             //Add to our new effect
-       //    EffectDescription newEffectDescription = new EffectDescription();
-       //    newEffectDescription.Copy(Definition.EffectDescription);
-       //    newEffectDescription.EffectForms.Clear();
-       //    newEffectDescription.EffectForms.Add();
-       //    newEffectDescription.EffectForms.Add();
-       //    newEffectDescription.SetRangeParameter(1);
-       //    newEffectDescription.SetTargetType(RuleDefinitions.TargetType.Sphere);
-       //    newEffectDescription.DurationType = RuleDefinitions.DurationType.Minute;
-       //    newEffectDescription.DurationParameter = 10;
+            //    EffectDescription newEffectDescription = new EffectDescription();
+            //    newEffectDescription.Copy(Definition.EffectDescription);
+            //    newEffectDescription.EffectForms.Clear();
+            //    newEffectDescription.EffectForms.Add();
+            //    newEffectDescription.EffectForms.Add();
+            //    newEffectDescription.SetRangeParameter(1);
+            //    newEffectDescription.SetTargetType(RuleDefinitions.TargetType.Sphere);
+            //    newEffectDescription.DurationType = RuleDefinitions.DurationType.Minute;
+            //    newEffectDescription.DurationParameter = 10;
 
 
 
@@ -547,6 +560,8 @@ namespace SolastaDruidClass
             newEffectDescription.SetTargetType(RuleDefinitions.TargetType.Sphere);
             newEffectDescription.SetTargetSide(RuleDefinitions.Side.Ally);
             newEffectDescription.DurationType = RuleDefinitions.DurationType.Minute;
+            newEffectDescription.SetEffectParticleParameters(DatabaseHelper.SpellDefinitions.Aid.EffectDescription.EffectParticleParameters);
+
 
 
             Definition.SetEffectDescription(newEffectDescription);

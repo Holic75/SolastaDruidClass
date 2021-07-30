@@ -6,6 +6,8 @@ using UnityModManagerNet;
 using SolastaModApi;
 using ModKit;
 using ModKit.Utility;
+using System.Collections.Generic;
+
 
 namespace SolastaDruidClass
 {
@@ -48,6 +50,37 @@ namespace SolastaDruidClass
         internal static void OnGameReady()
         {
             DruidClassBuilder.BuildAndAddClassToDB();
+
+
+            CharacterClassDefinition Druid = DatabaseRepository.GetDatabase<CharacterClassDefinition>().TryGetElement("DHDruid", "a2112af0-636f-4b72-acdc-07c921bcea6d");
+    
+          // ItemDefinition[] itemlist = DatabaseRepository.GetDatabase<ItemDefinition>().GetAllElements();
+
+            
+
+            var itemlist = new List<ItemDefinition>
+            {
+            DatabaseHelper.ItemDefinitions.WandOfLightningBolts,
+            //DatabaseHelper.ItemDefinitions.StaffOfMetis,              // devs removed class restrictions for HF 1.1.11 so not needed now
+            DatabaseHelper.ItemDefinitions.StaffOfHealing,
+            DatabaseHelper.ItemDefinitions.StaffOfFire,
+            DatabaseHelper.ItemDefinitions.GreenmageArmor,
+            DatabaseHelper.ItemDefinitions.ArcaneShieldstaff,
+            DatabaseHelper.ItemDefinitions.WizardClothes_Alternate
+            };
+
+            foreach (ItemDefinition item in itemlist)
+            {
+               // if (item.RequiredAttunementClasses != null)
+               // {
+                    item.RequiredAttunementClasses.Add(Druid);
+               // };
+            };
+
+
+
+
+
         }
     }
 }

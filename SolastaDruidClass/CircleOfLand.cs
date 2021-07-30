@@ -109,7 +109,7 @@ namespace SolastaDruidClass
         const string LandsStrideFeatureSetName = "LandsStrideFeatureSet";
         const string LandsStrideFeatureSetGuid = "efad62ce-35f4-4906-8459-990e19f154a5";
 
-        protected LandsStrideFeatureSetBuilder(string name, string guid) : base(DatabaseHelper.FeatureDefinitionFeatureSets.TerrainTypeAffinityRangerNaturalExplorerChoice, name, guid)
+        protected LandsStrideFeatureSetBuilder(string name, string guid) : base(DatabaseHelper.FeatureDefinitionFeatureSets.FeatureSetGreenmageWardenOfTheForest, name, guid)
         {
             Definition.GuiPresentation.Title = "Feat/&LandsStrideFeatureSetTitle";
             Definition.GuiPresentation.Description = "Feat/&LandsStrideFeatureSetDescription";
@@ -132,7 +132,7 @@ namespace SolastaDruidClass
         const string NaturesWardFeatureSetName = "NaturesWardFeatureSet";
         const string NaturesWardFeatureSetGuid = "d28098d3-5c9c-4e56-80b6-7c5ba381a42e";
 
-        protected NaturesWardFeatureSetBuilder(string name, string guid) : base(DatabaseHelper.FeatureDefinitionFeatureSets.TerrainTypeAffinityRangerNaturalExplorerChoice, name, guid)
+        protected NaturesWardFeatureSetBuilder(string name, string guid) : base(DatabaseHelper.FeatureDefinitionFeatureSets.FeatureSetGreenmageWardenOfTheForest, name, guid)
         {
             Definition.GuiPresentation.Title = "Feat/&NaturesWardFeatureSetTitle";
             Definition.GuiPresentation.Description = "Feat/&NaturesWardFeatureSetDescription";
@@ -352,9 +352,9 @@ namespace SolastaDruidClass
            });
 
 
-            CharacterClassDefinition Druid = DatabaseRepository.GetDatabase<CharacterClassDefinition>().TryGetElement("Druid", "a2112af0-636f-4b72-acdc-07c921bcea6d");
+            CharacterClassDefinition Druid = DatabaseRepository.GetDatabase<CharacterClassDefinition>().TryGetElement("DHDruid", "a2112af0-636f-4b72-acdc-07c921bcea6d");
 
-            //const string DruidClassName = "Druid";
+            //const string DruidClassName = "DHDruid";
             // const string DruidClassGuid = "a2112af0-636f-4b72-acdc-07c921bcea6d";
             Definition.SetSpellcastingClass(Druid);
             Definition.AutoPreparedSpellsGroups.Clear();
@@ -420,9 +420,9 @@ namespace SolastaDruidClass
            });
 
 
-            CharacterClassDefinition Druid = DatabaseRepository.GetDatabase<CharacterClassDefinition>().TryGetElement("Druid", "a2112af0-636f-4b72-acdc-07c921bcea6d");
+            CharacterClassDefinition Druid = DatabaseRepository.GetDatabase<CharacterClassDefinition>().TryGetElement("DHDruid", "a2112af0-636f-4b72-acdc-07c921bcea6d");
 
-            //const string DruidClassName = "Druid";
+            //const string DruidClassName = "DHDruid";
             // const string DruidClassGuid = "a2112af0-636f-4b72-acdc-07c921bcea6d";
             Definition.SetSpellcastingClass(Druid);
             Definition.AutoPreparedSpellsGroups.Clear();
@@ -488,9 +488,9 @@ namespace SolastaDruidClass
            });
 
 
-            CharacterClassDefinition Druid = DatabaseRepository.GetDatabase<CharacterClassDefinition>().TryGetElement("Druid", "a2112af0-636f-4b72-acdc-07c921bcea6d");
+            CharacterClassDefinition Druid = DatabaseRepository.GetDatabase<CharacterClassDefinition>().TryGetElement("DHDruid", "a2112af0-636f-4b72-acdc-07c921bcea6d");
 
-            //const string DruidClassName = "Druid";
+            //const string DruidClassName = "DHDruid";
             // const string DruidClassGuid = "a2112af0-636f-4b72-acdc-07c921bcea6d";
             Definition.SetSpellcastingClass(Druid);
             Definition.AutoPreparedSpellsGroups.Clear();
@@ -556,9 +556,9 @@ namespace SolastaDruidClass
            });
 
 
-            CharacterClassDefinition Druid = DatabaseRepository.GetDatabase<CharacterClassDefinition>().TryGetElement("Druid", "a2112af0-636f-4b72-acdc-07c921bcea6d");
+            CharacterClassDefinition Druid = DatabaseRepository.GetDatabase<CharacterClassDefinition>().TryGetElement("DHDruid", "a2112af0-636f-4b72-acdc-07c921bcea6d");
 
-            //const string DruidClassName = "Druid";
+            //const string DruidClassName = "DHDruid";
             // const string DruidClassGuid = "a2112af0-636f-4b72-acdc-07c921bcea6d";
             Definition.SetSpellcastingClass(Druid);
             Definition.AutoPreparedSpellsGroups.Clear();
@@ -624,9 +624,9 @@ namespace SolastaDruidClass
            });
 
 
-            CharacterClassDefinition Druid = DatabaseRepository.GetDatabase<CharacterClassDefinition>().TryGetElement("Druid", "a2112af0-636f-4b72-acdc-07c921bcea6d");
+            CharacterClassDefinition Druid = DatabaseRepository.GetDatabase<CharacterClassDefinition>().TryGetElement("DHDruid", "a2112af0-636f-4b72-acdc-07c921bcea6d");
 
-            //const string DruidClassName = "Druid";
+            //const string DruidClassName = "DHDruid";
             // const string DruidClassGuid = "a2112af0-636f-4b72-acdc-07c921bcea6d";
             Definition.SetSpellcastingClass(Druid);
             Definition.AutoPreparedSpellsGroups.Clear();
@@ -693,9 +693,9 @@ namespace SolastaDruidClass
            });
 
 
-            CharacterClassDefinition Druid = DatabaseRepository.GetDatabase<CharacterClassDefinition>().TryGetElement("Druid", "a2112af0-636f-4b72-acdc-07c921bcea6d");
+            CharacterClassDefinition Druid = DatabaseRepository.GetDatabase<CharacterClassDefinition>().TryGetElement("DHDruid", "a2112af0-636f-4b72-acdc-07c921bcea6d");
 
-            //const string DruidClassName = "Druid";
+            //const string DruidClassName = "DHDruid";
             // const string DruidClassGuid = "a2112af0-636f-4b72-acdc-07c921bcea6d";
             Definition.SetSpellcastingClass(Druid);
             Definition.AutoPreparedSpellsGroups.Clear();
@@ -761,9 +761,9 @@ namespace SolastaDruidClass
            });
 
 
-            CharacterClassDefinition Druid = DatabaseRepository.GetDatabase<CharacterClassDefinition>().TryGetElement("Druid", "a2112af0-636f-4b72-acdc-07c921bcea6d");
+            CharacterClassDefinition Druid = DatabaseRepository.GetDatabase<CharacterClassDefinition>().TryGetElement("DHDruid", "a2112af0-636f-4b72-acdc-07c921bcea6d");
 
-            //const string DruidClassName = "Druid";
+            //const string DruidClassName = "DHDruid";
             // const string DruidClassGuid = "a2112af0-636f-4b72-acdc-07c921bcea6d";
             Definition.SetSpellcastingClass(Druid);
             Definition.AutoPreparedSpellsGroups.Clear();
@@ -829,9 +829,9 @@ namespace SolastaDruidClass
            });
 
 
-            CharacterClassDefinition Druid = DatabaseRepository.GetDatabase<CharacterClassDefinition>().TryGetElement("Druid", "a2112af0-636f-4b72-acdc-07c921bcea6d");
+            CharacterClassDefinition Druid = DatabaseRepository.GetDatabase<CharacterClassDefinition>().TryGetElement("DHDruid", "a2112af0-636f-4b72-acdc-07c921bcea6d");
 
-            //const string DruidClassName = "Druid";
+            //const string DruidClassName = "DHDruid";
             // const string DruidClassGuid = "a2112af0-636f-4b72-acdc-07c921bcea6d";
             Definition.SetSpellcastingClass(Druid);
             Definition.AutoPreparedSpellsGroups.Clear();

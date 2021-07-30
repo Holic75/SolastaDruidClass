@@ -168,9 +168,9 @@ namespace SolastaDruidClass
            });
 
 
-                CharacterClassDefinition Druid = DatabaseRepository.GetDatabase<CharacterClassDefinition>().TryGetElement("Druid", "a2112af0-636f-4b72-acdc-07c921bcea6d");
+                CharacterClassDefinition Druid = DatabaseRepository.GetDatabase<CharacterClassDefinition>().TryGetElement("DHDruid", "a2112af0-636f-4b72-acdc-07c921bcea6d");
 
-                //const string DruidClassName = "Druid";
+                //const string DruidClassName = "DHDruid";
                 // const string DruidClassGuid = "a2112af0-636f-4b72-acdc-07c921bcea6d";
                 Definition.SetSpellcastingClass(Druid);
                 Definition.AutoPreparedSpellsGroups.Clear();
