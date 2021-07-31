@@ -450,10 +450,20 @@ namespace SolastaDruidClass
 
             // adding spells from other mods
             SpellDefinition shillelagh = DatabaseRepository.GetDatabase<SpellDefinition>().TryGetElement("ShillelaghSpell", "8ccfb62d-5119-4a1c-afc4-042e18fb02ca");
+            SpellDefinition heat_metal = DatabaseRepository.GetDatabase<SpellDefinition>().TryGetElement("HeatMetalSpell", "8a8d6cdf-51c9-45bd-893b-cbaf278c8f31");
+            SpellDefinition call_Lightning = DatabaseRepository.GetDatabase<SpellDefinition>().TryGetElement("CallLightningSpell", "746fbfa7-b9e7-4b07-986f-31d1e47adc7e");
 
             if (shillelagh != null)
             {
                 DruidSpell_Cantrips.Spells.Add(shillelagh);
+            }
+            if (heat_metal != null)
+            {
+                DruidSpell_level_2.Spells.Add(heat_metal);
+            }
+            if (call_Lightning != null)
+            {
+                DruidSpell_level_3.Spells.Add(call_Lightning);
             }
 
             Definition.SpellsByLevel.Clear();

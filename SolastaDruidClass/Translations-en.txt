@@ -185,3 +185,105 @@ Feature/&MetalDisadvantageTitle Heat metal disadvantage
 Feature/&MetalDisadvantageDescription  Disadvantage to attack rolls
 Feat/&DruidArmorProficienciesTitle Druid Armor Proficiencies
 Feat/&DruidArmorProficienciesDescription Light Armor, Medium Armor, Shield
+Feature/&DH_WildshapeFeatureSet_level_2_Title WildShape
+Feature/&DH_WildshapeFeatureSet_level_2_Description you can use your action to magically assume the shape of a beast that you have seen before. You can use this feature twice. You regain expended uses when you finish a short or long rest.Your druid level determines the beasts you can transform into.
+Feature/&DH_WildshapeFeatureSet_level_4_Title Improved Wildshapes
+Feature/&DH_WildshapeFeatureSet_level_4_Description Alpha-Wolf and Badlands Spider
+Feature/&DH_WildshapeFeatureSet_level_8_Title Improved Wildshapes
+Feature/&DH_WildshapeFeatureSet_level_8_Description Direwolf and Giant Eagle
+Feature/&DH_BeastSpellsFeatureSet_Title Beast Spells
+Feature/&DH_BeastSpellsFeatureSet_Description You can now cast while wildshaped
+Feature/&DH_End_Wildshape_Power_Title Dismiss Wildshape (Beast Alive)
+Feature/&DH_End_Wildshape_Power_Description Return to your normal form
+Feature/&DH_End_Wildshape_DeadBeast_Power_Title End wildshape (Beast Dead)
+Feature/&DH_End_Wildshape_DeadBeast_Power_Description Return to you normal form if your wild shape has died
+Feature/&DH_Caster_Wildshaped_Condition_Title  Wildshaped
+Feature/&DH_Caster_Wildshaped_Condition_Description Druid cannot cast spells or use equipment while wildshaped
+Feature/&DH_Caster_BeastSpells_Wildshaped_Condition_Title Beast Spells Condition
+Feature/&DH_Caster_BeastSpells_Wildshaped_Condition_Description Can cast spells while in wildshape
+Feature/&DH_Wolf_Wildshape_Power_Title WildShape Wolf
+Feature/&DH_Wolf_Wildshape_Power_Description Transform into a wolf for melee
+Feature/&DH_AlphaWolf_Wildshape_Power_Title  WildShape Alpha-Wolf
+Feature/&DH_AlphaWolf_Wildshape_Power_Description Transform into an Alpha-Wolf
+Feature/&DH_BadlandsSpider_Wildshape_Power_Title WildShape Spider
+Feature/&DH_BadlandsSpider_Wildshape_Power_Description  Transform into a Badlands-Spider
+Feature/&DH_BlackBear_Wildshape_Power_Title Wildshape Black Bear
+Feature/&DH_BlackBear_Wildshape_Power_Description Transform into Black Bear
+Feature/&DH_Direwolf_Wildshape_Power_Title WildShape Direwolf
+Feature/&DH_Direwolf_Wildshape_Power_Description Transform into Direwolf
+Feature/&DH_Giant_Eagle_Wildshape_Power_Title WildShape Giant Eagle
+Feature/&DH_Giant_Eagle_Wildshape_Power_Description Transform into Giant Eagle
+Feature/&DH_BrownBear_Wildshape_Power_Title WildShape Brown Bear
+Feature/&DH_BrownBear_Wildshape_Power_Description Transform into Brown Bear
+Feature/&DH_Direwolf_BeastSpells_Wildshape_Power_Title  WildShape Direwolf (Beast Spells)
+Feature/&DH_Direwolf_BeastSpells_Wildshape_Power_Description Transform into Direwolf while retaining ability to cast spells
+Feature/&DH_Giant_Eagle_BeastSpells_Wildshape_Power_Title WildShape Giant Eagle (Beast Spells)
+Feature/&DH_Giant_Eagle_BeastSpells_Wildshape_Power_Description  Transform into Giant Eagle while retaining ability to cast spells
+Feature/&DH_BrownBear_BeastSpells_Wildshape_Power_Title WildShape Brown Bear (Beast Spells)
+Feature/&DH_BrownBear_BeastSpells_Wildshape_Power_Description  Transform into Brown Bear while retaining ability to cast spells
+Feature/&DH_Wolf_Wildshape_Form_Title  WildShape Wolf
+Feature/&DH_Wolf_Wildshape_Form_Description Transform into a wolf
+Feature/&DH_AlphaWolf_Wildshape_Form_Title  WildShape Alpha-Wolf
+Feature/&DH_AlphaWolf_Wildshape_Form_Description Transform into an Alpha-Wolf
+Feature/&DH_BadlandsSpider_Wildshape_Form_Title  WildShape Badlands-Spider
+Feature/&DH_BadlandsSpider_Wildshape_Form_Description  Transform into a Badlands-Spider
+Feature/&DH_BlackBear_Wildshape_Form_Title  Wildshape Black Bear
+Feature/&DH_BlackBear_Wildshape_Form_Description Transform into Black Bear
+Feature/&DH_Direwolf_Wildshape_Form_Title WildShape Direwolf
+Feature/&DH_Direwolf_Wildshape_Form_Description  Transform into Direwolf
+Feature/&DH_Giant_Eagle_Wildshape_Form_Title WildShape Giant Eagle
+Feature/&DH_Giant_Eagle_Wildshape_Form_Description Transform into Giant Eagle
+Feature/&DH_BrownBear_Wildshape_Form_Title WildShape Brown Bear
+Feature/&DH_BrownBear_Wildshape_Form_Description Transform into Brown Bear
+Feature/&DH_BadlandsSpider_BeastSpellsWildshape_Form_Title  WildShape Badlands-Spider
+Feature/&DH_BadlandsSpider_BeastSpellsWildshape_Form_Description  Transform into a Badlands-Spider
+Feature/&DH_Direwolf_BeastSpellsWildshape_Form_Title WildShape Direwolf
+Feature/&DH_Direwolf_BeastSpellsWildshape_Form_Description  Transform into Direwolf
+Feature/&DH_Giant_Eagle_BeastSpellsWildshape_Form_Title WildShape Giant Eagle
+Feature/&DH_Giant_Eagle_BeastSpellsWildshape_Form_Description Transform into Giant Eagle
+Feature/&DH_BrownBear_BeastSpellsWildshape_Form_Title WildShape Brown Bear
+Feature/&DH_BrownBear_BeastSpellsWildshape_Form_Description Transform into Brown Bear
+Feature/&DH_Wolf_Wildshape_Condition_Title  WildShape Wolf
+Feature/&DH_Wolf_Wildshape_Condition_Description Transform into a wolf
+Feature/&DH_AlphaWolf_Wildshape_Condition_Title  WildShape Alpha-Wolf
+Feature/&DH_AlphaWolf_Wildshape_Condition_Description Transform into an Alpha-Wolf
+Feature/&DH_BadlandsSpider_Wildshape_Condition_Title  WildShape Badlands-Spider
+Feature/&DH_BadlandsSpider_Wildshape_Condition_Description  Transform into a Badlands-Spider
+Feature/&DH_BlackBear_Wildshape_Condition_Title  Wildshape Black Bear
+Feature/&DH_BlackBear_Wildshape_Condition_Description Transform into Black Bear
+Feature/&DH_Direwolf_Wildshape_Condition_Title WildShape Direwolf
+Feature/&DH_Direwolf_Wildshape_Condition_Description  Transform into Direwolf
+Feature/&DH_Giant_Eagle_Wildshape_Condition_Title WildShape Giant Eagle
+Feature/&DH_Giant_Eagle_Wildshape_Condition_Description Transform into Giant Eagle
+Feature/&DH_BrownBear_Wildshape_Condition_Title WildShape Brown Bear
+Feature/&DH_BrownBear_Wildshape_Condition_Description Transform into Brown Bear
+Feature/&DH_BadlandsSpider_BeastSpellsWildshape_Condition_Title  WildShape Badlands-Spider
+Feature/&DH_BadlandsSpider_BeastSpellsWildshape_Condition_Description  Transform into a Badlands-Spider
+Feature/&DH_Direwolf_BeastSpellsWildshape_Condition_Title WildShape Direwolf
+Feature/&DH_Direwolf_BeastSpellsWildshape_Condition_Description  Transform into Direwolf
+Feature/&DH_Giant_Eagle_BeastSpellsWildshape_Condition_Title WildShape Giant Eagle
+Feature/&DH_Giant_Eagle_BeastSpellsWildshape_Condition_Description Transform into Giant Eagle
+Feature/&DH_BrownBear_BeastSpellsWildshape_Condition_Title WildShape Brown Bear
+Feature/&DH_BrownBear_BeastSpellsWildshape_Condition_Description Transform into Brown Bear
+Feature/&DH_Wolf_Wildshape_Power_Title  WildShape Wolf
+Feature/&DH_Wolf_Wildshape_Power_Description Transform into a wolf
+Feature/&DH_AlphaWolf_Wildshape_Power_Title  WildShape Alpha-Wolf
+Feature/&DH_AlphaWolf_Wildshape_Power_Description Transform into an Alpha-Wolf
+Feature/&DH_BadlandsSpider_Wildshape_Power_Title  WildShape Badlands-Spider
+Feature/&DH_BadlandsSpider_Wildshape_Power_Description  Transform into a Badlands-Spider
+Feature/&DH_BlackBear_Wildshape_Power_Title  Wildshape Black Bear
+Feature/&DH_BlackBear_Wildshape_Power_Description Transform into Black Bear
+Feature/&DH_Direwolf_Wildshape_Power_Title WildShape Direwolf
+Feature/&DH_Direwolf_Wildshape_Power_Description  Transform into Direwolf
+Feature/&DH_Giant_Eagle_Wildshape_Power_Title WildShape Giant Eagle
+Feature/&DH_Giant_Eagle_Wildshape_Power_Description Transform into Giant Eagle
+Feature/&DH_BrownBear_Wildshape_Power_Title WildShape Brown Bear
+Feature/&DH_BrownBear_Wildshape_Power_Description Transform into Brown Bear
+Feature/&DH_BadlandsSpider_BeastSpellsWildshape_Power_Title  WildShape Badlands-Spider
+Feature/&DH_BadlandsSpider_BeastSpellsWildshape_Power_Description  Transform into a Badlands-Spider
+Feature/&DH_Direwolf_BeastSpellsWildshape_Power_Title WildShape Direwolf
+Feature/&DH_Direwolf_BeastSpellsWildshape_Power_Description  Transform into Direwolf
+Feature/&DH_Giant_Eagle_BeastSpellsWildshape_Power_Title WildShape Giant Eagle
+Feature/&DH_Giant_Eagle_BeastSpellsWildshape_Power_Description Transform into Giant Eagle
+Feature/&DH_BrownBear_BeastSpellsWildshape_Power_Title WildShape Brown Bear
+Feature/&DH_BrownBear_BeastSpellsWildshape_Power_Description Transform into Brown Bear

@@ -49,14 +49,12 @@ namespace SolastaDruidClass
 
         internal static void OnGameReady()
         {
+            SummoningWildshapeViaPolymorph.Create();
             DruidClassBuilder.BuildAndAddClassToDB();
 
 
             CharacterClassDefinition Druid = DatabaseRepository.GetDatabase<CharacterClassDefinition>().TryGetElement("DHDruid", "a2112af0-636f-4b72-acdc-07c921bcea6d");
-    
-          // ItemDefinition[] itemlist = DatabaseRepository.GetDatabase<ItemDefinition>().GetAllElements();
 
-            
 
             var itemlist = new List<ItemDefinition>
             {
@@ -71,16 +69,19 @@ namespace SolastaDruidClass
 
             foreach (ItemDefinition item in itemlist)
             {
-               // if (item.RequiredAttunementClasses != null)
-               // {
-                    item.RequiredAttunementClasses.Add(Druid);
-               // };
+                // if (item.RequiredAttunementClasses != null)
+                // {
+                item.RequiredAttunementClasses.Add(Druid);
+                // };
             };
-
-
-
-
-
         }
+
+
+
+        public static Guid ModGuidNamespace = new Guid("4e224e9c-dbee-44a0-b6b3-47bff8be8ec0");
+        
+
     }
+
 }
+

@@ -137,7 +137,7 @@ namespace SolastaDruidClass
 
             Definition.GuiPresentation.Title = "Feat/&SummonShifterForm_BearFormTitle";
             Definition.GuiPresentation.Description = "Feat/&SummonShifterForm_BearFormDescription";
-            Definition.GuiPresentation.SetSpriteReference(DatabaseHelper.SpellDefinitions.Heroism.GuiPresentation.SpriteReference);
+            Definition.GuiPresentation.SetSpriteReference(DatabaseHelper.SpellDefinitions.Barkskin.GuiPresentation.SpriteReference);
 
             Definition.SetActivationTime(RuleDefinitions.ActivationTime.Action);
             Definition.SetRechargeRate(RuleDefinitions.RechargeRate.ChannelDivinity);
@@ -228,7 +228,7 @@ namespace SolastaDruidClass
 
             Definition.GuiPresentation.Title = "Feat/&SummonShifterForm_StagFormTitle";
             Definition.GuiPresentation.Description = "Feat/&SummonShifterForm_StagFormDescription";
-            Definition.GuiPresentation.SetSpriteReference(DatabaseHelper.SpellDefinitions.Heroism.GuiPresentation.SpriteReference);
+            Definition.GuiPresentation.SetSpriteReference(DatabaseHelper.SpellDefinitions.MassHealingWord.GuiPresentation.SpriteReference);
 
             Definition.SetActivationTime(RuleDefinitions.ActivationTime.Action);
             Definition.SetRechargeRate(RuleDefinitions.RechargeRate.ChannelDivinity);
@@ -341,7 +341,7 @@ namespace SolastaDruidClass
 
             Definition.GuiPresentation.Title = "Feat/&SummonShifterForm_WolfAndBearFormTitle";
             Definition.GuiPresentation.Description = "Feat/&SummonShifterForm_WolfAndBearFormDescription";
-            Definition.GuiPresentation.SetSpriteReference(DatabaseHelper.SpellDefinitions.Heroism.GuiPresentation.SpriteReference);
+            Definition.GuiPresentation.SetSpriteReference(DatabaseHelper.SpellDefinitions.Stoneskin.GuiPresentation.SpriteReference);
 
             Definition.SetActivationTime(RuleDefinitions.ActivationTime.Action);
             Definition.SetRechargeRate(RuleDefinitions.RechargeRate.ChannelDivinity);
@@ -418,7 +418,7 @@ namespace SolastaDruidClass
 
             Definition.GuiPresentation.Title = "Feat/&SummonShifterForm_WolfAndStagFormTitle";
             Definition.GuiPresentation.Description = "Feat/&SummonShifterForm_WolfAndStagFormDescription";
-            Definition.GuiPresentation.SetSpriteReference(DatabaseHelper.SpellDefinitions.Heroism.GuiPresentation.SpriteReference);
+            Definition.GuiPresentation.SetSpriteReference(DatabaseHelper.SpellDefinitions.Invisibility.GuiPresentation.SpriteReference);
 
             Definition.SetActivationTime(RuleDefinitions.ActivationTime.Action);
             Definition.SetRechargeRate(RuleDefinitions.RechargeRate.ChannelDivinity);
@@ -510,7 +510,7 @@ namespace SolastaDruidClass
 
             Definition.GuiPresentation.Title = "Feat/&SummonShifterForm_BearAndStagFormTitle";
             Definition.GuiPresentation.Description = "Feat/&SummonShifterForm_BearAndStagFormDescription";
-            Definition.GuiPresentation.SetSpriteReference(DatabaseHelper.SpellDefinitions.Heroism.GuiPresentation.SpriteReference);
+            Definition.GuiPresentation.SetSpriteReference(DatabaseHelper.SpellDefinitions.GreaterInvisibility.GuiPresentation.SpriteReference);
 
             Definition.SetActivationTime(RuleDefinitions.ActivationTime.Action);
             Definition.SetRechargeRate(RuleDefinitions.RechargeRate.ChannelDivinity);
