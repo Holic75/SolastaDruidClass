@@ -10,11 +10,6 @@ using NewFeatureDefinitions = SolastaModHelpers.NewFeatureDefinitions;
 
 namespace SolastaDruidClass
 {
-	// CR 0.125:  poisonous_snake, flying snake, eagle matriarch, 
-	// CR 0.25 : wolf, 						//starving wolf
-	// CR 0.50 : AlphaWolf, BadlandsSpider, black bear
-	// CR 1.00 : Dire wolf, giant eagle, brown bear
-	// CR 2.00 : tiger_drake, deepspider,  giant beetle
 	public class SummoningWildshapeViaPolymorph
 	{
 
@@ -111,26 +106,6 @@ namespace SolastaDruidClass
 				effect_form.ConditionForm.Operation = ConditionForm.ConditionOperation.Add;
 				effect_form.ConditionForm.ConditionDefinition = condition;
 				effect.EffectForms.Add(effect_form);
-
-				if (beast.Name == "Giant_Eagle") 
-				{
-					ConditionForm casterFlight = new ConditionForm();
-					casterFlight.SetApplyToSelf(true);
-					casterFlight.SetForceOnSelf(true);
-					casterFlight.Operation = ConditionForm.ConditionOperation.Add;
-					casterFlight.SetConditionDefinitionName(DatabaseHelper.ConditionDefinitions.ConditionFlyingBootsWinged.Name);
-					casterFlight.ConditionDefinition = DatabaseHelper.ConditionDefinitions.ConditionFlyingBootsWinged;
-
-					EffectForm casterFlightEffect = new EffectForm();
-					casterFlightEffect.SetApplyLevel(EffectForm.LevelApplianceType.No);
-					casterFlightEffect.SetLevelMultiplier(1);
-					casterFlightEffect.SetLevelType(RuleDefinitions.LevelSourceType.ClassLevel);
-					casterFlightEffect.SetCreatedByCharacter(true);
-					casterFlightEffect.FormType = EffectForm.EffectFormType.Condition;
-					casterFlightEffect.ConditionForm = casterFlight;
-
-					effect.EffectForms.Add(casterFlightEffect);
-				}
 
 				WildShape_Power = Helpers.GenericPowerBuilder<NewFeatureDefinitions.PowerWithRestrictions>
 					.createPower(                                                                           //	  public static FeatureDefinitionPower createPower(    
@@ -231,7 +206,6 @@ namespace SolastaDruidClass
 					feature
 					);
 
-				
 				condition.ConditionTags.Clear();
 				condition.SetTurnOccurence(RuleDefinitions.TurnOccurenceType.EndOfTurn);
 				var effect = new EffectDescription();
@@ -249,26 +223,6 @@ namespace SolastaDruidClass
 				effect_form.ConditionForm.Operation = ConditionForm.ConditionOperation.Add;
 				effect_form.ConditionForm.ConditionDefinition = condition;
 				effect.EffectForms.Add(effect_form);
-
-				if(beast.Name == "Giant_Eagle")
-				{
-					ConditionForm casterFlight = new ConditionForm();
-					casterFlight.SetApplyToSelf(true);
-					casterFlight.SetForceOnSelf(true);
-					casterFlight.Operation = ConditionForm.ConditionOperation.Add;
-					casterFlight.SetConditionDefinitionName(DatabaseHelper.ConditionDefinitions.ConditionFlyingBootsWinged.Name);
-					casterFlight.ConditionDefinition = DatabaseHelper.ConditionDefinitions.ConditionFlyingBootsWinged;
-
-					EffectForm casterFlightEffect = new EffectForm();
-					casterFlightEffect.SetApplyLevel(EffectForm.LevelApplianceType.No);
-					casterFlightEffect.SetLevelMultiplier(1);
-					casterFlightEffect.SetLevelType(RuleDefinitions.LevelSourceType.ClassLevel);
-					casterFlightEffect.SetCreatedByCharacter(true);
-					casterFlightEffect.FormType = EffectForm.EffectFormType.Condition;
-					casterFlightEffect.ConditionForm = casterFlight;
-
-					effect.EffectForms.Add(casterFlightEffect);
-				}
 
 				BeastSpellsWildshape_Power = Helpers.GenericPowerBuilder<NewFeatureDefinitions.PowerWithRestrictions>
 					.createPower(                                                                           //	  public static FeatureDefinitionPower createPower(    
@@ -316,7 +270,11 @@ namespace SolastaDruidClass
 
 	}//public class SummoningWildshapeViaPolymorph
 
-
+	// CR 0.125:  poisonous_snake, flying snake, eagle matriarch, 
+	// CR 0.25 : wolf, 						//starving wolf
+	// CR 0.50 : AlphaWolf, BadlandsSpider, black bear
+	// CR 1.00 : Dire wolf, giant eagle, brown bear
+	// CR 2.00 : tiger_drake, deepspider,  giant beetle
 
 	internal class WildshapeChargesPoolBuilder : BaseDefinitionBuilder<FeatureDefinitionAttributeModifier>
 	{
