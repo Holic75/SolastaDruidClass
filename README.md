@@ -1,6 +1,6 @@
 # SolastaDruidClass
 
-Mod to add the Druid class to Solasta. Thanks to Holic the mod now has a more accurate implemenation of wildshapes and can be considered fully featured.
+Mod to add the Druid class to Solasta. Thanks to Holic the mod now has a more accurate implementation of wildshapes and can be considered fully featured.
 
 There's 3 circles, Land, and two homebrew Circle of Spirit Shifting (Shifters) and Circle of Rift Wanderers (Wanderers). Shifters get melee boosts as an alternative to wildshapes and is mechanically a mix between Moon and Stars subclass. Wanderer gets a spirit that focuses on movement and is mechanically similar to the Wildfire subclass (which  focuses on fire) with a bit of the features of Stars subclass at higher levels.
 
@@ -11,7 +11,7 @@ New features in v1.0.0:
 * Wildshape now has a more accurate and functional implementation (Support Holic if you can, the new approach would not be possible with Holic's work)
 * Druids can now attune spellcaster only items
 * Druid only focus Staff of Woodlands has been added to the stock of Halman (Guild of Antiquarians)
-* Updated shifter form icons and vfx to make them easier to distingush between forms
+* Updated shifter form icons and vfx to make them easier to distinguish between forms
 * Added support for shillelagh, heat metal and call lightning if the mod Solasta Extra Content is also loaded
 * Fixed circle of land level 6 and 10 features to grant both features at each level instead of forcing a choice
 * Now requires SolastaModHelpers to function
