@@ -1,27 +1,34 @@
 # SolastaDruidClass
 
-Mod to add Druid (with SRD circle of land) to Solasta. It's more jury-rigged/jank than most because of wildshapes so it's possible to slightly abuse/unbalance so that's for the player to limit rather than the mod.
-
-Think of it as a intermediate beta version of the druid class until somebody more competent gets around to it.
+Mod to add the Druid class to Solasta. Thanks to Holic the mod now has a more accurate implemenation of wildshapes and can be considered fully featured.
 
 There's 3 circles, Land, and two homebrew Circle of Spirit Shifting (Shifters) and Circle of Rift Wanderers (Wanderers). Shifters get melee boosts as an alternative to wildshapes and is mechanically a mix between Moon and Stars subclass. Wanderer gets a spirit that focuses on movement and is mechanically similar to the Wildfire subclass (which  focuses on fire) with a bit of the features of Stars subclass at higher levels.
 
-Added produce flame cantrip. Might add some form of shillelagh or heat metal later if I can make them functional
 
 **********************
-Jury rigging/jank explained: 
+New features in v1.0.0: 
 
-Wildshape currently works by summoning a monster and banishing/(hidden and invincible) the caster rather than transforming the caster, and dismissing the summon reverses the process. The actions of the caster are limited while wildshaped to maintain the action economy of a single character. Consequently damage doesn't transfer over when the beast runs out of HP and the positions of the banished caster and summoned monster don't stay together. Caster is prevented from casting while wildshape is active until level 18.
+* Wildshape now has a more accurate and functional implementation (Support Holic if you can, the new approach would not be possible with Holic's work)
+* Druids can now attune spellcaster only items
+* Druid only focus Staff of Woodlands has been added to the stock of Halman (Guild of Antiquarians)
+* Updated shifter form icons and vfx to make them easier to distingush between forms
+* Added support for shillelagh, heat metal and call lightning if the mod Solasta Extra Content is also loaded
+* Fixed circle of land level 6 and 10 features to grant both features at each level instead of forcing a choice
+* Now requires SolastaModHelpers to function
 
-Ideally the casters powers would also be prevented during wildshape to prevent abuse/unbalancing but you need to have a method to dismiss on command rather than waiting for the wildshape to expire. The proper way to do it would be do prevent both powers and casting while adding a unique action but that requires patching, which is better left to others.
+Warnings:
 
-The limited number of wildshape options are due to the limited number of beasts in the game that meet the CR and mobility requirements. Black and brown bear options will be turned on when the Devs add the models as they are currently using the orge model as a stand-in.
-
-The wolf option is replaced by the Direwolf option to keep things tidy and I didn't think many would choose the weaker version when the stronger option becomes available
-Homebrew subclass features are a mix and match of official subclass features that might result in unbalanced combat. Circle of land is in line with official specs.
+* v1.0.0 will be incompatible with previous versions because of the change in how wildshape works. 
+* Requires SolastaModHelpers v0.9.13 or later for new wildshape implementation.
 
 ******************
 
-Might end up reworking wildshapes to work not via summons but via changing presentations / conditions (that grant temp hp and add monster attacks) so it is actually the caster on the frontline or even via proxy (seems less likely). Manipulation of character and monster presentations would be needed and I'm not sure they are compatible. The `forcedbeard` of belt of dwarvenkind and `featuredefinitioncharacterpresentation` could be a template to follow. it would require `rulesetcharacterhero` patch but it should be possible for people more comfortable with patching. `interruptionDamageThreshold` might be key for ending wildshape if using condition based approach
+Additional Details 
 
-Any help or advice would be appreciated. 
+The new implemenetation of wildshapes allows for closer interaction with the caster and the wildshape form with features and effects transferred between the two. A caveat is that damage greater than the wildshapes remaining HP is not transferred to the caster. The initial concept of banishing the caster and summoning a monster in it's place remains the same.
+
+The limited number of wildshape options are due to the limited number of beasts in the game that meet the CR and mobility requirements. Black and Brown Bear options will be turned on when the Devs add the models as they are currently using the orge model as a stand-in.
+The Wolf option is replaced by the Direwolf option to keep things tidy and I didn't think many would choose the weaker version when the stronger option becomes available.
+Homebrew subclass features are a mix and match of official subclass features that might result in unbalanced combat. Circle of land is in line with official specs.
+
+
