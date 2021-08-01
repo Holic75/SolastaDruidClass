@@ -4,6 +4,7 @@ using System.IO;
 using System.Reflection;
 using UnityModManagerNet;
 using SolastaModApi;
+using SolastaModApi.Extensions;
 using ModKit;
 using ModKit.Utility;
 using System.Collections.Generic;
@@ -63,8 +64,8 @@ namespace SolastaDruidClass
             DatabaseHelper.ItemDefinitions.StaffOfHealing,
             DatabaseHelper.ItemDefinitions.StaffOfFire,
             DatabaseHelper.ItemDefinitions.GreenmageArmor,
-            DatabaseHelper.ItemDefinitions.ArcaneShieldstaff,
-            DatabaseHelper.ItemDefinitions.WizardClothes_Alternate
+            //DatabaseHelper.ItemDefinitions.ArcaneShieldstaff,         // wizard only item?
+            //DatabaseHelper.ItemDefinitions.WizardClothes_Alternate
             };
 
             foreach (ItemDefinition item in itemlist)
@@ -74,6 +75,22 @@ namespace SolastaDruidClass
                 item.RequiredAttunementClasses.Add(Druid);
                 // };
             };
+
+
+            StockUnitDescription druidstaff_stock = new StockUnitDescription();
+            druidstaff_stock.SetInitialized(true);
+            druidstaff_stock.SetItemDefinition(DH_StaffOfWoodlandsBuilder.DH_StaffOfWoodlands);
+            druidstaff_stock.SetStackCount(1);
+            druidstaff_stock.SetInitialAmount(1);
+            druidstaff_stock.SetMaxAmount(1);
+            druidstaff_stock.SetReassortAmount(1);
+            druidstaff_stock.SetReassortRateType(RuleDefinitions.DurationType.Day);
+            druidstaff_stock.SetReassortRateValue(1);
+            druidstaff_stock.SetMinAmount(1);
+
+            var halman = DatabaseHelper.MerchantDefinitions.Store_Merchant_Antiquarians_Halman_Summer;
+
+            halman.StockUnitDescriptions.Add(druidstaff_stock);
         }
 
 
