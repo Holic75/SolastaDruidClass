@@ -287,3 +287,27 @@ Feature/&DH_Giant_Eagle_BeastSpellsWildshape_Power_Title WildShape Giant Eagle
 Feature/&DH_Giant_Eagle_BeastSpellsWildshape_Power_Description Transform into Giant Eagle
 Feature/&DH_BrownBear_BeastSpellsWildshape_Power_Title WildShape Brown Bear
 Feature/&DH_BrownBear_BeastSpellsWildshape_Power_Description Transform into Brown Bear
+Feature/&DH_ShifterForm_Wolf_Power_Title Wolf Form
+Feature/&DH_ShifterForm_Wolf_Power_Description You deal an extra 1D8 to injured enemies. You can disengage or dash as a bonus action. You gain advantage on attacks when other allies are within 5ft of target
+Feature/&DH_ShifterForm_Bear_Power_Title Bear Form
+Feature/&DH_ShifterForm_Bear_Power_Description You gain a multiattack and increase you attack and defense 
+Feature/&DH_ShifterForm_Stag_Power_Title Stag Form
+Feature/&DH_ShifterForm_Stag_Power_Description You grant +1 armor and 1D8 tempHp to allies in range every round for a minute
+Feature/&DH_ShifterForm_WolfAndBear_Power_Title Fused Form - Bear and Wolf
+Feature/&DH_ShifterForm_WolfAndBear_Power_Description Gain the benefits of both Bear and Wolf Forms at the same time
+Feature/&DH_ShifterForm_WolfAndStag_Power_Title Fused Form - Stag and Wolf
+Feature/&DH_ShifterForm_WolfAndStag_Power_Description Gain the benefits of both Stag and Wolf Forms at the same time
+Feature/&DH_ShifterForm_BearAndStag_Power_Title Fused Form - Bear and Stag
+Feature/&DH_ShifterForm_BearAndStag_Power_Description Gain the benefits of both Bear and Stag Forms at the same time
+Feature/&DH_WandererSpirit_Power_Title Summon Wanderer Spirit
+Feature/&DH_WandererSpirit_Power_Description A spirit formed from  lingering energies of thr Rift and an air elemental that is bonded the Wanderder Druid and aids during combat
+Feature/&DH_WandererSpirit_2_Power_Title Summon Wanderer Spirit
+Feature/&DH_WandererSpirit_2_Power_Description A spirit formed from  lingering energies of thr Rift and an air elemental that is bonded the Wanderer Druid and aids during combat
+Feature/&DH_WandererSpirit_3_Power_Title Summon Greater Wanderer Spirit
+Feature/&DH_WandererSpirit_3_Power_Description A spirit formed from  lingering energies of thr Rift and an air elemental that is bonded the Wanderer Druid and aids during combat
+Feature/&DH_WandererSpirit_4_Power_Title Summon Greater Wanderer Spirit
+Feature/&DH_WandererSpirit_4_Power_Description A spirit formed from  lingering energies of thr Rift and an air elemental that is bonded the Wanderer Druid and aids during combat
+Feature/&DH_WandererSpirit_5_Power_Title Summon Greater Wanderer Spirit
+Feature/&DH_WandererSpirit_5_Power_Description A spirit formed from  lingering energies of thr Rift and an air elemental that is bonded the Wanderer Druid and aids during combat
+Feature/&WandererSpirit_Active_ConditionTitle Wanderer Spirit Recently Summoned
+Feature/&WandererSpirit_Active_ConditionDescription No access to wildshapes/additional summons so soon after summoning spirit

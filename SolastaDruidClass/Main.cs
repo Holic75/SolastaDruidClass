@@ -51,6 +51,7 @@ namespace SolastaDruidClass
         internal static void OnGameReady()
         {
             SummoningWildshapeViaPolymorph.Create();
+            SummoningPowersViaModHelpers.Create();
             DruidClassBuilder.BuildAndAddClassToDB();
 
 

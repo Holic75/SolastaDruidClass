@@ -40,11 +40,13 @@ namespace SolastaDruidClass
                     .SetSpriteReference(DatabaseHelper.CharacterSubclassDefinitions.TraditionLoremaster.GuiPresentation.SpriteReference)
                     .Build();
 
+          
+
             var definition = new CharacterSubclassDefinitionBuilder(DruidSubClassCircleOfWanderersName, DruidSubClassCircleOfWanderersGuid);
             definition.SetGuiPresentation(subclassGuiPresentation)
             // circle of Wanderers level 2 
             .AddFeatureAtLevel(WanderersAutopreparedSpellsBuilder.WanderersAutopreparedSpells, 2)
-            .AddFeatureAtLevel(SummonWandererSpiritPowerBuilder.SummonWandererSpirit, 2)
+            .AddFeatureAtLevel(SummoningPowersViaModHelpers.Dictionaryof_WandererSpirit_Powers["WandererSpirit"], 2)
            
             // Wanderers's  level 6
             .AddFeatureAtLevel(WanderersFeatureSetBuilder.WanderersFeatureSet, 6)
@@ -53,7 +55,7 @@ namespace SolastaDruidClass
              //    level 14
              .AddFeatureAtLevel(WanderersFeatureSet_level14Builder.WanderersFeatureSet_level14, 14)
              // level 18
-             .AddFeatureAtLevel(SummonWandererSpiritPower_5Builder.SummonWandererSpiritPower_5,18)
+             .AddFeatureAtLevel(SummoningPowersViaModHelpers.Dictionaryof_WandererSpirit_Powers["WandererSpirit_5"], 18)
            .AddToDB();
 
         }
@@ -70,7 +72,7 @@ namespace SolastaDruidClass
                 Definition.GuiPresentation.Description = "Feat/&WanderersFeatureSetDescription";
 
                 Definition.FeatureSet.Clear(); 
-                  Definition.FeatureSet.Add(SummonWandererSpiritPower_2Builder.SummonWandererSpiritPower_2);
+                  Definition.FeatureSet.Add(SummoningPowersViaModHelpers.Dictionaryof_WandererSpirit_Powers["WandererSpirit_2"]);
                 Definition.FeatureSet.Add(DatabaseHelper.FeatureDefinitionMovementAffinitys.MovementAffinityBootsOfStriding);
             Definition.FeatureSet.Add(DatabaseHelper.FeatureDefinitionConditionAffinitys.ConditionAffinityRestrainedmmunity); 
 
@@ -93,7 +95,7 @@ namespace SolastaDruidClass
             Definition.GuiPresentation.Description = "Feat/&WanderersFeatureSet_level10Description";
 
             Definition.FeatureSet.Clear();
-            Definition.FeatureSet.Add(SummonWandererSpiritPower_3Builder.SummonWandererSpiritPower_3); 
+            Definition.FeatureSet.Add(SummoningPowersViaModHelpers.Dictionaryof_WandererSpirit_Powers["WandererSpirit_3"]); 
 
         }
 
@@ -114,7 +116,7 @@ namespace SolastaDruidClass
             Definition.GuiPresentation.Description = "Feat/&WanderersFeatureSet_level14Description";
 
             Definition.FeatureSet.Clear();
-            Definition.FeatureSet.Add(SummonWandererSpiritPower_4Builder.SummonWandererSpiritPower_4); 
+            Definition.FeatureSet.Add(SummoningPowersViaModHelpers.Dictionaryof_WandererSpirit_Powers["WandererSpirit_4"]); 
 
         }
 

@@ -49,7 +49,9 @@ namespace SolastaDruidClass
 
             var definition = new CharacterSubclassDefinitionBuilder(DruidSubClassCircleOfShiftersName, DruidSubClassCircleOfShiftersGuid);
             definition.SetGuiPresentation(subclassGuiPresentation)
-            // circle of Shifters level 2 
+
+                
+                // circle of Shifters level 2 
             .AddFeatureAtLevel(ShiftersAutopreparedSpellsBuilder.ShiftersAutopreparedSpells, 2)
             .AddFeatureAtLevel(ShiftersFeatureSetBuilder.ShiftersFeatureSet, 2)
 
@@ -77,9 +79,9 @@ namespace SolastaDruidClass
             Definition.GuiPresentation.Description = "Feat/&ShiftersFeatureSetDescription";
 
             Definition.FeatureSet.Clear();
-            Definition.FeatureSet.Add(SummonShifterForm_WolfFormPowerBuilder.SummonShifterForm_WolfForm);
-            Definition.FeatureSet.Add(SummonShifterForm_BearFormPowerBuilder.SummonShifterForm_BearForm);
-            Definition.FeatureSet.Add(SummonShifterForm_StagFormPowerBuilder.SummonShifterForm_StagForm);
+             Definition.FeatureSet.Add(SummoningPowersViaModHelpers.Dictionaryof_ShifterForm_Powers["Wolf"]);
+             Definition.FeatureSet.Add(SummoningPowersViaModHelpers.Dictionaryof_ShifterForm_Powers["Bear"]);
+             Definition.FeatureSet.Add(SummoningPowersViaModHelpers.Dictionaryof_ShifterForm_Powers["Stag"]);
 
         }
 
@@ -125,9 +127,9 @@ namespace SolastaDruidClass
 
             Definition.FeatureSet.Clear();
             //  Definition.FeatureSet.Add(DatabaseHelper.FeatureDefinitionAttributeModifiers.AttributeModifierDomainBattleExtraAttack);
-            Definition.FeatureSet.Add(SummonShifterForm_WolfAndBearFormPowerBuilder.SummonShifterForm_WolfAndBearForm);
-            Definition.FeatureSet.Add(SummonShifterForm_WolfAndStagFormPowerBuilder.SummonShifterForm_WolfAndStagForm);
-            Definition.FeatureSet.Add(SummonShifterForm_BearAndStagFormPowerBuilder.SummonShifterForm_BearAndStagForm);
+             Definition.FeatureSet.Add(SummoningPowersViaModHelpers.Dictionaryof_ShifterForm_Powers["WolfAndBear"]);
+             Definition.FeatureSet.Add(SummoningPowersViaModHelpers.Dictionaryof_ShifterForm_Powers["WolfAndStag"]);
+             Definition.FeatureSet.Add(SummoningPowersViaModHelpers.Dictionaryof_ShifterForm_Powers["BearAndStag"]);
 
         }
 

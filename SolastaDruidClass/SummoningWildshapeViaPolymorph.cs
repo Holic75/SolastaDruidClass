@@ -13,13 +13,13 @@ namespace SolastaDruidClass
 	public class SummoningWildshapeViaPolymorph
 	{
 
-		static public FeatureDefinitionPower WildShape_Power;
-		static public FeatureDefinitionPower BeastSpellsWildshape_Power;
+		static public NewFeatureDefinitions.PowerWithRestrictions WildShape_Power;
+		static public NewFeatureDefinitions.PowerWithRestrictions BeastSpellsWildshape_Power;
 		static public List<MonsterDefinition> listofbeasts;
 
 
-		static public Dictionary<string, FeatureDefinitionPower> Dictionaryof_Wildshape_Powers = new Dictionary<string, FeatureDefinitionPower>();
-		static public Dictionary<string, FeatureDefinitionPower> Dictionaryof_BeastSpellsWildshape_Powers = new Dictionary<string, FeatureDefinitionPower>();
+		static public Dictionary<string, NewFeatureDefinitions.PowerWithRestrictions> Dictionaryof_Wildshape_Powers = new Dictionary<string, NewFeatureDefinitions.PowerWithRestrictions>();
+		static public Dictionary<string, NewFeatureDefinitions.PowerWithRestrictions> Dictionaryof_BeastSpellsWildshape_Powers = new Dictionary<string, NewFeatureDefinitions.PowerWithRestrictions>();
 
 
 		internal static void Create()
@@ -118,7 +118,7 @@ namespace SolastaDruidClass
 					RuleDefinitions.ActivationTime.Action,                                                  //    RuleDefinitions.ActivationTime activation_time,
 					2,                                                                                      //    int fixed_uses,
 					RuleDefinitions.UsesDetermination.Fixed,                                                //    RuleDefinitions.UsesDetermination uses_determination
-					RuleDefinitions.RechargeRate.ChannelDivinity,                                           //    RuleDefinitions.RechargeRate recharge_rate,
+					RuleDefinitions.RechargeRate.ShortRest,													//    RuleDefinitions.RechargeRate recharge_rate,
 					"Wisdom",                                                                               //    string uses_ability = "Strength",
 					"Wisdom",                                                                               //    string ability = "Strength",
 					1,                                                                                      //    int cost_per_use = 1,
@@ -147,6 +147,11 @@ namespace SolastaDruidClass
 					WildShape_Power.SetOverriddenPower(Dictionaryof_Wildshape_Powers["BlackBear"]);
 				}
 
+				if (beast.Name != "Wolf")
+                {
+					WildShape_Power.linkedPower = Dictionaryof_Wildshape_Powers["Wolf"];
+
+				}
 			};// foreach
 
 		}// static void
@@ -235,7 +240,7 @@ namespace SolastaDruidClass
 					RuleDefinitions.ActivationTime.Action,                                                  //    RuleDefinitions.ActivationTime activation_time,
 					2,                                                                                      //    int fixed_uses,
 					RuleDefinitions.UsesDetermination.Fixed,                                                //    RuleDefinitions.UsesDetermination uses_determination
-					RuleDefinitions.RechargeRate.ChannelDivinity,                                           //    RuleDefinitions.RechargeRate recharge_rate,
+					RuleDefinitions.RechargeRate.ShortRest,                                           //    RuleDefinitions.RechargeRate recharge_rate,
 					"Wisdom",                                                                               //    string uses_ability = "Strength",
 					"Wisdom",                                                                               //    string ability = "Strength",
 					1,                                                                                      //    int cost_per_use = 1,
@@ -264,6 +269,8 @@ namespace SolastaDruidClass
 					BeastSpellsWildshape_Power.SetOverriddenPower(Dictionaryof_Wildshape_Powers["BrownBear"]);
 				}
 
+				BeastSpellsWildshape_Power.linkedPower = Dictionaryof_Wildshape_Powers["Wolf"];
+
 			}; // foreach
 
 		}// static void
@@ -276,29 +283,29 @@ namespace SolastaDruidClass
 	// CR 1.00 : Dire wolf, giant eagle, brown bear
 	// CR 2.00 : tiger_drake, deepspider,  giant beetle
 
-	internal class WildshapeChargesPoolBuilder : BaseDefinitionBuilder<FeatureDefinitionAttributeModifier>
-	{
-		const string WildshapeChargesPoolName = "WildshapeChargesPool";
-		const string WildshapeChargesPoolGuid = "7f0ffd78-b8ef-476f-85cc-80812fe8fc4f";
-
-
-
-		protected WildshapeChargesPoolBuilder(string name, string guid) : base(DatabaseHelper.FeatureDefinitionAttributeModifiers.AttributeModifierClericChannelDivinity, name, guid)
-		{
-
-			Definition.GuiPresentation.Title = "Feat/&WildshapeChargesPoolTitle";
-			Definition.GuiPresentation.Description = "Feat/&WildshapeChargesPoolDescription";
-			Definition.SetModifierValue(2);
-
-
-		}
-
-		public static FeatureDefinitionAttributeModifier CreateAndAddToDB(string name, string guid)
-		   => new WildshapeChargesPoolBuilder(name, guid).AddToDB();
-
-		public static FeatureDefinitionAttributeModifier WildshapeChargesPool = CreateAndAddToDB(WildshapeChargesPoolName, WildshapeChargesPoolGuid);
-
-	}
+//	internal class WildshapeChargesPoolBuilder : BaseDefinitionBuilder<FeatureDefinitionAttributeModifier>
+//	{
+//		const string WildshapeChargesPoolName = "WildshapeChargesPool";
+//		const string WildshapeChargesPoolGuid = "7f0ffd78-b8ef-476f-85cc-80812fe8fc4f";
+//
+//
+//
+//		protected WildshapeChargesPoolBuilder(string name, string guid) : base(DatabaseHelper.FeatureDefinitionAttributeModifiers.AttributeModifierClericChannelDivinity, name, guid)
+//		{
+//
+//			Definition.GuiPresentation.Title = "Feat/&WildshapeChargesPoolTitle";
+//			Definition.GuiPresentation.Description = "Feat/&WildshapeChargesPoolDescription";
+//			Definition.SetModifierValue(2);
+//
+//
+//		}
+//
+//		public static FeatureDefinitionAttributeModifier CreateAndAddToDB(string name, string guid)
+//		   => new WildshapeChargesPoolBuilder(name, guid).AddToDB();
+//
+//		public static FeatureDefinitionAttributeModifier WildshapeChargesPool = CreateAndAddToDB(WildshapeChargesPoolName, WildshapeChargesPoolGuid);
+//
+//	}
 
 	internal class WildshapeFeatureSetBuilder : BaseDefinitionBuilder<FeatureDefinitionFeatureSet>
 	{
@@ -315,7 +322,7 @@ namespace SolastaDruidClass
 			//    Definition.FeatureSet.Add(EndWildShapePowerBuilder.EndWildShapePower);
 			//    Definition.FeatureSet.Add(EndWildShapePowerDeadBeastBuilder.EndWildShapePowerDeadBeast);
 			//    Definition.FeatureSet.Add(WildShapePowerBuilder.WildShapePower);
-			Definition.FeatureSet.Add(WildshapeChargesPoolBuilder.WildshapeChargesPool);
+			//	Definition.FeatureSet.Add(WildshapeChargesPoolBuilder.WildshapeChargesPool);
 			Definition.FeatureSet.Add(SummoningWildshapeViaPolymorph.Dictionaryof_Wildshape_Powers["Wolf"]);
 			//   Definition.FeatureSet.Add();
 			//   Definition.FeatureSet.Add();
