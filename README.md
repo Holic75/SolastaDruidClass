@@ -4,9 +4,17 @@ Mod to add the Druid class to Solasta. Thanks to Holic the mod now has a more ac
 
 There's 3 circles, Land, and two homebrew Circle of Spirit Shifting (Shifters) and Circle of Rift Wanderers (Wanderers). Shifters get melee boosts as an alternative to wildshapes and is mechanically a mix between Moon and Stars subclass. Wanderer gets a spirit that focuses on movement and is mechanically similar to the Wildfire subclass (which  focuses on fire) with a bit of the features of Stars subclass at higher levels.
 
+**********************
+New features in v1.0.1: 
+
+Updated the shared pool used by wildshapes and subclass powers that use wildshape charges. Change was made to prevent interaction with channel divinity of paladin or cleric when using the multiclass mod. 
+
+Warnings:
+
+* v1.0.1 will be incompatible with previous versions because of the change to prevent wildshape interacting with channel divinity if using multiclass mod. 
 
 **********************
-New features in v1.0.0: 
+features in v1.0.0: 
 
 * Wildshape now has a more accurate and functional implementation (Support Holic if you can, the new approach would not be possible with Holic's work)
 * Druids can now attune spellcaster only items
