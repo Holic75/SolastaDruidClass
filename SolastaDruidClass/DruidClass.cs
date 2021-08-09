@@ -6,24 +6,51 @@ using HarmonyLib;
 using UnityEngine;
 using System;
 
+using Helpers = SolastaModHelpers.Helpers;
+using NewFeatureDefinitions = SolastaModHelpers.NewFeatureDefinitions;
+using ExtendedEnums = SolastaModHelpers.ExtendedEnums;
+using SolastaModHelpers;
+using System.Linq;
+
 namespace SolastaDruidClass
 {
     internal class DruidClassBuilder : CharacterClassDefinitionBuilder
     {
-        const string DruidClassName = "DHDruid";
+        const string DruidClassName = "Druid";
         const string DruidClassGuid = "a2112af0-636f-4b72-acdc-07c921bcea6d";
         const string DruidClassSubclassesGuid = "46ae0591-296d-4f6c-80b0-4e198c999076";
 
-        //protected DruidClassBuilder(string name, string guid) : base(DatabaseHelper.CharacterClassDefinitions.Cleric, name, guid)
-        protected DruidClassBuilder(string name, string guid) : base( name, guid)
+        static public CharacterClassDefinition druid_class;
+        static public SpellListDefinition druid_spelllist;
+        static public Dictionary<int, FeatureDefinitionFeatureSet> wildshapes = new Dictionary<int, FeatureDefinitionFeatureSet>();
+        static public FeatureDefinitionCastSpell druid_spellcasting;
+        //circle of the land
+        static public FeatureDefinition circle_of_the_land_extra_cantrip;
+        static public FeatureDefinitionPower circle_of_land_natural_recovery;
+        static public FeatureDefinitionFeatureSet circle_of_land_lands_stride;
+        static public FeatureDefinitionFeatureSet circle_of_land_natures_ward;
+        static public FeatureDefinitionFeatureSet circle_of_land_circle_spells;
+        static public FeatureDefinitionPower base_wildshape_power;
+        //circle of the elements
+        static public Dictionary<int, FeatureDefinitionFeatureSet> elemental_forms = new Dictionary<int, FeatureDefinitionFeatureSet>();
+        static public FeatureDefinitionAutoPreparedSpells elemental_healing;
+        static public FeatureDefinition elemental_form_mark;
+        static public NewFeatureDefinitions.AddAttackTagIfHasFeature primal_attacks;
+        static public NewFeatureDefinitions.MonsterAdditionalDamage elemental_strike;
+
+
+
+        protected DruidClassBuilder(string name, string guid) : base(name, guid)
         {
+            druid_class = Definition;
+            var druid_class_image = SolastaModHelpers.CustomIcons.Tools.storeCustomIcon("DruidClassImage",
+                                                                               $@"{UnityModManagerNet.UnityModManager.modsPath}/SolastaDruidClass/Sprites/DruidClass.png",
+                                                                               1024, 576);
+
             Definition.GuiPresentation.Title = "Class/&DruidClassTitle";
             Definition.GuiPresentation.Description = "Class/&DruidClassDescription";
-            Definition.GuiPresentation.SetSpriteReference(DatabaseHelper.LocationDefinitions.EncounterWaterfall_LocationDB.GuiPresentation.SpriteReference);
+            Definition.GuiPresentation.SetSpriteReference(druid_class_image);
 
-            // Druid
-            // [‒]
-            // Hit Dice: 1d8
             Definition.SetClassAnimationId(AnimationDefinitions.ClassAnimationId.Cleric);
             Definition.SetClassPictogramReference(DatabaseHelper.CharacterClassDefinitions.Cleric.ClassPictogramReference);
             Definition.SetDefaultBattleDecisions(DatabaseHelper.CharacterClassDefinitions.Cleric.DefaultBattleDecisions);
@@ -31,15 +58,7 @@ namespace SolastaDruidClass
             Definition.SetIngredientGatheringOdds(DatabaseHelper.CharacterClassDefinitions.Ranger.IngredientGatheringOdds);
             Definition.SetRequiresDeity(false);
             Definition.SetDefaultBattleDecisions(DatabaseHelper.DecisionPackageDefinitions.DefaultSupportCasterWithBackupAttacksDecisions);
-
-
-            
-           
-
-            
-
-          
-
+              
             Definition.AbilityScoresPriority.Clear();
             Definition.AbilityScoresPriority.AddRange(new List<string> 
             {
@@ -87,16 +106,25 @@ namespace SolastaDruidClass
 
             Definition.EquipmentRows.AddRange(DatabaseHelper.CharacterClassDefinitions.Cleric.EquipmentRows);
             Definition.EquipmentRows.Clear();
-            List<CharacterClassDefinition.HeroEquipmentOption> list = new List<CharacterClassDefinition.HeroEquipmentOption>();
-            List<CharacterClassDefinition.HeroEquipmentOption> list2 = new List<CharacterClassDefinition.HeroEquipmentOption>();
-            list.Add(EquipmentOptionsBuilder.Option(DatabaseHelper.ItemDefinitions.Shield, EquipmentDefinitions.ShieldCategory, 1));
-            list2.Add(EquipmentOptionsBuilder.Option(DatabaseHelper.ItemDefinitions.Dagger, EquipmentDefinitions.OptionWeaponSimpleChoice, 1));
-           List<CharacterClassDefinition.HeroEquipmentOption> list3 = new List<CharacterClassDefinition.HeroEquipmentOption>();
-           List<CharacterClassDefinition.HeroEquipmentOption> list4 = new List<CharacterClassDefinition.HeroEquipmentOption>();
-           list3.Add(EquipmentOptionsBuilder.Option(DatabaseHelper.ItemDefinitions.Quarterstaff, EquipmentDefinitions.MartialWeaponCategory, 1));
-           list4.Add(EquipmentOptionsBuilder.Option(DatabaseHelper.ItemDefinitions.Dagger, EquipmentDefinitions.OptionWeaponSimpleMeleeChoice, 1));
-            this.AddEquipmentRow(list, list2);
-            this.AddEquipmentRow(list3, list4);
+            this.AddEquipmentRow(new List<CharacterClassDefinition.HeroEquipmentOption>
+                                    {
+                                        EquipmentOptionsBuilder.Option(DatabaseHelper.ItemDefinitions.Shield, EquipmentDefinitions.ShieldCategory, 1)
+                                    },
+                                new List<CharacterClassDefinition.HeroEquipmentOption>
+                                    {
+                                        EquipmentOptionsBuilder.Option(DatabaseHelper.ItemDefinitions.Dagger, EquipmentDefinitions.OptionWeaponSimpleChoice, 1)
+                                    }
+                                );
+            this.AddEquipmentRow(new List<CharacterClassDefinition.HeroEquipmentOption>
+                                    {
+                                        EquipmentOptionsBuilder.Option(DatabaseHelper.ItemDefinitions.Scimitar, EquipmentDefinitions.MartialWeaponCategory, 1)
+                                    },
+                                new List<CharacterClassDefinition.HeroEquipmentOption>
+                                    {
+                                        EquipmentOptionsBuilder.Option(DatabaseHelper.ItemDefinitions.Dagger, EquipmentDefinitions.OptionWeaponSimpleChoice, 1)
+                                    }
+                                );
+
             this.AddEquipmentRow(new List<CharacterClassDefinition.HeroEquipmentOption>
             {
                 EquipmentOptionsBuilder.Option(DatabaseHelper.ItemDefinitions.Leather, EquipmentDefinitions.OptionArmor, 1),
@@ -105,32 +133,184 @@ namespace SolastaDruidClass
           
             });
 
+            Definition.FeatureUnlocks.Clear();
 
-           Definition.FeatureUnlocks.Clear();
-
-
-            // Proficiencies
-            // Armor: light armor, medium armor, shields (druids will not wear armor or use shields made of metal)
-            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DruidArmorProficienciesBuilder.DruidArmorProficiencies, 1));
-       //     // weapon profs
-            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DruidProficienciesBuilder.DruidProficiencies, 1));
-       //     // Saving Throws: Intelligence, Wisdom
-            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionProficiencys.ProficiencyWizardSavingThrow, 1)); 
-       //     // Tools: Herbalism kit
-            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionProficiencys.ProficiencyPhilosopherTools, 1));
-            //     // skill choice
-               Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DruidClassSkillPointPoolBuilder.DruidClassSkillPointPool, 1));
-           // Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionPointPools.PointPoolRangerSkillPoints, 1));
+            var saving_throws = Helpers.ProficiencyBuilder.CreateSavingthrowProficiency("DruidSavingthrowProficiency",
+                                                                                        "",
+                                                                                        Helpers.Stats.Intelligence, Helpers.Stats.Wisdom);
 
 
+            var weapon_proficiency = Helpers.ProficiencyBuilder.CreateWeaponProficiency("DruidProficiencies",
+                                                                                          "5b0c5413-79ae-4898-b993-85cf3619a938",
+                                                                                          "Feature/&DruidProficienciesTitle",
+                                                                                          "Feature/&DruidProficienciesDescription",
+                                                                                          Helpers.WeaponProficiencies.Club,
+                                                                                          Helpers.WeaponProficiencies.Dagger,
+                                                                                          Helpers.WeaponProficiencies.Dart,
+                                                                                          Helpers.WeaponProficiencies.Javelin,
+                                                                                          Helpers.WeaponProficiencies.Mace,
+                                                                                          Helpers.WeaponProficiencies.QuarterStaff,
+                                                                                          Helpers.WeaponProficiencies.Scimitar,
+                                                                                          Helpers.WeaponProficiencies.Spear
+                                                                                          );
+
+            var armor_proficiency = Helpers.ProficiencyBuilder.createCopy("DruidArmorProficiencies",
+                                                                          "eb0d5b55-b878-4828-aaca-e4aa95a2a9db",
+                                                                          "Feature/&DruidArmorProficienciesTitle",
+                                                                          "Feature/&DruidArmorProficienciesDescription",
+                                                                          DatabaseHelper.FeatureDefinitionProficiencys.ProficiencyClericArmor
+                                                                          );
+            armor_proficiency.proficiencies = new List<string> { Helpers.ArmorProficiencies.LigthArmor, Helpers.ArmorProficiencies.HideArmor };
+
+            var skills = Helpers.PoolBuilder.createSkillProficiency("DruidClassSkillPointPool",
+                                                                    "8f2cb82d-6bf9-4a72-a3e1-286a1e2b5662",
+                                                                    "Feature/&DruidClassSkillPointPoolTitle",
+                                                                    "Feature/&DruidClassSkillPointPoolDescription",
+                                                                    2,
+                                                                    Helpers.Skills.Arcana,
+                                                                    Helpers.Skills.AnimalHandling,
+                                                                    Helpers.Skills.Insight,
+                                                                    Helpers.Skills.Medicine,
+                                                                    Helpers.Skills.Nature,
+                                                                    Helpers.Skills.Perception,
+                                                                    Helpers.Skills.Religion,
+                                                                    Helpers.Skills.Survival
+                                                                    );
 
 
+            var tools_proficiency = Helpers.ProficiencyBuilder.CreateToolsProficiency("DruidToolsProficiency",
+                                                                                      "",
+                                                                                      "Feature/&DruidToolsProficiencyTitle",
+                                                                                      Helpers.Tools.HerbalismKit
+                                                                                      );
+
+            druid_spelllist = Helpers.SpelllistBuilder.create9LevelSpelllist("DruidSpelllist", "19ef0624-ede3-4612-b636-6479dd8f4e2e", "",
+                                                                    new List<SpellDefinition>
+                                                                    {
+                                                                                    DatabaseHelper.SpellDefinitions.AnnoyingBee,
+                                                                                    DatabaseHelper.SpellDefinitions.Guidance,
+                                                                                    DatabaseHelper.SpellDefinitions.PoisonSpray,
+                                                                                    DatabaseHelper.SpellDefinitions.Resistance,
+                                                                                    DatabaseHelper.SpellDefinitions.Shine,
+                                                                                    DatabaseHelper.SpellDefinitions.Sparkle
+                                                                    },
+                                                                    new List<SpellDefinition>
+                                                                    {
+                                                                                    DatabaseHelper.SpellDefinitions.AnimalFriendship,
+                                                                                    DatabaseHelper.SpellDefinitions.CharmPerson,
+                                                                                    DatabaseHelper.SpellDefinitions.CureWounds,
+                                                                                    DatabaseHelper.SpellDefinitions.DetectMagic,
+                                                                                    DatabaseHelper.SpellDefinitions.Entangle,
+                                                                                    DatabaseHelper.SpellDefinitions.FaerieFire,
+                                                                                    DatabaseHelper.SpellDefinitions.FogCloud,
+                                                                                    DatabaseHelper.SpellDefinitions.Goodberry,
+                                                                                    DatabaseHelper.SpellDefinitions.HealingWord,
+                                                                                    DatabaseHelper.SpellDefinitions.Jump,
+                                                                                    DatabaseHelper.SpellDefinitions.Longstrider,
+                                                                                    DatabaseHelper.SpellDefinitions.ProtectionFromEvilGood,
+                                                                                    DatabaseHelper.SpellDefinitions.Thunderwave
+                                                                    },
+                                                                    new List<SpellDefinition>
+                                                                    {
+                                                                                    DatabaseHelper.SpellDefinitions.Barkskin,
+                                                                                    DatabaseHelper.SpellDefinitions.Darkvision,
+                                                                                    DatabaseHelper.SpellDefinitions.EnhanceAbility,
+                                                                                    DatabaseHelper.SpellDefinitions.FindTraps,
+                                                                                    DatabaseHelper.SpellDefinitions.FlamingSphere,
+                                                                                    DatabaseHelper.SpellDefinitions.HoldPerson,
+                                                                                    DatabaseHelper.SpellDefinitions.GustOfWind,
+                                                                                    DatabaseHelper.SpellDefinitions.LesserRestoration,
+                                                                                    DatabaseHelper.SpellDefinitions.PassWithoutTrace,
+                                                                                    DatabaseHelper.SpellDefinitions.ProtectionFromPoison,
+                                                                    },
+                                                                    new List<SpellDefinition>
+                                                                    {
+                                                                                    DatabaseHelper.SpellDefinitions.ConjureAnimals,
+                                                                                    DatabaseHelper.SpellDefinitions.Daylight,
+                                                                                    DatabaseHelper.SpellDefinitions.DispelMagic,
+                                                                                    DatabaseHelper.SpellDefinitions.ProtectionFromEnergy,
+                                                                                    DatabaseHelper.SpellDefinitions.Revivify,
+                                                                                    DatabaseHelper.SpellDefinitions.SleetStorm,
+                                                                                    DatabaseHelper.SpellDefinitions.WindWall
+                                                                    },
+                                                                    new List<SpellDefinition>
+                                                                    {
+                                                                                    DatabaseHelper.SpellDefinitions.Blight,
+                                                                                    DatabaseHelper.SpellDefinitions.Confusion,
+                                                                                    DatabaseHelper.SpellDefinitions.ConjureMinorElementals,
+                                                                                    DatabaseHelper.SpellDefinitions.DominateBeast,
+                                                                                    DatabaseHelper.SpellDefinitions.FireShield,
+                                                                                    DatabaseHelper.SpellDefinitions.FreedomOfMovement,
+                                                                                    DatabaseHelper.SpellDefinitions.GiantInsect,
+                                                                                    DatabaseHelper.SpellDefinitions.IceStorm,
+                                                                                    DatabaseHelper.SpellDefinitions.Stoneskin,
+                                                                                    DatabaseHelper.SpellDefinitions.WallOfFire,
+                                                                    },
+                                                                    new List<SpellDefinition>
+                                                                    {
+                                                                                    DatabaseHelper.SpellDefinitions.ConeOfCold,
+                                                                                    DatabaseHelper.SpellDefinitions.ConjureElemental,
+                                                                                    DatabaseHelper.SpellDefinitions.Contagion,
+                                                                                    DatabaseHelper.SpellDefinitions.GreaterRestoration,
+                                                                                    DatabaseHelper.SpellDefinitions.InsectPlague,
+                                                                                    DatabaseHelper.SpellDefinitions.MassCureWounds
+                                                                    }
+                                                                    );
+            var new_spells = new SpellDefinition[]{ NewFeatureDefinitions.SpellData.getSpell("ShillelaghSpell"),
+                                                    NewFeatureDefinitions.SpellData.getSpell("AirBlastSpell"),
+                                                    NewFeatureDefinitions.SpellData.getSpell("ThunderStrikeSpell"),
+                                                    NewFeatureDefinitions.SpellData.getSpell("IceStrikeSpell"),
+                                                    NewFeatureDefinitions.SpellData.getSpell("HeatMetalSpell"),
+                                                    NewFeatureDefinitions.SpellData.getSpell("CallLightningSpell")
+                                                  };
+            foreach (var s in new_spells)
+            {
+                if (s != null)
+                {
+                    Helpers.Misc.addSpellToSpelllist(druid_spelllist, s);
+                }
+            }
 
 
-            // druid casting
-            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DruidCastingAbilityBuilder.DruidCastingAbility, 1));
-            // wild shape 
-            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(WildshapeFeatureSetBuilder.WildshapeFeatureSet,2));
+            druid_spellcasting = Helpers.SpellcastingBuilder.createDivinePreparedSpellcasting("DruidCastingAbility",
+                                                                                                  "64e9ce25-cbbc-4ff2-9fd2-0e4ad1d32a67",
+                                                                                                  "Feature/&DruidCastingAbilityTitle",
+                                                                                                  "Feature/&DruidCastingAbilityDescription",
+                                                                                                  druid_spelllist,
+                                                                                                  Helpers.Stats.Wisdom,
+                                                                                                  new List<int> { 2, 2, 2, 3, 3, 3, 3, 3, 3, 4,
+                                                                                                                  4, 4, 4, 4, 4, 4, 4, 4, 4, 4},
+                                                                                                  DatabaseHelper.FeatureDefinitionCastSpells.CastSpellCleric.SlotsPerLevels
+                                                                                                  );
+            var ritual_spellcasting = Helpers.RitualSpellcastingBuilder.createRitualSpellcasting("DruidRitualSpellcasting",
+                                                                                                 "",
+                                                                                                 DatabaseHelper.FeatureDefinitionFeatureSets.FeatureSetClericRitualCasting.GuiPresentation.Description,
+                                                                                                 (RuleDefinitions.RitualCasting)ExtendedEnums.ExtraRitualCasting.Prepared);
+            createWildshape();
+
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(armor_proficiency, 1));
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(weapon_proficiency, 1));
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(saving_throws, 1)); 
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(tools_proficiency, 1));
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(skills, 1));
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(druid_spellcasting, 1));
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(ritual_spellcasting, 1));
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(wildshapes[2],2));
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionFeatureSets.FeatureSetAbilityScoreChoice, 4));
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(wildshapes[4], 4));
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(wildshapes[6], 6));
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionFeatureSets.FeatureSetAbilityScoreChoice, 8));
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(wildshapes[8], 8));
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(wildshapes[10], 10));
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionFeatureSets.FeatureSetAbilityScoreChoice, 12));
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(wildshapes[12], 12));
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(wildshapes[14], 14));
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionFeatureSets.FeatureSetAbilityScoreChoice, 16));
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(wildshapes[16], 16));
+            //beast spells lvl 18
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(wildshapes[18], 18));
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionFeatureSets.FeatureSetAbilityScoreChoice, 19));
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(wildshapes[20], 20));
 
             //Subclass circle at level 2
             var subclassChoicesGuiPresentation = new GuiPresentation();
@@ -138,558 +318,715 @@ namespace SolastaDruidClass
             subclassChoicesGuiPresentation.Description = "Subclass/&DruidSubclassCircleDescription";
             DruidFeatureDefinitionSubclassChoice = this.BuildSubclassChoice(2, "Circle", false, "SubclassChoiceDruidCircleArchetypes", subclassChoicesGuiPresentation, DruidClassSubclassesGuid);
 
+            var item_list = new List<ItemDefinition>
+                                {
+                                DatabaseHelper.ItemDefinitions.WandOfLightningBolts,
+                                //DatabaseHelper.ItemDefinitions.StaffOfMetis,              // devs removed class restrictions for HF 1.1.11 so not needed now
+                                DatabaseHelper.ItemDefinitions.StaffOfHealing,
+                                DatabaseHelper.ItemDefinitions.StaffOfFire,
+                                DatabaseHelper.ItemDefinitions.GreenmageArmor,
+                                //DatabaseHelper.ItemDefinitions.ArcaneShieldstaff,         // wizard only item?
+                                //DatabaseHelper.ItemDefinitions.WizardClothes_Alternate
+                                };
 
-            // wildshape improvement at level 4 and ability improvement
-            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionFeatureSets.FeatureSetAbilityScoreChoice, 4));
-           Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(Wildshape_level4FeatureSetBuilder.Wildshape_level4FeatureSet, 4));
-          
-            //circle at level 6
-
-            // wildshape improvement at level 8 and ability improvement
-            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionFeatureSets.FeatureSetAbilityScoreChoice, 8));
-            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(Wildshape_level8FeatureSetBuilder.Wildshape_level8FeatureSet, 8));
-
-            //circle at level 10
-
-            // ability improvement at 12
-            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionFeatureSets.FeatureSetAbilityScoreChoice, 12));
-
-            //circle at level 14
-
-            // ability improvement at 16
-            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionFeatureSets.FeatureSetAbilityScoreChoice, 16));
-            // 18th	 	Beast Spells
-            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(BeastSpellsFeatureSetBuilder.BeastSpellsFeatureSet, 18));
-            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionMagicAffinitys.MagicAffinityBattleMagic, 18));
-            // 19th	Ability Score Improvement  -
-            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionFeatureSets.FeatureSetAbilityScoreChoice, 19));
-             // 20th	Archdruid                  -
-            // ?? turn off materials in the rule settings??
+            foreach (ItemDefinition item in item_list)
+            {
+                item.RequiredAttunementClasses.Add(druid_class);
+            };
         }
+
+
+        public void createWildshape()
+        {
+            //lvl 2 - wolf cr 0.25
+            //lvl 4 - badlands spider  cr 0.5
+            //lvl 8 - dire wolf, giant eagle - cr 1
+            base_wildshape_power = Helpers.GenericPowerBuilder<NewFeatureDefinitions.HiddenPower>
+                                                            .createPower("DruidBaseWildshapePower",
+                                                                            "",
+                                                                            Common.common_no_title,
+                                                                            Common.common_no_title,
+                                                                            Common.common_no_icon,
+                                                                            DatabaseHelper.FeatureDefinitionPowers.PowerDomainElementalFireBurst.effectDescription,
+                                                                            RuleDefinitions.ActivationTime.Action,
+                                                                            2,
+                                                                            RuleDefinitions.UsesDetermination.Fixed,
+                                                                            RuleDefinitions.RechargeRate.ShortRest,
+                                                                            "Wisdom",
+                                                                            "Wisdom",
+                                                                            1,
+                                                                            true
+                                                                            );
+
+            var wildshape_wolf_attack = Helpers.CopyFeatureBuilder<MonsterAttackDefinition>.createFeatureCopy("WildshapeWolfBiteAttack",
+                                                                                                  "",
+                                                                                                  "",
+                                                                                                  "",
+                                                                                                  null,
+                                                                                                  DatabaseHelper.MonsterAttackDefinitions.Attack_Wolf_Bite,
+                                                                                                  a =>
+                                                                                                  {
+                                                                                                      a.SetToHitBonus(4);
+                                                                                                      var effect = new EffectDescription();
+                                                                                                      effect.Copy(a.EffectDescription);
+                                                                                                      effect.EffectForms.Clear();
+                                                                                                      effect.HasSavingThrow = true;
+                                                                                                      effect.SavingThrowAbility = Helpers.Stats.Strength;
+                                                                                                      effect.FixedSavingThrowDifficultyClass = 11;
+                                                                                                      effect.difficultyClassComputation = RuleDefinitions.EffectDifficultyClassComputation.FixedValue;
+
+                                                                                                      var dmg = new EffectForm();
+                                                                                                      dmg.FormType = EffectForm.EffectFormType.Damage;
+                                                                                                      dmg.DamageForm = new DamageForm();
+                                                                                                      dmg.DamageForm.BonusDamage = 2;
+                                                                                                      dmg.DamageForm.DiceNumber = 2;
+                                                                                                      dmg.DamageForm.DieType = RuleDefinitions.DieType.D4;
+                                                                                                      dmg.DamageForm.DamageType = Helpers.DamageTypes.Piercing;
+                                                                                                      effect.EffectForms.Add(dmg);
+
+                                                                                                      var knock = new EffectForm();
+                                                                                                      knock.FormType = EffectForm.EffectFormType.Motion;
+                                                                                                      knock.SetMotionForm(new MotionForm());
+                                                                                                      knock.MotionForm.SetType(MotionForm.MotionType.FallProne);
+                                                                                                      knock.HasSavingThrow = true;
+                                                                                                      knock.SavingThrowAffinity = RuleDefinitions.EffectSavingThrowType.Negates;
+                                                                                                      effect.EffectForms.Add(knock);
+                                                                                                      a.effectDescription = effect;
+                                                                                                  }
+                                                                                                  );
+
+            var wildshape_spider_attack = Helpers.CopyFeatureBuilder<MonsterAttackDefinition>.createFeatureCopy("WildshapeMediumSpiderBiteAttack",
+                                                                                      "",
+                                                                                      "",
+                                                                                      "",
+                                                                                      null,
+                                                                                      DatabaseHelper.MonsterAttackDefinitions.Attack_Badlands_Spider_Bite,
+                                                                                      a =>
+                                                                                      {
+                                                                                          a.SetToHitBonus(5);
+                                                                                          var effect = new EffectDescription();
+                                                                                          effect.Copy(a.EffectDescription);
+                                                                                          effect.EffectForms.Clear();
+                                                                                          effect.HasSavingThrow = true;
+                                                                                          effect.SavingThrowAbility = Helpers.Stats.Constitution;
+                                                                                          effect.FixedSavingThrowDifficultyClass = 11;
+                                                                                          effect.difficultyClassComputation = RuleDefinitions.EffectDifficultyClassComputation.FixedValue;
+
+                                                                                          var dmg = new EffectForm();
+                                                                                          dmg.FormType = EffectForm.EffectFormType.Damage;
+                                                                                          dmg.DamageForm = new DamageForm();
+                                                                                          dmg.DamageForm.BonusDamage = 1;
+                                                                                          dmg.DamageForm.DiceNumber = 1;
+                                                                                          dmg.DamageForm.DieType = RuleDefinitions.DieType.D4;
+                                                                                          dmg.DamageForm.DamageType = Helpers.DamageTypes.Piercing;
+                                                                                          effect.EffectForms.Add(dmg);
+
+                                                                                          var dmg2 = new EffectForm();
+                                                                                          dmg2.FormType = EffectForm.EffectFormType.Damage;
+                                                                                          dmg2.DamageForm = new DamageForm();
+                                                                                          dmg2.DamageForm.BonusDamage = 0;
+                                                                                          dmg2.DamageForm.DiceNumber = 1;
+                                                                                          dmg2.DamageForm.DieType = RuleDefinitions.DieType.D8;
+                                                                                          dmg2.DamageForm.DamageType = Helpers.DamageTypes.Poison;
+                                                                                          dmg2.savingThrowAffinity = RuleDefinitions.EffectSavingThrowType.Negates;
+                                                                                          dmg2.hasSavingThrow = true;
+                                                                                          effect.EffectForms.Add(dmg2);
+                                                                                      }
+                                                                                      );
+
+
+            var wildshape_wolf = Common.createPolymoprhUnit(DatabaseHelper.MonsterDefinitions.Wolf,
+                                                            "WildshapeWolfUnit",
+                                                            "",
+                                                            "",
+                                                            "");
+            
+            wildshape_wolf.attackIterations = new List<MonsterAttackIteration>()
+            {
+                new MonsterAttackIteration(wildshape_wolf_attack, 1)
+            };
+
+            var wildshape_spider = Common.createPolymoprhUnit(DatabaseHelper.MonsterDefinitions.BadlandsSpider,
+                                                                "WildshapeBadlandsSpiderUnit",
+                                                                "",
+                                                                "",
+                                                                "");
+            wildshape_spider.hitDice = 4;
+            wildshape_spider.hitPointsBonus = 4;
+            wildshape_spider.standardHitPoints = 18;
+            wildshape_spider.armorClass = 14;
+
+            wildshape_spider.attackIterations = new List<MonsterAttackIteration>()
+            {
+                new MonsterAttackIteration(wildshape_spider_attack, 1)
+            };
+
+            var wildshape_dire_wolf = Common.createPolymoprhUnit(DatabaseHelper.MonsterDefinitions.Direwolf,
+                                                                "WildshapeDireWolfUnit",
+                                                                "",
+                                                                "",
+                                                                "");
+
+            var wildshape_giant_eagle = Common.createPolymoprhUnit(DatabaseHelper.MonsterDefinitions.Giant_Eagle,
+                                                                    "WildshapeGiantEagleUnit",
+                                                                    "",
+                                                                    "",
+                                                                    "");
+
+            var shapes = new Dictionary<MonsterDefinition, (int, int)>
+            {
+                {wildshape_wolf, (0, 8)},
+                {wildshape_spider, (4, -1)},
+                {wildshape_dire_wolf,  (8, -1)},
+                {wildshape_giant_eagle,  (8, -1)}
+            };
+
+            wildshapes = createWildshapeFeatures("Wildshape", shapes, 2, 1);
+            wildshapes[2].featureSet.Add(base_wildshape_power);
+        }
+
+
+        static Dictionary<int, FeatureDefinitionFeatureSet> createWildshapeFeatures(string prefix, Dictionary<MonsterDefinition, (int, int)> shapes, int min_level, int max_level = 20, int cost_per_use = 1)
+        {
+            var powers = new Dictionary<MonsterDefinition, List<NewFeatureDefinitions.PowerWithRestrictions>>();
+            foreach (var s in shapes)
+            {
+                powers[s.Key] = new List<NewFeatureDefinitions.PowerWithRestrictions>();
+                var feature = Helpers.FeatureBuilder<NewFeatureDefinitions.Polymorph>.createFeature
+                                                                            (s.Key.name + "Feature",
+                                                                            "",
+                                                                            "Feature/&" + s.Key.name + "FeatureTitle",
+                                                                            "Feature/&" + s.Key.name + "FeatureDescription",
+                                                                            null,
+                                                                            a =>
+                                                                            {
+                                                                                a.monster = s.Key;
+                                                                                a.transferFeatures = true;
+                                                                                a.statsToTransfer = new string[] { Helpers.Stats.Charisma, Helpers.Stats.Intelligence, Helpers.Stats.Wisdom };
+                                                                                a.allowSpellcasting = false;
+                                                                            }
+                                                                            );
+
+                var condition = Helpers.ConditionBuilder.createCondition(s.Key.Name + "Condition",
+                                                                        "",
+                                                                        "Rules/&CasterWhileWildshapedConditionTitle",
+                                                                        "Rules/&CasterWhileWildshapedConditionDescription",
+                                                                        null,
+                                                                        DatabaseHelper.ConditionDefinitions.ConditionBarkskin,
+                                                                        feature
+                                                                        );
+
+                condition.ConditionTags.Clear();
+                condition.SetTurnOccurence(RuleDefinitions.TurnOccurenceType.EndOfTurn);
+
+
+                for (int i = min_level; i <= 20; i += 2)
+                {
+                    int duration = i / 2;
+                    var effect = new EffectDescription();
+                    effect.Copy(DatabaseHelper.SpellDefinitions.Barkskin.EffectDescription);
+                    effect.EffectForms.Clear();
+                    effect.RangeType = RuleDefinitions.RangeType.Self;
+                    effect.TargetSide = RuleDefinitions.Side.Ally;
+                    effect.TargetType = RuleDefinitions.TargetType.Self;
+                    effect.DurationType = RuleDefinitions.DurationType.Hour;
+                    effect.DurationParameter = duration;
+
+                    var effect_form = new EffectForm();
+                    effect_form.ConditionForm = new ConditionForm();
+                    effect_form.FormType = EffectForm.EffectFormType.Condition;
+                    effect_form.ConditionForm.Operation = ConditionForm.ConditionOperation.Add;
+                    effect_form.ConditionForm.ConditionDefinition = condition;
+                    effect.EffectForms.Add(effect_form);
+
+                    var power = Helpers.GenericPowerBuilder<NewFeatureDefinitions.PowerWithRestrictions>
+                                                                                .createPower(s.Key.Name + $"{duration}Power",
+                                                                                                "",
+                                                                                                "Feature/&" + s.Key.name + "FeatureTitle",
+                                                                                                "Feature/&" + s.Key.name + "FeatureDescription",
+                                                                                                s.Key.GuiPresentation.SpriteReference,
+                                                                                                effect,
+                                                                                                RuleDefinitions.ActivationTime.Action,
+                                                                                                2,
+                                                                                                RuleDefinitions.UsesDetermination.Fixed,
+                                                                                                RuleDefinitions.RechargeRate.ShortRest,
+                                                                                                "Wisdom",
+                                                                                                "Wisdom",
+                                                                                                cost_per_use,
+                                                                                                true
+                                                                                                );
+                    power.restrictions = new List<NewFeatureDefinitions.IRestriction> { new NewFeatureDefinitions.MinClassLevelRestriction(druid_class, s.Value.Item1) };
+                    if (s.Value.Item2 > 0)
+                    {
+                        power.restrictions.Add(new NewFeatureDefinitions.InverseRestriction(new NewFeatureDefinitions.MinClassLevelRestriction(druid_class, s.Value.Item2)));
+                    }
+                    if (i > 2)
+                    {
+                        power.overriddenPower = powers[s.Key].Last();
+                    }
+                    power.linkedPower = base_wildshape_power;
+                    powers[s.Key].Add(power);
+                }
+            };
+
+            var forms = new Dictionary<int, FeatureDefinitionFeatureSet>();
+            int k = 0;
+            for (int i = min_level; i <= 20; i += 2)
+            {
+                forms[i] = Helpers.FeatureSetBuilder.createFeatureSet($"{prefix}{i}FeatureSet",
+                                                            "",
+                                                            $"Feature/&{prefix}FeatureSetTitle",
+                                                            $"Feature/&{prefix}FeatureSetDescription",
+                                                            false,
+                                                            FeatureDefinitionFeatureSet.FeatureSetMode.Union,
+                                                            false,
+                                                            powers.Aggregate(new List<FeatureDefinitionPower>(), (old, next) => { old.Add(next.Value[k]); return old; }).ToArray()
+                                                            );
+                if (k != 0)
+                {
+                    forms[i].GuiPresentation.hidden = true;
+                }
+                k++;
+            }
+
+            return forms;
+        }
+
+
+        static void createCircleOfTheLandBonusCantrip()
+        {
+            circle_of_the_land_extra_cantrip = /*Helpers.CopyFeatureBuilder<FeatureDefinitionPointPool>.createFeatureCopy("DruidSubclassCircleOfLandExtraCantrip",
+                                                                                                                        "71b34c54-00ad-4b55-9174-07fc4f979fcb",
+                                                                                                                        "Feature/&DruidSubclassCircleOfLandExtraCantripTitle",
+                                                                                                                        "Feature/&DruidSubclassCircleOfLandExtraCantripDescription",
+                                                                                                                        null,
+                                                                                                                        DatabaseHelper.FeatureDefinitionPointPools.PointPoolLoreMasterArcaneLore
+                                                                                                                        );*/
+            circle_of_the_land_extra_cantrip = Helpers.ExtraSpellSelectionBuilder.createExtraCantripSelection("DruidSubclassCircleOfLandExtraCantrip",
+                                                                                                              "71b34c54-00ad-4b55-9174-07fc4f979fcb",
+                                                                                                              "Feature/&DruidSubclassCircleOfLandExtraCantripTitle",
+                                                                                                               "Feature/&DruidSubclassCircleOfLandExtraCantripDescription",
+                                                                                                                druid_class,
+                                                                                                                2,
+                                                                                                                1,
+                                                                                                                druid_spelllist
+                                                                                                                );
+        }
+
+
+        static void createCircleOfTheLandNaturalRecovery()
+        {
+            circle_of_land_natural_recovery = Helpers.CopyFeatureBuilder<FeatureDefinitionPower>.createFeatureCopy("DruidSubclassCircleOfLandNaturalRecovery",
+                                                                                                                    "72bf9d07-8eb2-4e08-95a0-a217e8504a85",
+                                                                                                                    "Feature/&DruidSubclassCircleOfLandNaturalRecoveryTitle",
+                                                                                                                    "Feature/&DruidSubclassCircleOfLandNaturalRecoveryDescription",
+                                                                                                                    null,
+                                                                                                                    DatabaseHelper.FeatureDefinitionPowers.PowerWizardArcaneRecovery
+                                                                                                                    );
+        }
+
+
+        static void createCircleOfTheLandLandsStride()
+        {
+            var entangle_immunty = Helpers.CopyFeatureBuilder<FeatureDefinitionConditionAffinity>.createFeatureCopy("DruidSubclassCircleOfLandEntangleImmunity",
+                                                                                                                    "20833a61-c3c7-4f9c-814a-8cce4ee23e4b",
+                                                                                                                    Common.common_no_title,
+                                                                                                                    Common.common_no_title,
+                                                                                                                    null,
+                                                                                                                    DatabaseHelper.FeatureDefinitionConditionAffinitys.ConditionAffinityRestrainedmmunity,
+                                                                                                                    a =>
+                                                                                                                    {
+                                                                                                                        a.conditionType = DatabaseHelper.ConditionDefinitions.ConditionRestrainedByEntangle.Name;
+                                                                                                                        a.conditionAffinityType = RuleDefinitions.ConditionAffinityType.Immunity;
+                                                                                                                    }
+                                                                                                                    );
+
+            var difficult_terrain_immunty = Helpers.CopyFeatureBuilder<FeatureDefinitionMovementAffinity>.createFeatureCopy("DruidSubclassCircleOfLandMovementAffinity",
+                                                                                                                            "9edd2200-4e0c-4f1e-a21e-edac6532e2b9",
+                                                                                                                            Common.common_no_title,
+                                                                                                                            Common.common_no_title,
+                                                                                                                            null,
+                                                                                                                            DatabaseHelper.FeatureDefinitionMovementAffinitys.MovementAffinityFreedomOfMovement,
+                                                                                                                            a =>
+                                                                                                                            {
+                                                                                                                                a.SetImmuneDifficultTerrain(true);
+                                                                                                                                a.SetMinimalBaseSpeed(0);
+                                                                                                                                a.SetHeavyArmorImmunity(false);
+                                                                                                                            }
+                                                                                                                            );
+            circle_of_land_lands_stride = Helpers.FeatureSetBuilder.createFeatureSet("DruidSubclassCircleOfLandLandsStrideFeatureSet",
+                                                                                    "efad62ce-35f4-4906-8459-990e19f154a5",
+                                                                                    "Feature/&DruidSubclassCircleOfLandLandsStrideFeatureSetTitle",
+                                                                                    "Feature/&DruidSubclassCircleOfLandLandsStrideFeatureSetDescription",
+                                                                                    false,
+                                                                                    FeatureDefinitionFeatureSet.FeatureSetMode.Union,
+                                                                                    false,
+                                                                                    difficult_terrain_immunty,
+                                                                                    entangle_immunty
+                                                                                    );
+        }
+
+
+        static void createCircleOfTheLandNaturesWard()
+        {
+            var charm_immunity = Helpers.CopyFeatureBuilder<FeatureDefinitionConditionAffinity>.createFeatureCopy("DruidSubclassCircleOfLandCharmImmunity",
+                                                                                                                  "55d4a966-db43-4c5e-9c04-434510ababa9",
+                                                                                                                  Common.common_no_title,
+                                                                                                                  Common.common_no_title,
+                                                                                                                  null,
+                                                                                                                  DatabaseHelper.FeatureDefinitionConditionAffinitys.ConditionAffinityProtectedFromEvilCharmImmunity,
+                                                                                                                  a =>
+                                                                                                                  {
+                                                                                                                      a.otherCharacterFamilyRestrictions = new List<string>
+                                                                                                                      {
+                                                                                                                          DatabaseHelper.CharacterFamilyDefinitions.Fey.Name,
+                                                                                                                          DatabaseHelper.CharacterFamilyDefinitions.Elemental.Name,
+                                                                                                                      };
+                                                                                                                  }
+                                                                                                                  );
+
+            var frightened_immunity = Helpers.CopyFeatureBuilder<FeatureDefinitionConditionAffinity>.createFeatureCopy("DruidSubclassCircleOfLandFrightenedImmunity",
+                                                                                                      "0973473d-2a81-4635-aafa-86bff2f1d779",
+                                                                                                      Common.common_no_title,
+                                                                                                      Common.common_no_title,
+                                                                                                      null,
+                                                                                                      DatabaseHelper.FeatureDefinitionConditionAffinitys.ConditionAffinityProtectedFromEvilFrightenedImmunity,
+                                                                                                      a =>
+                                                                                                      {
+                                                                                                          a.otherCharacterFamilyRestrictions = new List<string>
+                                                                                                          {
+                                                                                                                          DatabaseHelper.CharacterFamilyDefinitions.Fey.Name,
+                                                                                                                          DatabaseHelper.CharacterFamilyDefinitions.Elemental.Name,
+                                                                                                          };
+                                                                                                      }
+                                                                                                      );
+
+            circle_of_land_natures_ward = Helpers.FeatureSetBuilder.createFeatureSet("DruidSubclassCircleOfLandNaturesWardFeatureSet",
+                                                                                        "d28098d3-5c9c-4e56-80b6-7c5ba381a42e",
+                                                                                        "Feature/&DruidSubclassCircleOfLandNaturesWardFeatureSetTitle",
+                                                                                        "Feature/&DruidSubclassCircleOfLandNaturesWardFeatureSetDescription",
+                                                                                        false,
+                                                                                        FeatureDefinitionFeatureSet.FeatureSetMode.Union,
+                                                                                        false,
+                                                                                        charm_immunity,
+                                                                                        frightened_immunity,
+                                                                                        DatabaseHelper.FeatureDefinitionConditionAffinitys.ConditionAffinityPoisonImmunity,
+                                                                                        DatabaseHelper.FeatureDefinitionConditionAffinitys.ConditionAffinityDiseaseImmunity
+                                                                                        );
+        }
+
+
+        static void createCircleOfTheLandBonusSpells()
+        {
+            Dictionary<string, SpellDefinition[][]> extra_spells
+                = new Dictionary<string, SpellDefinition[][]>()
+                {
+                    {"Arctic", new SpellDefinition[][]{new SpellDefinition[]{DatabaseHelper.SpellDefinitions.HoldPerson, DatabaseHelper.SpellDefinitions.RayOfEnfeeblement},
+                                                       new SpellDefinition[]{DatabaseHelper.SpellDefinitions.SleetStorm, DatabaseHelper.SpellDefinitions.Slow},
+                                                       new SpellDefinition[]{DatabaseHelper.SpellDefinitions.FreedomOfMovement, DatabaseHelper.SpellDefinitions.IceStorm},
+                                                       new SpellDefinition[]{DatabaseHelper.SpellDefinitions.HoldMonster, DatabaseHelper.SpellDefinitions.ConeOfCold},
+                                                      }
+                    },
+                    {"Desert", new SpellDefinition[][]{new SpellDefinition[]{DatabaseHelper.SpellDefinitions.Blur, DatabaseHelper.SpellDefinitions.Silence},
+                                                       new SpellDefinition[]{DatabaseHelper.SpellDefinitions.CreateFood, DatabaseHelper.SpellDefinitions.ProtectionFromEnergy},
+                                                       new SpellDefinition[]{DatabaseHelper.SpellDefinitions.Blight, DatabaseHelper.SpellDefinitions.GreaterInvisibility},
+                                                       new SpellDefinition[]{DatabaseHelper.SpellDefinitions.InsectPlague, DatabaseHelper.SpellDefinitions.FlameStrike},
+                                                       }
+                    },
+                    {"Forest", new SpellDefinition[][]{new SpellDefinition[]{DatabaseHelper.SpellDefinitions.Barkskin, DatabaseHelper.SpellDefinitions.SpiderClimb},
+                                                       new SpellDefinition[]{ NewFeatureDefinitions.SpellData.getSpell("CallLightningSpell") ?? DatabaseHelper.SpellDefinitions.LightningBolt, DatabaseHelper.SpellDefinitions.SpiritGuardians},
+                                                       new SpellDefinition[]{DatabaseHelper.SpellDefinitions.IdentifyCreatures, DatabaseHelper.SpellDefinitions.FreedomOfMovement},
+                                                       new SpellDefinition[]{DatabaseHelper.SpellDefinitions.ConjureElemental, DatabaseHelper.SpellDefinitions.InsectPlague},
+                                                       }
+                    },
+                    {"Grassland", new SpellDefinition[][]{new SpellDefinition[]{DatabaseHelper.SpellDefinitions.Invisibility, DatabaseHelper.SpellDefinitions.PassWithoutTrace},
+                                                          new SpellDefinition[]{DatabaseHelper.SpellDefinitions.Daylight, DatabaseHelper.SpellDefinitions.Haste},
+                                                          new SpellDefinition[]{DatabaseHelper.SpellDefinitions.IdentifyCreatures, DatabaseHelper.SpellDefinitions.FreedomOfMovement},
+                                                          new SpellDefinition[]{DatabaseHelper.SpellDefinitions.ConjureElemental, DatabaseHelper.SpellDefinitions.InsectPlague},
+                                                          }
+                    },
+                    {"Mountain", new SpellDefinition[][]{new SpellDefinition[]{DatabaseHelper.SpellDefinitions.SpiderClimb, DatabaseHelper.SpellDefinitions.Shatter},
+                                                         new SpellDefinition[]{DatabaseHelper.SpellDefinitions.LightningBolt, DatabaseHelper.SpellDefinitions.WindWall},
+                                                         new SpellDefinition[]{DatabaseHelper.SpellDefinitions.FreedomOfMovement, DatabaseHelper.SpellDefinitions.Stoneskin},
+                                                         new SpellDefinition[]{DatabaseHelper.SpellDefinitions.ConjureElemental, DatabaseHelper.SpellDefinitions.GreaterRestoration},
+                                                        }
+                    },
+                    {"Swamp", new SpellDefinition[][]{new SpellDefinition[]{DatabaseHelper.SpellDefinitions.Darkness, DatabaseHelper.SpellDefinitions.AcidArrow},
+                                                         new SpellDefinition[]{DatabaseHelper.SpellDefinitions.BestowCurse, DatabaseHelper.SpellDefinitions.StinkingCloud},
+                                                         new SpellDefinition[]{DatabaseHelper.SpellDefinitions.FreedomOfMovement, DatabaseHelper.SpellDefinitions.IdentifyCreatures},
+                                                         new SpellDefinition[]{DatabaseHelper.SpellDefinitions.Contagion, DatabaseHelper.SpellDefinitions.InsectPlague},
+                                                        }
+                    },
+                    {"Underdark", new SpellDefinition[][]{new SpellDefinition[]{DatabaseHelper.SpellDefinitions.SpiderClimb, DatabaseHelper.SpellDefinitions.Blindness},
+                                                         new SpellDefinition[]{DatabaseHelper.SpellDefinitions.StinkingCloud, DatabaseHelper.SpellDefinitions.VampiricTouchIntelligence},
+                                                         new SpellDefinition[]{DatabaseHelper.SpellDefinitions.GreaterInvisibility, DatabaseHelper.SpellDefinitions.Stoneskin},
+                                                         new SpellDefinition[]{DatabaseHelper.SpellDefinitions.CloudKill, DatabaseHelper.SpellDefinitions.InsectPlague},
+                                                        }
+                    }
+                };
+
+            circle_of_land_circle_spells = Helpers.FeatureSetBuilder.createFeatureSet("DruidSubclassCircleOfLandSubclassCircleSpells",
+                                                                                        "698b6ea8-6e0e-4f06-98e3-814a7dc21e53",
+                                                                                        "Feature/&DruidSubclassCircleOfLandCircleSpellsTitle",
+                                                                                        "Feature/&DruidSubclassCircleOfLandCircleSpellsDescription",
+                                                                                        false,
+                                                                                        FeatureDefinitionFeatureSet.FeatureSetMode.Exclusion,
+                                                                                        true
+                                                                                        );
+
+
+            foreach (var kv in extra_spells)
+            {
+                var autoprepared_spells = Helpers.CopyFeatureBuilder<FeatureDefinitionAutoPreparedSpells>.createFeatureCopy("DruidSubclassCircleOfLand" + kv.Key + "AutopreparedSpells",
+                                                                                                                            "",
+                                                                                                                            "Feature/&DruidSubclassCircleOfLand" + kv.Key + "AutopreparedSpellsTitle",
+                                                                                                                            "Feature/&DomainSpellsDescription",
+                                                                                                                            null,
+                                                                                                                            DatabaseHelper.FeatureDefinitionAutoPreparedSpellss.AutoPreparedSpellsDomainBattle,
+                                                                                                                            a =>
+                                                                                                                            {
+                                                                                                                                a.SetSpellcastingClass(druid_class);
+                                                                                                                                a.autoPreparedSpellsGroups = new List<FeatureDefinitionAutoPreparedSpells.AutoPreparedSpellsGroup>();
+                                                                                                                            }
+                                                                                                                            );
+                for (int i = 0; i < kv.Value.Length; i++)
+                {
+                    var spell_group = new FeatureDefinitionAutoPreparedSpells.AutoPreparedSpellsGroup()
+                    {
+                        classLevel = i * 2 + 1,
+                        spellsList = kv.Value[i].ToList()
+                    };
+                    autoprepared_spells.autoPreparedSpellsGroups.Add(spell_group);
+                }
+                circle_of_land_circle_spells.featureSet.Add(autoprepared_spells);
+            }
+        }
+
+
+
+        static CharacterSubclassDefinition createCircleOfTheLand()
+        {
+            createCircleOfTheLandBonusCantrip();
+            createCircleOfTheLandNaturalRecovery();
+            createCircleOfTheLandBonusSpells();
+            createCircleOfTheLandLandsStride();
+            createCircleOfTheLandNaturesWard();
+
+            var gui_presentation = new GuiPresentationBuilder(
+                    "Subclass/&DruidSubclassCircleOfLandDescription",
+                    "Subclass/&DruidSubclassCircleOfLandTitle")
+                    .SetSpriteReference(DatabaseHelper.CharacterSubclassDefinitions.TraditionGreenmage.GuiPresentation.SpriteReference)
+                    .Build();
+
+            CharacterSubclassDefinition definition = new CharacterSubclassDefinitionBuilder("DruidSubclassCircleOfLand", "9ff4743d-015b-4a89-b2e4-cacd5866b153")
+                                                                                            .SetGuiPresentation(gui_presentation)
+                                                                                            .AddFeatureAtLevel(circle_of_the_land_extra_cantrip, 2)
+                                                                                            .AddFeatureAtLevel(circle_of_land_natural_recovery, 2)
+                                                                                            .AddFeatureAtLevel(circle_of_land_circle_spells, 3)
+                                                                                            .AddFeatureAtLevel(circle_of_land_lands_stride, 6)
+                                                                                            .AddFeatureAtLevel(circle_of_land_natures_ward, 10)
+                                                                                            .AddToDB();
+            return definition;
+        }
+
+
+        static void createElementalForms()
+        {
+            elemental_form_mark = Helpers.OnlyDescriptionFeatureBuilder.createOnlyDescriptionFeature("DruidSubclassCircleOfElementsElementalFormMark",
+                                                                                                     "",
+                                                                                                     Common.common_no_title,
+                                                                                                     Common.common_no_title);
+            Dictionary<string, MonsterDefinition> monsters = new Dictionary<string, MonsterDefinition>
+            {
+                {"FireJester", DatabaseHelper.MonsterDefinitions.Fire_Jester},
+                {"FireOsprey", DatabaseHelper.MonsterDefinitions.Fire_Osprey},
+                {"WindSnake", DatabaseHelper.MonsterDefinitions.WindSnake},
+                {"SkarnGhoul", DatabaseHelper.MonsterDefinitions.SkarnGhoul},
+                {"Gargoyle", DatabaseHelper.MonsterDefinitions.Gargoyle},
+                {"FireSpider", DatabaseHelper.MonsterDefinitions.Fire_Spider},
+                {"AirElemental", DatabaseHelper.MonsterDefinitions.Air_Elemental},
+                {"FireElemental", DatabaseHelper.MonsterDefinitions.Fire_Elemental},
+                {"EarthElemental", DatabaseHelper.MonsterDefinitions.Earth_Elemental},
+            };
+
+            foreach (var key in monsters.Keys.ToArray())
+            {
+                monsters[key] = Common.createPolymoprhUnit(monsters[key],
+                                                            $"DruidSubclassCircleOfElements{key}Unit",
+                                                            "",
+                                                            "",
+                                                            "");
+                monsters[key].alignment = "Unaligned";
+                monsters[key].features.Add(elemental_form_mark);
+            }
+
+            var shapes = new Dictionary<MonsterDefinition, (int, int)>
+            {
+                {monsters["FireJester"], (0, -1)},
+                {monsters["WindSnake"], (6, -1)},
+                //{monsters["Gargoyle"], (6, -1)},
+                {monsters["SkarnGhoul"], (6, -1)},
+                {monsters["FireOsprey"], (8, -1)},
+                {monsters["FireSpider"], (12, -1)},
+                {monsters["AirElemental"], (14, -1)},
+                {monsters["FireElemental"], (14, -1)},
+                {monsters["EarthElemental"], (14, -1)},
+            };
+
+            elemental_forms = createWildshapeFeatures("DruidSubclassCircleOfElementsElementalForm", shapes, 2, 1);
+        }
+
+
+        static void createElementalHealing()
+        {
+            var sprite = SolastaModHelpers.CustomIcons.Tools.storeCustomIcon("ElementalHealingSpellImage",
+                                        $@"{UnityModManagerNet.UnityModManager.modsPath}/SolastaDruidClass/Sprites/ElementalHealing.png",
+                                        128, 128);
+
+            var effect = new EffectDescription();
+            effect.Copy(DatabaseHelper.SpellDefinitions.CureWounds.effectDescription);
+            effect.targetType = RuleDefinitions.TargetType.Self;
+            effect.rangeType = RuleDefinitions.RangeType.Self;
+            effect.effectForms.Clear();
+            var effect_form = new EffectForm();
+            effect_form.healingForm = new HealingForm();
+            effect_form.formType = EffectForm.EffectFormType.Healing;
+            effect_form.healingForm.dieType = RuleDefinitions.DieType.D8;
+            effect_form.healingForm.DiceNumber = 1;
+            effect.effectForms.Add(effect_form);
+            var elemental_healing_spell = Helpers.GenericSpellBuilder<NewFeatureDefinitions.SpellWithRestrictions>.createSpell("DruidSubclassCircleOfElementsElementalHealingSpell",
+                                                                                                                               "",
+                                                                                                                               "Feature/&DruidSubclassCircleOfElementsElementalHealingTitle",
+                                                                                                                               "Feature/&DruidSubclassCircleOfElementsElementalHealingDescription",
+                                                                                                                               sprite,
+                                                                                                                               effect,
+                                                                                                                               RuleDefinitions.ActivationTime.BonusAction,
+                                                                                                                               1,
+                                                                                                                               false,
+                                                                                                                               false,
+                                                                                                                               false,
+                                                                                                                               Helpers.SpellSchools.Evocation
+                                                                                                                               );
+            elemental_healing_spell.restrictions.Add(new NewFeatureDefinitions.HasFeatureRestriction(elemental_form_mark));
+
+            elemental_healing = Helpers.CopyFeatureBuilder<FeatureDefinitionAutoPreparedSpells>.createFeatureCopy("DruidSubclassCircleOfElementsElementalHealing",
+                                                                                                            "",
+                                                                                                            "Feature/&DruidSubclassCircleOfElementsElementalHealingTitle",
+                                                                                                            "Feature/&DruidSubclassCircleOfElementsElementalHealingDescription",
+                                                                                                            null,
+                                                                                                            DatabaseHelper.FeatureDefinitionAutoPreparedSpellss.AutoPreparedSpellsDomainBattle,
+                                                                                                            a =>
+                                                                                                            {
+                                                                                                                a.SetSpellcastingClass(druid_class);
+                                                                                                                a.autoPreparedSpellsGroups = new List<FeatureDefinitionAutoPreparedSpells.AutoPreparedSpellsGroup>()
+                                                                                                                {
+                                                                                                                    new FeatureDefinitionAutoPreparedSpells.AutoPreparedSpellsGroup()
+                                                                                                                    {
+                                                                                                                        classLevel = 2,
+                                                                                                                        spellsList = new List<SpellDefinition>{elemental_healing_spell }
+                                                                                                                    }
+                                                                                                                };
+                                                                                                            }
+                                                                                                            );
+            Common.polymorph_spellcasting_forbidden.exceptionSpells.Add(elemental_healing_spell);
+        }
+
+
+
+        static void createPrimalAttacks()
+        {
+            primal_attacks = Helpers.FeatureBuilder<NewFeatureDefinitions.AddAttackTagIfHasFeature>.createFeature("DruidSubclassCircleOfElementsPrimalAttacks",
+                                                                                                                  "",
+                                                                                                                  "Feature/&DruidSubclassCircleOfElementsPrimalAttacksTitle",
+                                                                                                                  "Feature/&DruidSubclassCircleOfElementsPrimalAttacksDescription",
+                                                                                                                  Common.common_no_icon,
+                                                                                                                  a =>
+                                                                                                                  {
+                                                                                                                      a.requiredFeature = elemental_form_mark;
+                                                                                                                      a.tag = "Magical";
+                                                                                                                  }
+                                                                                                                  );
+        }
+
+
+        static void createElementalStrike()
+        {
+            elemental_strike = Helpers.FeatureBuilder<NewFeatureDefinitions.MonsterAdditionalDamage>.createFeature("DruidSubclassCircleOfElementsElementalStrike",
+                                                                                                                   "",
+                                                                                                                   "Feature/&DruidSubclassCircleOfElementsElementalStrikeTitle",
+                                                                                                                   "Feature/&DruidSubclassCircleOfElementsElementalStrikeDescription",
+                                                                                                                   Common.common_no_icon,
+                                                                                                                   b =>
+                                                                                                                   {
+                                                                                                                       var a = new NewFeatureDefinitions.MonsterAdditionalDamageProxy();
+                                                                                                                       a.additionalDamageType = RuleDefinitions.AdditionalDamageType.SameAsBaseDamage;
+                                                                                                                       a.damageAdvancement = RuleDefinitions.AdditionalDamageAdvancement.SlotLevel;
+                                                                                                                       a.triggerCondition = RuleDefinitions.AdditionalDamageTriggerCondition.SpendSpellSlot;
+                                                                                                                       a.spellcastingFeature = druid_spellcasting;
+                                                                                                                       a.limitedUsage = RuleDefinitions.FeatureLimitedUsage.OnceInMyturn;
+                                                                                                                       a.notificationTag = "DruidSubclassCircleOfElementsElementalStrike";
+                                                                                                                       a.damageDieType = RuleDefinitions.DieType.D8;
+                                                                                                                       a.damageValueDetermination = RuleDefinitions.AdditionalDamageValueDetermination.Die;
+                                                                                                                       a.damageDiceNumber = 1;
+                                                                                                                       var list = new (int, int)[10];
+                                                                                                                       for (int i = 0; i < 10; i++)
+                                                                                                                       {
+                                                                                                                           list[i] = (i + 1, i + 2);
+                                                                                                                       }
+
+                                                                                                                       a.diceByRankTable = Helpers.Misc.createDiceRankTable(10, list);
+                                                                                                                       a.impactParticle = DatabaseHelper.FeatureDefinitionAdditionalDamages.AdditionalDamageHuntersMark.ImpactParticle;
+                                                                                                                       a.restricitons.Add(new NewFeatureDefinitions.HasFeatureRestriction(elemental_form_mark));
+                                                                                                                       b.provider = a;
+                                                                                                                   }
+                                                                                                                   );
+        }
+
+        static CharacterSubclassDefinition createCircleOfTheElements()
+        {
+            createElementalForms();
+            createElementalHealing();
+            createPrimalAttacks();
+            createElementalStrike();
+            var gui_presentation = new GuiPresentationBuilder(
+                    "Subclass/&DruidSubclassCircleOfElementsDescription",
+                    "Subclass/&DruidSubclassCircleOfElementsTitle")
+                    .SetSpriteReference(DatabaseHelper.CharacterSubclassDefinitions.TraditionShockArcanist.GuiPresentation.SpriteReference)
+                    .Build();
+
+            CharacterSubclassDefinition definition = new CharacterSubclassDefinitionBuilder("DruidSubclassCircleOfElements", "fce3fd2e-0bba-4fdc-98da-460c0249108e")
+                                                                                            .SetGuiPresentation(gui_presentation)
+                                                                                            .AddFeatureAtLevel(elemental_forms[2], 2)
+                                                                                            .AddFeatureAtLevel(elemental_healing, 2)
+                                                                                            .AddFeatureAtLevel(elemental_forms[4], 4)
+                                                                                            .AddFeatureAtLevel(elemental_forms[6], 6)
+                                                                                            .AddFeatureAtLevel(primal_attacks, 6)
+                                                                                            .AddFeatureAtLevel(elemental_forms[8], 8)
+                                                                                            .AddFeatureAtLevel(elemental_forms[10], 10)
+                                                                                            .AddFeatureAtLevel(elemental_strike, 10)
+                                                                                            .AddFeatureAtLevel(elemental_forms[12], 12)
+                                                                                            .AddFeatureAtLevel(elemental_forms[14], 14)
+                                                                                            .AddFeatureAtLevel(elemental_forms[16], 16)
+                                                                                            .AddFeatureAtLevel(elemental_forms[18], 18)
+                                                                                            .AddFeatureAtLevel(elemental_forms[20], 20)
+                                                                                            .AddToDB();
+            return definition;
+        }
+
 
         public static void BuildAndAddClassToDB()
         {
             var DruidClass = new DruidClassBuilder(DruidClassName, DruidClassGuid).AddToDB();
+            DruidClass.FeatureUnlocks.Sort(delegate (FeatureUnlockByLevel a, FeatureUnlockByLevel b)
+                                            {
+                                                return a.Level - b.Level;
+                                            }
+                                         );
 
-             DruidSubClassCircleOfLand.BuildandAddSubclass();
-            DruidSubClassCircleOfWanderers.BuildandAddSubclass();
-            DruidSubClassCircleOfShifters.BuildandAddSubclass();
-
-            //
-            CharacterSubclassDefinition CircleOfLand = DatabaseRepository.GetDatabase<CharacterSubclassDefinition>().TryGetElement("DruidSubclassCircleOfLand", "9ff4743d-015b-4a89-b2e4-cacd5866b153");
-            DruidFeatureDefinitionSubclassChoice.Subclasses.Add(CircleOfLand.Name);
-
-            
-            // circle of wayfarers/summons/companion druid fey battle buddy using wildfire companion and primal companions as templates
-            CharacterSubclassDefinition CircleOfWanderers = DatabaseRepository.GetDatabase<CharacterSubclassDefinition>().TryGetElement("DruidSubclassCircleOfWanderers", "3d08c24e-f16f-4c57-ae30-ce02084c5077");
-            DruidFeatureDefinitionSubclassChoice.Subclasses.Add(CircleOfWanderers.Name);
-
-
-            //circle of shifters/aspects/lycanthropy (use conditions to alter PC's body in different ways for gish druid)
-            CharacterSubclassDefinition CircleOfShifters = DatabaseRepository.GetDatabase<CharacterSubclassDefinition>().TryGetElement("DruidSubclassCircleOfShifters", "fed33975-da89-482d-bd4c-3b95ab914d8a");
-            DruidFeatureDefinitionSubclassChoice.Subclasses.Add(CircleOfShifters.Name);
+            DruidFeatureDefinitionSubclassChoice.Subclasses.Add(createCircleOfTheElements().Name);
+            DruidFeatureDefinitionSubclassChoice.Subclasses.Add(createCircleOfTheLand().Name);
         }
 
         private static FeatureDefinitionSubclassChoice DruidFeatureDefinitionSubclassChoice;
     }
-
-
-    internal class DruidProficienciesBuilder : BaseDefinitionBuilder<FeatureDefinitionProficiency>
-    {
-        const string DruidProficienciesName = "DruidProficiencies";
-        const string DruidProficienciesGuid = "5b0c5413-79ae-4898-b993-85cf3619a938";
-
-        protected DruidProficienciesBuilder(string name, string guid) : base(DatabaseHelper.FeatureDefinitionProficiencys.ProficiencyWizardWeapon, name, guid)
-        {
-            Definition.GuiPresentation.Title = "Feat/&DruidProficienciesTitle"; //Feature/&NoContentTitle
-            Definition.GuiPresentation.Description = "Feat/&DruidProficienciesDescription";//Feature/&NoContentTitle
-
-            Definition.SetProficiencyType(RuleDefinitions.ProficiencyType.Weapon);
-            Definition.Proficiencies.Clear();
-
-            // Weapons: clubs, daggers, darts, javelins, maces, quarterstaffs, scimitars, sickles, slings, spears
-
-            Definition.Proficiencies.Add(DatabaseHelper.WeaponTypeDefinitions.ClubType.Name);
-            Definition.Proficiencies.Add(DatabaseHelper.WeaponTypeDefinitions.DaggerType.Name);
-            Definition.Proficiencies.Add(DatabaseHelper.WeaponTypeDefinitions.DartType.Name);
-            Definition.Proficiencies.Add(DatabaseHelper.WeaponTypeDefinitions.JavelinType.Name);
-            Definition.Proficiencies.Add(DatabaseHelper.WeaponTypeDefinitions.MaceType.Name);
-            Definition.Proficiencies.Add(DatabaseHelper.WeaponTypeDefinitions.QuarterstaffType.Name);
-            Definition.Proficiencies.Add(DatabaseHelper.WeaponTypeDefinitions.ScimitarType.Name);
-            Definition.Proficiencies.Add(DatabaseHelper.WeaponTypeDefinitions.SpearType.Name);
-
-        }
-
-        public static FeatureDefinitionProficiency CreateAndAddToDB(string name, string guid)
-            => new DruidProficienciesBuilder(name, guid).AddToDB();
-
-        public static FeatureDefinitionProficiency DruidProficiencies = CreateAndAddToDB(DruidProficienciesName, DruidProficienciesGuid);
-    }
-    internal class DruidArmorProficienciesBuilder : BaseDefinitionBuilder<FeatureDefinitionProficiency>
-    {
-        const string DruidArmorProficienciesName = "DruidArmorProficiencies";
-        const string DruidArmorProficienciesGuid = "eb0d5b55-b878-4828-aaca-e4aa95a2a9db";
-
-        protected DruidArmorProficienciesBuilder(string name, string guid) : base(DatabaseHelper.FeatureDefinitionProficiencys.ProficiencyClericArmor, name, guid)
-        {
-            Definition.GuiPresentation.Title = "Feat/&DruidArmorProficienciesTitle"; //Feature/&NoContentTitle
-            Definition.GuiPresentation.Description = "Feat/&DruidArmorProficienciesDescription";//Feature/&NoContentTitle
-
-
-        }
-
-        public static FeatureDefinitionProficiency CreateAndAddToDB(string name, string guid)
-            => new DruidArmorProficienciesBuilder(name, guid).AddToDB();
-
-        public static FeatureDefinitionProficiency DruidArmorProficiencies = CreateAndAddToDB(DruidArmorProficienciesName, DruidArmorProficienciesGuid);
-    }
-    internal class DruidClassSkillPointPoolBuilder : BaseDefinitionBuilder<FeatureDefinitionPointPool>
-    {
-        const string DruidClassSkillPointPoolName = "DruidClassSkillPointPool";
-        const string DruidClassSkillPointPoolGuid = "8f2cb82d-6bf9-4a72-a3e1-286a1e2b5662";
-
-        protected DruidClassSkillPointPoolBuilder(string name, string guid) : base(DatabaseHelper.FeatureDefinitionPointPools.PointPoolClericSkillPoints, name, guid)
-        {
-            Definition.GuiPresentation.Title = "Feature/&DruidClassSkillPointPoolTitle";
-            Definition.GuiPresentation.Description = "Feature/&DruidClassSkillPointPoolDescription";
-
-           // Definition.SetPoolAmount(2);
-           // Definition.SetPoolType("Skill");
-        //   Definition.RestrictedChoices.Clear();
-        //   Definition.RestrictedChoices.Add("Arcana");
-        //   Definition.RestrictedChoices.Add("AnimalHandling");
-        //   Definition.RestrictedChoices.Add("Insight");
-        //   Definition.RestrictedChoices.Add("Medicine");
-        //   Definition.RestrictedChoices.Add("Nature");
-        //   Definition.RestrictedChoices.Add("Perception");
-        //   Definition.RestrictedChoices.Add("Religion");
-        //   Definition.RestrictedChoices.Add("Survival" );
-
-            Definition.SetPoolAmount(2);
-            Definition.SetPoolType(HeroDefinitions.PointsPoolType.Skill);
-            Definition.RestrictedChoices.Clear();
-            Definition.RestrictedChoices.AddRange(new string[] { "AnimalHandling", "Arcana", "Insight","Medecine", "Nature", "Perception", "Religion","Survival", });
-        }                               //// Skills: Choose 2 from Arcana, Animal Handling, Insight, Medicine, Nature, Perception, Religion, and Survival.
-
-        public static FeatureDefinitionPointPool CreateAndAddToDB(string name, string guid)
-            => new DruidClassSkillPointPoolBuilder(name, guid).AddToDB();
-
-        public static FeatureDefinitionPointPool DruidClassSkillPointPool = CreateAndAddToDB(DruidClassSkillPointPoolName, DruidClassSkillPointPoolGuid);
-    }
-
-    internal class DruidCastingAbilityBuilder : BaseDefinitionBuilder<FeatureDefinitionCastSpell>
-    {
-        const string DruidCastingAbilityName = "DruidCastingAbility";
-        const string DruidCastingAbilityGuid = "64e9ce25-cbbc-4ff2-9fd2-0e4ad1d32a67";
-
-        protected DruidCastingAbilityBuilder(string name, string guid) : base(DatabaseHelper.FeatureDefinitionCastSpells.CastSpellCleric, name, guid)
-        {
-            Definition.GuiPresentation.Title = "Feature/&DruidCastingAbilityTitle";
-            Definition.GuiPresentation.Description = "Feature/&DruidCastingAbilityDescription";
-
-           
-            Definition.SetSpellListDefinition(DruidSpellListBuilder.DruidSpellList);
-            Definition.SetSpellCastingOrigin(FeatureDefinitionCastSpell.CastingOrigin.Class);
-            
-            Definition.KnownCantrips.Clear();
-           Definition.KnownCantrips.AddRange( new List<int> { 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 });
-
-
-
-        }
-
-        public static FeatureDefinitionCastSpell CreateAndAddToDB(string name, string guid)
-            => new DruidCastingAbilityBuilder(name, guid).AddToDB();
-
-        public static FeatureDefinitionCastSpell DruidCastingAbility = CreateAndAddToDB(DruidCastingAbilityName, DruidCastingAbilityGuid);
-    }
-
-
-
-
-    internal class DruidSpellListBuilder : BaseDefinitionBuilder<SpellListDefinition>
-    {
-        const string DruidSpellListName = "DruidSpellList";
-        const string DruidSpellListGuid = "19ef0624-ede3-4612-b636-6479dd8f4e2e";
-
-        protected DruidSpellListBuilder(string name, string guid) : base(DatabaseHelper.SpellListDefinitions.SpellListCleric, name, guid)
-        {
-            Definition.GuiPresentation.Title = "Feature/&DruidSpellListTitle";
-            Definition.GuiPresentation.Description = "Feature/&DruidSpellListDescription";
-
-            SpellListDefinition.SpellsByLevelDuplet DruidSpell_Cantrips = new SpellListDefinition.SpellsByLevelDuplet();
-            DruidSpell_Cantrips.Spells = new List<SpellDefinition>();
-            //DruidSpell_Cantrips.Level = 1;
-            DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.Guidance);
-            DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.PoisonSpray);
-            DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.Resistance);
-            DruidSpell_Cantrips.Spells.Add(ProduceFlameCantripBuilder.ProduceFlameCantrip);
-         //   DruidSpell_Cantrips.Spells.Add(shillelaghCantripBuilder.shillelaghCantrip);
-            // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.Druidcraft);
-            DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.Sparkle);
-            DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.Dazzle);
-            DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.Shine);
-            DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.AnnoyingBee);    // added solasta's cantrips to give more than 3 srd options
-            DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.ShadowArmor);
-            DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.ShadowDagger);
-           // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.Gust);
-           // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.shapewater);
-           // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.controlflames);
-           // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.moldearth);     // non srd cantrips
-           // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.thornwhip);
-           // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.thunderclap);
-           // DruidSpell_Cantrips.Spells.Add(DatabaseHelper.SpellDefinitions.primalsavgery);
-
-
-            SpellListDefinition.SpellsByLevelDuplet DruidSpell_level_1 = new SpellListDefinition.SpellsByLevelDuplet();
-            DruidSpell_level_1.Spells = new List<SpellDefinition>();
-            DruidSpell_level_1.Level = 1;
-            DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.AnimalFriendship);
-            DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.CharmPerson);
-        //    DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.CreateDestroyWater);
-            DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.CureWounds);
-            DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.DetectMagic);
-            DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.DetectPoisonAndDisease);
-            DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.Entangle);
-            DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.FaerieFire);
-            DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.FogCloud);
-            DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.Goodberry);
-            DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.HealingWord);
-            DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.Jump);
-            DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.Longstrider);
-            DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.ProtectionFromEvilGood);
-       //     DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.PurifyFood);
-            DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.Thunderwave);
-            //DruidSpell_level_1.Spells.Add(DatabaseHelper.SpellDefinitions.);
-
-            SpellListDefinition.SpellsByLevelDuplet DruidSpell_level_2 = new SpellListDefinition.SpellsByLevelDuplet();
-            DruidSpell_level_2.Spells = new List<SpellDefinition>();
-            DruidSpell_level_2.Level = 2;
-            DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.Barkskin);
-            DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.Darkvision);
-            DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.EnhanceAbility);
-            DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.FindTraps);
-        //    DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.FlameBlade);
-            DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.FlamingSphere);
-            DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.GustOfWind);
-       //     DruidSpell_level_2.Spells.Add(HeatMetalSpellBuilder.HeatMetalSpell);
-            DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.HoldPerson);
-            DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.LesserRestoration);
-            DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.PassWithoutTrace);
-            DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.ProtectionFromPoison);
-        //    DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.spikegrowth);
-        //    DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.);
-        //    DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.);
-        //    DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.);
-        //    DruidSpell_level_2.Spells.Add(DatabaseHelper.SpellDefinitions.);
-
-            SpellListDefinition.SpellsByLevelDuplet DruidSpell_level_3 = new SpellListDefinition.SpellsByLevelDuplet();
-            DruidSpell_level_3.Spells = new List<SpellDefinition>();
-            DruidSpell_level_3.Level = 3;
-       //     DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.CallLightning);
-            DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.ConjureAnimals);
-            DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.Daylight);
-            DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.DispelMagic);
-            DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.ProtectionFromEnergy);
-            DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.Revivify);
-            DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.SleetStorm);
-        //    DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.WaterBreathing);
-        //    DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.WaterWalk);
-            DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.WindWall);
-        //    DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.);
-        //    DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.);
-        //    DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.);
-        //    DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.);
-        //    DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.);
-        //    DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.);
-        //    DruidSpell_level_3.Spells.Add(DatabaseHelper.SpellDefinitions.);
-
-            SpellListDefinition.SpellsByLevelDuplet DruidSpell_level_4 = new SpellListDefinition.SpellsByLevelDuplet();
-            DruidSpell_level_4.Spells = new List<SpellDefinition>();
-            DruidSpell_level_4.Level = 4;
-            DruidSpell_level_4.Spells.Add(DatabaseHelper.SpellDefinitions.Blight);
-            DruidSpell_level_4.Spells.Add(DatabaseHelper.SpellDefinitions.Confusion);
-            DruidSpell_level_4.Spells.Add(DatabaseHelper.SpellDefinitions.ConjureMinorElementals);
-            DruidSpell_level_4.Spells.Add(DatabaseHelper.SpellDefinitions.FireShield);
-            DruidSpell_level_4.Spells.Add(DatabaseHelper.SpellDefinitions.FreedomOfMovement);
-            DruidSpell_level_4.Spells.Add(DatabaseHelper.SpellDefinitions.GiantInsect);
-            DruidSpell_level_4.Spells.Add(DatabaseHelper.SpellDefinitions.IceStorm);
-            DruidSpell_level_4.Spells.Add(DatabaseHelper.SpellDefinitions.Stoneskin);
-            DruidSpell_level_4.Spells.Add(DatabaseHelper.SpellDefinitions.WallOfFire);
-        //    DruidSpell_level_4.Spells.Add(DatabaseHelper.SpellDefinitions.);
-        //    DruidSpell_level_4.Spells.Add(DatabaseHelper.SpellDefinitions.);
-        //    DruidSpell_level_4.Spells.Add(DatabaseHelper.SpellDefinitions.);
-        //    DruidSpell_level_4.Spells.Add(DatabaseHelper.SpellDefinitions.);
-        //    DruidSpell_level_4.Spells.Add(DatabaseHelper.SpellDefinitions.);
-        //    DruidSpell_level_4.Spells.Add(DatabaseHelper.SpellDefinitions.);
-        //    DruidSpell_level_4.Spells.Add(DatabaseHelper.SpellDefinitions.);
-        //    DruidSpell_level_4.Spells.Add(DatabaseHelper.SpellDefinitions.);
-
-            SpellListDefinition.SpellsByLevelDuplet DruidSpell_level_5 = new SpellListDefinition.SpellsByLevelDuplet();
-            DruidSpell_level_5.Spells = new List<SpellDefinition>();
-            DruidSpell_level_5.Level = 5;
-            DruidSpell_level_5.Spells.Add(DatabaseHelper.SpellDefinitions.ConeOfCold);
-            DruidSpell_level_5.Spells.Add(DatabaseHelper.SpellDefinitions.ConjureElemental);
-            DruidSpell_level_5.Spells.Add(DatabaseHelper.SpellDefinitions.Contagion);
-            DruidSpell_level_5.Spells.Add(DatabaseHelper.SpellDefinitions.GreaterRestoration);
-            DruidSpell_level_5.Spells.Add(DatabaseHelper.SpellDefinitions.InsectPlague);
-            DruidSpell_level_5.Spells.Add(DatabaseHelper.SpellDefinitions.MassCureWounds);
-            //  DruidSpell_level_5.Spells.Add(DatabaseHelper.SpellDefinitions.);
-            //  DruidSpell_level_5.Spells.Add(DatabaseHelper.SpellDefinitions.);
-            //  DruidSpell_level_5.Spells.Add(DatabaseHelper.SpellDefinitions.);
-            //  DruidSpell_level_5.Spells.Add(DatabaseHelper.SpellDefinitions.);
-            //  DruidSpell_level_5.Spells.Add(DatabaseHelper.SpellDefinitions.);
-            //  DruidSpell_level_5.Spells.Add(DatabaseHelper.SpellDefinitions.);
-            //  DruidSpell_level_5.Spells.Add(DatabaseHelper.SpellDefinitions.);
-            //  DruidSpell_level_5.Spells.Add(DatabaseHelper.SpellDefinitions.);
-            //  DruidSpell_level_5.Spells.Add(DatabaseHelper.SpellDefinitions.);
-            //  DruidSpell_level_5.Spells.Add(DatabaseHelper.SpellDefinitions.);
-            //  DruidSpell_level_5.Spells.Add(DatabaseHelper.SpellDefinitions.);
-
-
-
-            // adding spells from other mods
-            SpellDefinition shillelagh = DatabaseRepository.GetDatabase<SpellDefinition>().TryGetElement("ShillelaghSpell", "8ccfb62d-5119-4a1c-afc4-042e18fb02ca");
-            SpellDefinition heat_metal = DatabaseRepository.GetDatabase<SpellDefinition>().TryGetElement("HeatMetalSpell", "8a8d6cdf-51c9-45bd-893b-cbaf278c8f31");
-            SpellDefinition call_Lightning = DatabaseRepository.GetDatabase<SpellDefinition>().TryGetElement("CallLightningSpell", "746fbfa7-b9e7-4b07-986f-31d1e47adc7e");
-
-            if (shillelagh != null)
-            {
-                DruidSpell_Cantrips.Spells.Add(shillelagh);
-            }
-            if (heat_metal != null)
-            {
-                DruidSpell_level_2.Spells.Add(heat_metal);
-            }
-            if (call_Lightning != null)
-            {
-                DruidSpell_level_3.Spells.Add(call_Lightning);
-            }
-
-            Definition.SpellsByLevel.Clear();
-            Definition.SpellsByLevel.AddRange(new List<SpellListDefinition.SpellsByLevelDuplet> 
-            { 
-                DruidSpell_Cantrips, 
-                DruidSpell_level_1 ,
-                DruidSpell_level_2,
-                DruidSpell_level_3,
-                DruidSpell_level_4,
-                DruidSpell_level_5
-            });
-
-
-        }
-
-        public static SpellListDefinition CreateAndAddToDB(string name, string guid)
-            => new DruidSpellListBuilder(name, guid).AddToDB();
-
-        public static SpellListDefinition DruidSpellList = CreateAndAddToDB(DruidSpellListName, DruidSpellListGuid);
-    }
-
-   
-    //    internal class WandOfWildshapeBuilder : BaseDefinitionBuilder<ItemDefinition>
-    //    {
-    //        const string WandOfWildshapeName = "WandOfWildshape";
-    //        const string WandOfWildshapeGuid = "12ec71f9-5e79-46aa-8683-f948f2540a2d";
-    //
-    //        protected WandOfWildshapeBuilder(string name, string guid) : base(DatabaseHelper.ItemDefinitions.WandMagicMissile, name, guid)
-    //        {
-    //            Definition.GuiPresentation.Title = "Item/&WandOfWildshapeTitle";
-    //            Definition.GuiPresentation.Description = "Item/&WandOfWildshapeDescription";
-    //
-    //            Definition.SetInDungeonEditor(true);
-    //
-    //            DeviceFunctionDescription wildshapefunction = new DeviceFunctionDescription();
-    //            wildshapefunction.SetCanOverchargeSpell(false);
-    //            wildshapefunction.SetDurationType(RuleDefinitions.DurationType.UntilLongRest);
-    //            wildshapefunction.SetFeatureDefinitionPower(WildShapePowerBuilder.WildShapePower);
-    //            wildshapefunction.SetParentUsage(EquipmentDefinitions.ItemUsage.ByFunction);
-    //            wildshapefunction.SetRechargeRate(RuleDefinitions.RechargeRate.LongRest);
-    //            wildshapefunction.SetType(DeviceFunctionDescription.FunctionType.Power);
-    //            wildshapefunction.SetUseAffinity(DeviceFunctionDescription.FunctionUseAffinity.IterationPerRecharge);
-    //            wildshapefunction.SetUseAmount(6);
-    //
-    //            UsableDeviceDescription usableDeviceDescription = new UsableDeviceDescription();
-    //            usableDeviceDescription.SetUsage(EquipmentDefinitions.ItemUsage.ByFunction);
-    //            usableDeviceDescription.SetChargesCapitalNumber(5);
-    //            usableDeviceDescription.SetRechargeRate(RuleDefinitions.RechargeRate.LongRest);
-    //            usableDeviceDescription.SetRechargeNumber(0);
-    //            usableDeviceDescription.SetRechargeDie(RuleDefinitions.DieType.D1);
-    //            usableDeviceDescription.SetRechargeBonus(5);
-    //            usableDeviceDescription.SetOutOfChargesConsequence(EquipmentDefinitions.ItemOutOfCharges.Persist);
-    //            usableDeviceDescription.SetMagicAttackBonus(5);
-    //            usableDeviceDescription.SetSaveDC(13);
-    //
-    //            Traverse.Create(usableDeviceDescription).Field("deviceFunctions").SetValue(new List<DeviceFunctionDescription> { wildshapefunction });
-    //
-    //            Traverse.Create(usableDeviceDescription).Field("itemTags").SetValue(new List<string> { "Consumable" });
-    //
-    //            Definition.UsableDeviceDescription.DeviceFunctions.Clear();
-    //            Definition.UsableDeviceDescription.DeviceFunctions.Add(wildshapefunction);
-    //
-    //             
-    //        }
-    //
-    //        public static ItemDefinition CreateAndAddToDB(string name, string guid)
-    //            => new WandOfWildshapeBuilder(name, guid).AddToDB();
-    //
-    //        public static ItemDefinition WandOfWildshape = CreateAndAddToDB(WandOfWildshapeName, WandOfWildshapeGuid);
-    //    }
-
-    //  internal class DummySavingThrowAffinityBuilder : BaseDefinitionBuilder<FeatureDefinitionSavingThrowAffinity>
-    //  {
-    //      const string DummySavingThrowAffinityName = "DummySavingThrowAffinityBuilder";
-    //      const string DummySavingThrowAffinityGuid = "";
-    //
-    //      protected DummySavingThrowAffinityBuilder(string name, string guid) : base(DatabaseHelper.FeatureDefinitionSavingThrowAffinitys., name, guid)
-    //      {
-    //          Definition.GuiPresentation.Title = "Feature/&DummySavingThrowAffinityBuilder";
-    //          Definition.GuiPresentation.Description = "Feature/&DummySavingThrowAffinityBuilder";
-    //
-    //           Definition.AffinityGroups.Clear();
-    //          
-    //		
-    //		
-    //          Definition.AffinityGroups.Add();
-    //      }
-    //
-    //      public static FeatureDefinitionSavingThrowAffinity CreateAndAddToDB(string name, string guid)
-    //          => new DummySavingThrowAffinityBuilder(name, guid).AddToDB();
-    //
-    //      public static FeatureDefinitionSavingThrowAffinity DummySavingThrowAffinityBuilder = CreateAndAddToDB(DummySavingThrowAffinityName, DummySavingThrowAffinityGuid);
-    //  }
-    //
-    //  internal class DummyFightingStyleBuilder : BaseDefinitionBuilder<FeatureDefinitionFightingStyleChoice>
-    //  {
-    //      const string DummyFightingStyleName = "DummyFightingStyle";
-    //      const string DummyFightingStyleGuid = "";
-    // 
-    //      protected DummyFightingStyleBuilder(string name, string guid) : base(DatabaseHelper.FeatureDefinitionFightingStyleChoices.FightingStyleCleric, name, guid)
-    //      {
-    //          Definition.GuiPresentation.Title = "Feature/&DummyFightingStyleTitle";
-    //          Definition.GuiPresentation.Description = ;
-    // 
-    //          Definition.FightingStyles.Clear();
-    //          Definition.FightingStyles.Add();
-    //      }
-    // 
-    //      public static FeatureDefinitionFightingStyleChoice CreateAndAddToDB(string name, string guid)
-    //          => new DummyFightingStyleBuilder(name, guid).AddToDB();
-    // 
-    //      public static FeatureDefinitionFightingStyleChoice DummyFightingStyle = CreateAndAddToDB(DummyFightingStyleName, DummyFightingStyleGuid);
-    //  }
-    //
-    //
-    //
-    //  internal class DummyMovementAffinityBuilder : BaseDefinitionBuilder<FeatureDefinitionMovementAffinity>
-    //  {
-    //      const string Name = "DummyMovementAffinityBuilder";
-    //      const string Guid = "";
-    //
-    //      protected DruidClassBuilder(string name, string guid) : base(DatabaseHelper.FeatureDefinitionMovementAffinitys., name, guid)
-    //      {
-    //          Definition.GuiPresentation.Title = "Feature/&DummyMovementAffinityBuilder";
-    //          Definition.GuiPresentation.Description = "Feature/&DummyMovementAffinityBuilder";
-    //      }
-    //
-    //      public static FeatureDefinitionMovementAffinity CreateAndAddToDB(string name, string guid)
-    //          => new DummyMovementAffinityBuilder(name, guid).AddToDB();
-    //
-    //      public static FeatureDefinitionMovementAffinity 
-    //          = CreateAndAddToDB(Name, Guid);
-    //  }
-    //
-    //   
-    //  internal class DummyPowerBuilder : BaseDefinitionBuilder<FeatureDefinitionPower>
-    //  {
-    //      const string Name = "DummyPowerBuilder";
-    //      const string Guid = "";
-    //
-    //      protected DummyPowerBuilder(string name, string guid) : base(DatabaseHelper.FeatureDefinitionPowers., name, guid)
-    //      {
-    //          Definition.GuiPresentation.Title = "Feature/&DummyPowerBuilderTitle";
-    //          Definition.GuiPresentation.Description = "Feature/&DummyPowerBuilderDescription";
-    //
-    //          Definition.SetRechargeRate(RuleDefinitions.RechargeRate.None);
-    //          Definition.SetActivationTime(RuleDefinitions.ActivationTime.Permanent);
-    //          Definition.SetCostPerUse(1);
-    //          Definition.SetFixedUsesPerRecharge(0);
-    //          Definition.SetShortTitleOverride("Feature/&DummyPowerBuilderTitle");
-    //          Definition.SetEffectDescription(new EffectDescription());
-    //      }
-    //
-    //      public static FeatureDefinitionPower CreateAndAddToDB(string name, string guid)
-    //          => new DummyPowerBuilder(name, guid).AddToDB();
-    //
-    //      public static FeatureDefinitionPower DummyPowerBuilder
-    //          = CreateAndAddToDB(Name, Guid);
-    //  }
-    //
-    //
-    //  internal class DummyConditionBuilder : BaseDefinitionBuilder<ConditionDefinition>
-    //  {
-    //      const string DummyConditionName = "DummyCondition";
-    //      const string DummyConditionGuid = "";
-    //
-    //      protected DummyConditionBuilder(string name, string guid) : base(DatabaseHelper.ConditionDefinitions., name, guid)
-    //      {
-    //          Definition.GuiPresentation.Title = "Feature/&DummyConditionTitle";
-    //          Definition.GuiPresentation.Description = "Feature/&DummyConditionDescription";
-    //
-    //          Definition.SetAllowMultipleInstances(false);
-    //          Definition.Features.Clear();
-    //          
-    //		Definition.SetDurationType(RuleDefinitions.DurationType.Minute);
-    //          Definition.SetDurationParameter(1);
-    //      }
-    //
-    //      public static ConditionDefinition CreateAndAddToDB(string name, string guid)
-    //          => new DummyConditionBuilder(name, guid).AddToDB();
-    //
-    //      public static ConditionDefinition DummyCondition
-    //          = CreateAndAddToDB(DummyConditionName, DummyConditionGuid);
-    //  }
-    //
-    //  /// </summary>
-    //   internal class DummyAttackModifierBuilder : BaseDefinitionBuilder<FeatureDefinitionAttackModifier>
-    //  {
-    //      const string DummyAttackModifierName = "DummyAttackModifier";
-    //      const string DummyAttackModifierGuid = "";
-    //
-    //      protected DummyAttackModifierBuilder(string name, string guid) : base(DatabaseHelper.FeatureDefinitionAttackModifiers., name, guid)
-    //      {
-    //          Definition.GuiPresentation.Title = "Feature/&DummyAttackModifierTitle";
-    //          Definition.GuiPresentation.Description = "Feature/&DummyAttackModifierDescription";
-    //
-    //          Definition.SetAttackRollModifier(0);
-    //          Definition.SetDamageRollModifier(0);
-    //
-    //	}
-    //
-    //      public static FeatureDefinitionAttackModifier CreateAndAddToDB(string name, string guid)
-    //          => new DummyAttackModifierBuilder(name, guid).AddToDB();
-    //
-    //      public static FeatureDefinitionAttackModifier DummyAttackModifier
-    //          = CreateAndAddToDB(DummyAttackModifierName, DummyAttackModifierGuid);
-    //  }
-    //
-    //
-    //  internal class DummyItemBuilder : BaseDefinitionBuilder<ItemDefinition>
-    //  {
-    //       const string DummyItemName = "DummyItem";
-    //       const string DummyItemGuid = "";
-    //
-    //       protected DummyItemBuilder(string name, string guid) : base(DatabaseHelper.ItemDefinitions., name, guid)
-    //       {
-    //           Definition.GuiPresentation.Title = "Item/&DummyItemTitle";
-    //           Definition.GuiPresentation.Description = "Item/&DummyItemDescription";
-    //
-    //       }
-    //
-    //       public static ItemDefinition CreateAndAddToDB(string name, string guid)
-    //           => new DummyItemBuilder(name, guid).AddToDB();
-    //
-    //       public static ItemDefinition HideClothes
-    //           = CreateAndAddToDB(DummyItemName, DummyItemGuid);
-    //   }
 }

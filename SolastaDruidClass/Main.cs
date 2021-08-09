@@ -50,35 +50,12 @@ namespace SolastaDruidClass
 
         internal static void OnGameReady()
         {
-            SummoningWildshapeViaPolymorph.Create();
-            SummoningPowersViaModHelpers.Create();
+            //SummoningWildshapeViaPolymorph.Create();
+            //SummoningPowersViaModHelpers.Create();
             DruidClassBuilder.BuildAndAddClassToDB();
 
 
-            CharacterClassDefinition Druid = DatabaseRepository.GetDatabase<CharacterClassDefinition>().TryGetElement("DHDruid", "a2112af0-636f-4b72-acdc-07c921bcea6d");
-
-
-            var itemlist = new List<ItemDefinition>
-            {
-            DatabaseHelper.ItemDefinitions.WandOfLightningBolts,
-            //DatabaseHelper.ItemDefinitions.StaffOfMetis,              // devs removed class restrictions for HF 1.1.11 so not needed now
-            DatabaseHelper.ItemDefinitions.StaffOfHealing,
-            DatabaseHelper.ItemDefinitions.StaffOfFire,
-            DatabaseHelper.ItemDefinitions.GreenmageArmor,
-            //DatabaseHelper.ItemDefinitions.ArcaneShieldstaff,         // wizard only item?
-            //DatabaseHelper.ItemDefinitions.WizardClothes_Alternate
-            };
-
-            foreach (ItemDefinition item in itemlist)
-            {
-                // if (item.RequiredAttunementClasses != null)
-                // {
-                item.RequiredAttunementClasses.Add(Druid);
-                // };
-            };
-
-
-            StockUnitDescription druidstaff_stock = new StockUnitDescription();
+            /*StockUnitDescription druidstaff_stock = new StockUnitDescription();
             druidstaff_stock.SetInitialized(true);
             druidstaff_stock.SetItemDefinition(DH_StaffOfWoodlandsBuilder.DH_StaffOfWoodlands);
             druidstaff_stock.SetStackCount(1);
@@ -91,7 +68,7 @@ namespace SolastaDruidClass
 
             var halman = DatabaseHelper.MerchantDefinitions.Store_Merchant_Antiquarians_Halman_Summer;
 
-            halman.StockUnitDescriptions.Add(druidstaff_stock);
+            halman.StockUnitDescriptions.Add(druidstaff_stock);*/
         }
 
 

@@ -32,10 +32,9 @@ namespace SolastaDruidClass
 		}
 
 
-		static void Create_WildshapeViaPolymorph_Power()
-		{
-
-			listofbeasts = new List<MonsterDefinition>
+        static void Create_WildshapeViaPolymorph_Power()
+        {
+            listofbeasts = new List<MonsterDefinition>
 										{
 										DatabaseHelper.MonsterDefinitions.Wolf ,
 										DatabaseHelper.MonsterDefinitions.AlphaWolf,
