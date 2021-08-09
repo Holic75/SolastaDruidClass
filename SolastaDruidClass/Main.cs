@@ -8,7 +8,7 @@ using SolastaModApi.Extensions;
 using ModKit;
 using ModKit.Utility;
 using System.Collections.Generic;
-
+using HarmonyLib;
 
 namespace SolastaDruidClass
 {
@@ -22,22 +22,20 @@ namespace SolastaDruidClass
         internal static void Error(string msg) => Logger?.Error(msg);
         internal static void Warning(string msg) => Logger?.Warning(msg);
         internal static UnityModManager.ModEntry.ModLogger Logger { get; private set; }
-        internal static ModManager<Core, Settings> Mod { get; private set; }
         internal static MenuManager Menu { get; private set; }
-        internal static Settings Settings { get { return Mod.Settings; } }
+
 
         internal static bool Load(UnityModManager.ModEntry modEntry)
         {
             try
             {
-                var assembly = Assembly.GetExecutingAssembly();
 
                 Logger = modEntry.Logger;
 
                 Translations.Load(MOD_FOLDER);
 
-                Mod = new ModManager<Core, Settings>();
-                Mod.Enable(modEntry, assembly);
+                var harmony = new Harmony(modEntry.Info.Id);
+                harmony.PatchAll(Assembly.GetExecutingAssembly());
             }
             catch (Exception ex)
             {
@@ -50,8 +48,6 @@ namespace SolastaDruidClass
 
         internal static void OnGameReady()
         {
-            //SummoningWildshapeViaPolymorph.Create();
-            //SummoningPowersViaModHelpers.Create();
             DruidClassBuilder.BuildAndAddClassToDB();
 
 
