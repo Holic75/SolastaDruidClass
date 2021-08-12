@@ -20,8 +20,7 @@ namespace SolastaDruidClass
        {
            Definition.GuiPresentation.Title = "Feat/&ProduceFlameCantripTitle";
            Definition.GuiPresentation.Description = "Feat/&ProduceFlameCantripDescription";
-            
-			 
+            			 
            Definition.SetUniqueInstance(true);
            Definition.SetSpellsBundle(true);
 

@@ -475,7 +475,7 @@ namespace SolastaDruidClass
                                                                 "",
                                                                 "",
                                                                 "");
-
+            DatabaseHelper.MonsterDefinitions.Giant_Eagle.groupAttacks = true;
             var wildshape_giant_eagle = Common.createPolymoprhUnit(DatabaseHelper.MonsterDefinitions.Giant_Eagle,
                                                                     "WildshapeGiantEagleUnit",
                                                                     "",
@@ -882,6 +882,10 @@ namespace SolastaDruidClass
                 {monsters["FireElemental"], (14, -1)},
                 {monsters["EarthElemental"], (14, -1)},
             };
+
+            monsters["FireJester"].AttackIterations[1].monsterAttackDefinition.projectile = DatabaseHelper.ItemDefinitions.Arrow_Alchemy_Flaming.name;
+            monsters["FireJester"].AttackIterations[1].monsterAttackDefinition.guiPresentation.title = DatabaseHelper.SpellDefinitions.FireBolt.guiPresentation.title;
+            monsters["WindSnake"].AttackIterations[1].monsterAttackDefinition.projectile = DatabaseHelper.ItemDefinitions.Arrow_Alchemy_Flash.name;
 
             elemental_forms = createWildshapeFeatures("DruidSubclassCircleOfElementsElementalForm", shapes, 2, 1);
         }
