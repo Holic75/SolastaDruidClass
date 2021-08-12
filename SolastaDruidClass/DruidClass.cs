@@ -961,6 +961,35 @@ namespace SolastaDruidClass
 
         static void createElementalStrike()
         {
+            var additional_damage_proxy = Helpers.FeatureBuilder<NewFeatureDefinitions.MonsterAdditionalDamageProxy>
+                .createFeature("DruidSubclassCircleOfElementsElementalStrikeProxy",
+                               "",
+                               Common.common_no_title,
+                               Common.common_no_title,
+                               Common.common_no_icon,
+                               a =>
+                               {
+                                   a.additionalDamageType = RuleDefinitions.AdditionalDamageType.SameAsBaseDamage;
+                                   a.damageAdvancement = RuleDefinitions.AdditionalDamageAdvancement.SlotLevel;
+                                   a.triggerCondition = RuleDefinitions.AdditionalDamageTriggerCondition.SpendSpellSlot;
+                                   a.spellcastingFeature = druid_spellcasting;
+                                   a.limitedUsage = RuleDefinitions.FeatureLimitedUsage.OnceInMyturn;
+                                   a.notificationTag = "DruidSubclassCircleOfElementsElementalStrike";
+                                   a.damageDieType = RuleDefinitions.DieType.D8;
+                                   a.damageValueDetermination = RuleDefinitions.AdditionalDamageValueDetermination.Die;
+                                   a.damageDiceNumber = 1;
+                                   var list = new (int, int)[10];
+                                   for (int i = 0; i < 10; i++)
+                                   {
+                                       list[i] = (i + 1, i + 2);
+                                   }
+
+                                   a.diceByRankTable = Helpers.Misc.createDiceRankTable(10, list);
+                                   a.impactParticle = DatabaseHelper.FeatureDefinitionAdditionalDamages.AdditionalDamageHuntersMark.ImpactParticle;
+                                   a.restricitons.Add(new NewFeatureDefinitions.HasFeatureRestriction(elemental_form_mark));
+                               }
+                               );
+
             elemental_strike = Helpers.FeatureBuilder<NewFeatureDefinitions.MonsterAdditionalDamage>.createFeature("DruidSubclassCircleOfElementsElementalStrike",
                                                                                                                    "",
                                                                                                                    "Feature/&DruidSubclassCircleOfElementsElementalStrikeTitle",
@@ -968,26 +997,7 @@ namespace SolastaDruidClass
                                                                                                                    Common.common_no_icon,
                                                                                                                    b =>
                                                                                                                    {
-                                                                                                                       var a = new NewFeatureDefinitions.MonsterAdditionalDamageProxy();
-                                                                                                                       a.additionalDamageType = RuleDefinitions.AdditionalDamageType.SameAsBaseDamage;
-                                                                                                                       a.damageAdvancement = RuleDefinitions.AdditionalDamageAdvancement.SlotLevel;
-                                                                                                                       a.triggerCondition = RuleDefinitions.AdditionalDamageTriggerCondition.SpendSpellSlot;
-                                                                                                                       a.spellcastingFeature = druid_spellcasting;
-                                                                                                                       a.limitedUsage = RuleDefinitions.FeatureLimitedUsage.OnceInMyturn;
-                                                                                                                       a.notificationTag = "DruidSubclassCircleOfElementsElementalStrike";
-                                                                                                                       a.damageDieType = RuleDefinitions.DieType.D8;
-                                                                                                                       a.damageValueDetermination = RuleDefinitions.AdditionalDamageValueDetermination.Die;
-                                                                                                                       a.damageDiceNumber = 1;
-                                                                                                                       var list = new (int, int)[10];
-                                                                                                                       for (int i = 0; i < 10; i++)
-                                                                                                                       {
-                                                                                                                           list[i] = (i + 1, i + 2);
-                                                                                                                       }
-
-                                                                                                                       a.diceByRankTable = Helpers.Misc.createDiceRankTable(10, list);
-                                                                                                                       a.impactParticle = DatabaseHelper.FeatureDefinitionAdditionalDamages.AdditionalDamageHuntersMark.ImpactParticle;
-                                                                                                                       a.restricitons.Add(new NewFeatureDefinitions.HasFeatureRestriction(elemental_form_mark));
-                                                                                                                       b.provider = a;
+                                                                                                                       b.provider = additional_damage_proxy;
                                                                                                                    }
                                                                                                                    );
         }
