@@ -6,8 +6,8 @@
 		<SolastaInstallDir Condition=" '$(SolastaInstallDir)' == '' ">C:\Program Files (x86)\Steam\steamapps\common\Slasta_COTM</SolastaInstallDir>
 		<FileVersion>0.0.2.0</FileVersion>
 		<Description></Description>
-		<PackageProjectUrl>https://github.com/DubhHerder/SolastaDruidClass</PackageProjectUrl>
-		<RepositoryUrl>https://github.com/DubhHerder/SolastaDruidClass</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/Holic75/SolastaDruidClass</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/Holic75/SolastaDruidClass</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<Configurations>Debug;Release;Debug Install;Release Install</Configurations>
 		<Authors>Zappastuff</Authors>
@@ -34,6 +34,10 @@
 		<OutputPath>$(SolastaInstallDir)\Mods\SolastaDruidClass\</OutputPath>
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+	</PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <OutputPath>bin\$(Configuration)\SolastaDruidClass\</OutputPath>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU' Or '$(Configuration)|$(Platform)'=='Debug Install|AnyCPU'">
@@ -63,6 +67,7 @@
 	<ItemGroup>
 		<Reference Include="Assembly-CSharp">
 		  <HintPath>..\lib\Assembly-CSharp_public.dll</HintPath>
+		  <Private>false</Private>
 		</Reference>
 		<Reference Include="Unity.Addressables">
 			<HintPath>$([System.IO.Path]::Combine($(SolastaInstallDir), 'Solasta_Data\Managed\Unity.Addressables.dll'))</HintPath>
