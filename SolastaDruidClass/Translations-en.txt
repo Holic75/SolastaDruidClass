@@ -86,3 +86,5 @@ Rules/&DruidSubclassCircleOfSpiritsSpiritSummonerConditionDescription	This summo
 Feature/&DruidSubclassCircleOfSpiritsGuardianSpiritsTitle	Guardian Spirits
 Feature/&DruidSubclassCircleOfSpiritsGuardianSpiritsDescription	Beginning at 10th level, the spirits safeguard the creatures you summon with your magic. When the creature you summoned ends its turn in your spirit area, that creature regains a number of hit points equal to half your druid level.
 Rules/&DruidSubclassCircleOfSpiritsGuardianSpiritsConditionDescription	The creature regains a number of hit points equal to half its summoner's druid level if it ends its turn in the summoners's spirit area.
+Screen/&CircleSpellDescription	This circle spell is always considered prepared. \nIt does not count towards your spell preparation limit. 
+Screen/&CircleSpellTitle	Circle

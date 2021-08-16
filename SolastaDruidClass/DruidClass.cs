@@ -289,6 +289,7 @@ namespace SolastaDruidClass
                                                                                                   Helpers.Stats.Wisdom,
                                                                                                   new List<int> { 2, 2, 2, 3, 3, 3, 3, 3, 3, 4,
                                                                                                                   4, 4, 4, 4, 4, 4, 4, 4, 4, 4},
+                                                                                                  RuleDefinitions.SpellPreparationCount.AbilityBonusPlusLevel,
                                                                                                   DatabaseHelper.FeatureDefinitionCastSpells.CastSpellCleric.SlotsPerLevels
                                                                                                   );
             var ritual_spellcasting = Helpers.RitualSpellcastingBuilder.createRitualSpellcasting("DruidRitualSpellcasting",
@@ -795,6 +796,7 @@ namespace SolastaDruidClass
                                                                                                                             DatabaseHelper.FeatureDefinitionAutoPreparedSpellss.AutoPreparedSpellsDomainBattle,
                                                                                                                             a =>
                                                                                                                             {
+                                                                                                                                a.autopreparedTag = "Circle";
                                                                                                                                 a.SetSpellcastingClass(druid_class);
                                                                                                                                 a.autoPreparedSpellsGroups = new List<FeatureDefinitionAutoPreparedSpells.AutoPreparedSpellsGroup>();
                                                                                                                             }
