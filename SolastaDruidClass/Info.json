@@ -8,6 +8,6 @@
   "LoadAfter": [ "SolastaModApi", "SolastaModHelpers", "SolastaExtraContent" ],
   "AssemblyName": "SolastaDruidClass.dll",
   "EntryMethod": "SolastaDruidClass.Main.Load",
-  "Repository": "https://github.com/Holic75/SolastaDruidClass/tree/master/SolastaDruidClass",
-  "HomePage": ""
+  "Repository": "https://github.com/Holic75/SolastaDruidClass/",
+  "HomePage": "https://www.nexusmods.com/solastacrownofthemagister/mods/157"
 }
