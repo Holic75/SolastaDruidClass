@@ -225,6 +225,7 @@ namespace SolastaDruidClass
                                                                                     DatabaseHelper.SpellDefinitions.Darkvision,
                                                                                     DatabaseHelper.SpellDefinitions.EnhanceAbility,
                                                                                     DatabaseHelper.SpellDefinitions.FindTraps,
+                                                                                    //DatabaseHelper.SpellDefinitions.FlameBlade,
                                                                                     DatabaseHelper.SpellDefinitions.FlamingSphere,
                                                                                     DatabaseHelper.SpellDefinitions.HoldPerson,
                                                                                     DatabaseHelper.SpellDefinitions.GustOfWind,
@@ -269,6 +270,7 @@ namespace SolastaDruidClass
                                                     NewFeatureDefinitions.SpellData.getSpell("AirBlastSpell"),
                                                     NewFeatureDefinitions.SpellData.getSpell("ThunderStrikeSpell"),
                                                     NewFeatureDefinitions.SpellData.getSpell("IceStrikeSpell"),
+                                                    NewFeatureDefinitions.SpellData.getSpell("FlameBladeSpell"),
                                                     NewFeatureDefinitions.SpellData.getSpell("HeatMetalSpell"),
                                                     NewFeatureDefinitions.SpellData.getSpell("CallLightningSpell")
                                                   };
