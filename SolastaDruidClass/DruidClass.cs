@@ -169,7 +169,7 @@ namespace SolastaDruidClass
                                                                           "Feature/&DruidArmorProficienciesDescription",
                                                                           DatabaseHelper.FeatureDefinitionProficiencys.ProficiencyClericArmor
                                                                           );
-            armor_proficiency.proficiencies = new List<string> { Helpers.ArmorProficiencies.LigthArmor, Helpers.ArmorProficiencies.HideArmor };
+            armor_proficiency.proficiencies = new List<string> { Helpers.ArmorProficiencies.LeatherArmor, Helpers.ArmorProficiencies.PaddedArmor, Helpers.ArmorProficiencies.HideArmor };
 
             var skills = Helpers.PoolBuilder.createSkillProficiency("DruidClassSkillPointPool",
                                                                     "8f2cb82d-6bf9-4a72-a3e1-286a1e2b5662",
@@ -253,6 +253,7 @@ namespace SolastaDruidClass
                                                                                     DatabaseHelper.SpellDefinitions.FreedomOfMovement,
                                                                                     DatabaseHelper.SpellDefinitions.GiantInsect,
                                                                                     DatabaseHelper.SpellDefinitions.IceStorm,
+                                                                                    DatabaseHelper.SpellDefinitions.IdentifyCreatures,
                                                                                     DatabaseHelper.SpellDefinitions.Stoneskin,
                                                                                     DatabaseHelper.SpellDefinitions.WallOfFire,
                                                                     },
@@ -298,6 +299,9 @@ namespace SolastaDruidClass
                                                                                                  "",
                                                                                                  DatabaseHelper.FeatureDefinitionFeatureSets.FeatureSetClericRitualCasting.GuiPresentation.Description,
                                                                                                  (RuleDefinitions.RitualCasting)ExtendedEnums.ExtraRitualCasting.Prepared);
+
+
+
             createWildshape();
 
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(armor_proficiency, 1));
@@ -306,6 +310,7 @@ namespace SolastaDruidClass
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(tools_proficiency, 1));
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(skills, 1));
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(druid_spellcasting, 1));
+            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(Common.staff_focus, 1));
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(ritual_spellcasting, 1));
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(wildshapes[2],2));
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionFeatureSets.FeatureSetAbilityScoreChoice, 4));
@@ -356,7 +361,7 @@ namespace SolastaDruidClass
             base_wildshape_power = Helpers.GenericPowerBuilder<NewFeatureDefinitions.HiddenPower>
                                                             .createPower("DruidBaseWildshapePower",
                                                                             "",
-                                                                            Common.common_no_title,
+                                                                            "Feature/&WildshapeFeatureSetTitle",
                                                                             Common.common_no_title,
                                                                             Common.common_no_icon,
                                                                             DatabaseHelper.FeatureDefinitionPowers.PowerDomainElementalFireBurst.effectDescription,
@@ -369,7 +374,7 @@ namespace SolastaDruidClass
                                                                             1,
                                                                             true
                                                                             );
-
+            base_wildshape_power.GuiPresentation.hidden = true;
             var wildshape_wolf_attack = Helpers.CopyFeatureBuilder<MonsterAttackDefinition>.createFeatureCopy("WildshapeWolfBiteAttack",
                                                                                                   "",
                                                                                                   "",
@@ -1053,7 +1058,7 @@ namespace SolastaDruidClass
                                                                                     );
             spirit_proxy = Helpers.CopyFeatureBuilder<EffectProxyDefinition>.createFeatureCopy("DruidSubclassCircleOfSpiritsSpiritProxy",
                                                                                                "",
-                                                                                               "",
+                                                                                               "Feature/&DruidSubclassCircleOfSpiritProxyTitle",
                                                                                                "",
                                                                                                null,
                                                                                                DatabaseHelper.EffectProxyDefinitions.ProxySilence
@@ -1338,6 +1343,21 @@ namespace SolastaDruidClass
             DruidFeatureDefinitionSubclassChoice.Subclasses.Add(createCircleOfTheElements().Name);
             DruidFeatureDefinitionSubclassChoice.Subclasses.Add(createCircleOfTheLand().Name);
             DruidFeatureDefinitionSubclassChoice.Subclasses.Add(createCircleOfSpirits().Name);
+
+            Action<RulesetCharacterHero> fix_action = c =>
+            {
+                if (c.activeFeatures.Any(cc => cc.Value.Contains(Common.staff_focus)))
+                {
+                    return;
+                }
+
+                if (c.classesAndLevels.ContainsKey(DruidClass))
+                {
+                    c.activeFeatures[AttributeDefinitions.GetClassTag(DruidClass, 1)].Add(Common.staff_focus);
+                }
+            };
+
+            Common.postload_actions.Add(fix_action);
         }
 
         private static FeatureDefinitionSubclassChoice DruidFeatureDefinitionSubclassChoice;

@@ -10,7 +10,7 @@ Feature/&DruidClassSkillPointPoolTitle	Druid Skill Proficiencies
 Feature/&DruidClassSkillPointPoolDescription Choose 2 from Arcana, Animal Handling, Insight, Medicine, Nature, Perception, Religion, and Survival
 Feature/&DruidToolsProficiencyTitle	Druid Tool Proficiency
 Feature/&DruidCastingAbilityTitle Spellcasting
-Feature/&DruidCastingAbilityDescription	Drawing on the divine essence of nature itself, you can cast spells to shape that essence to your will.
+Feature/&DruidCastingAbilityDescription	Drawing on the divine essence of nature itself, you can cast spells to shape that essence to your will. You can use a quarterstaff as your spell casting focus.
 Feature/&WildshapeFeatureSetTitle	Wildshape
 Feature/&WildshapeFeatureSetDescription	Starting at 2nd level, you can use your action to magically assume the shape of a wolf. You can use this feature twice. You regain expended uses when you finish a short or long rest.\nAt 4th level you can additionally assume the shape of a spider, and at 8th level you can assume the shape of the dire wolf or the giant eagle.\nYou can revert to your normal form earlier by using a bonus action on your turn. You can stay in a beast shape for a number of hours equal to half your druid level (rounded down). You automatically revert if you fall unconscious, drop to 0 hit points, or die.
 Rules/&CasterWhileWildshapedConditionTitle Wildshaped
@@ -74,6 +74,7 @@ Subclass/&DruidSubclassCircleOfSpiritsTitle	Circle of the Spirits
 Subclass/&DruidSubclassCircleOfSpiritsDescription	Certain druids develop a particular relationship with the guardian spirits of nature. Holders of secular shamanic traditions, such druids can call upon these powerful allies, though only under certain conditions. Usually enigmatic, sometimes troubling, members of the Circle of the Spirits are respected and feared by those able to see in them beings who can communicate with the dangerous spirit world.
 Feature/&DruidSubclassCircleOfSpiritsSpiritsFeatureSetTitle	Spirit Call
 Feature/&DruidSubclassCircleOfSpiritsSpiritsFeatureSetDescription	Starting at 2nd level, you gain the ability to call forth nature spirits and use them to influence the world around you. As a bonus action, by spending one use of your wildshape ability, you can magically summon an spirit to a point you can see within 60 feet of you. The spirit creates an aura in a 20-foot radius around that point for 1 minute. The effect of the spirit's aura depends on the type of spirit you summon.
+Feature/&DruidSubclassCircleOfSpiritProxyTitle	Spirit
 Feature/&DruidSubclassCircleOfSpiritsProtectionSpiritTitle Call Protection Spirit
 Feature/&DruidSubclassCircleOfSpiritsProtectionSpiritDescription	This spirit protects you and your allies from enemies. Each ally in the aura receives +1 bonus to AC, saving throws and has an advantage on Constitution checks to maintain concentration.
 Feature/&DruidSubclassCircleOfSpiritsHuntSpiritTitle Call Hunt Spirit
