@@ -310,7 +310,11 @@ namespace SolastaDruidClass
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(tools_proficiency, 1));
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(skills, 1));
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(druid_spellcasting, 1));
-            Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(Common.staff_focus, 1));
+            var staff_focus = DatabaseRepository.GetDatabase<FeatureDefinition>().GetElement("UseStaffAsSpellcastingFocus", true);
+            if (staff_focus != null)
+            {
+                Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(staff_focus, 1));
+            }
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(ritual_spellcasting, 1));
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(wildshapes[2],2));
             Definition.FeatureUnlocks.Add(new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionFeatureSets.FeatureSetAbilityScoreChoice, 4));
@@ -1344,20 +1348,23 @@ namespace SolastaDruidClass
             DruidFeatureDefinitionSubclassChoice.Subclasses.Add(createCircleOfTheLand().Name);
             DruidFeatureDefinitionSubclassChoice.Subclasses.Add(createCircleOfSpirits().Name);
 
-            Action<RulesetCharacterHero> fix_action = c =>
+            var staff_focus = DatabaseRepository.GetDatabase<FeatureDefinition>().GetElement("UseStaffAsSpellcastingFocus", true);
+            if (staff_focus != null)
             {
-                if (c.activeFeatures.Any(cc => cc.Value.Contains(Common.staff_focus)))
+                Action<RulesetCharacterHero> fix_action = c =>
                 {
-                    return;
-                }
+                    if (c.activeFeatures.Any(cc => cc.Value.Contains(staff_focus)))
+                    {
+                        return;
+                    }
 
-                if (c.classesAndLevels.ContainsKey(DruidClass))
-                {
-                    c.activeFeatures[AttributeDefinitions.GetClassTag(DruidClass, 1)].Add(Common.staff_focus);
-                }
-            };
-
-            Common.postload_actions.Add(fix_action);
+                    if (c.classesAndLevels.ContainsKey(DruidClass))
+                    {
+                        c.activeFeatures[AttributeDefinitions.GetClassTag(DruidClass, 1)].Add(staff_focus);
+                    }
+                };
+                Common.postload_actions.Add(fix_action);
+            }
         }
 
         private static FeatureDefinitionSubclassChoice DruidFeatureDefinitionSubclassChoice;
