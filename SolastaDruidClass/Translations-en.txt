@@ -47,7 +47,7 @@ Subclass/&DruidSubclassCircleOfElementsTitle	Circle of the Elements
 Feature/&DruidSubclassCircleOfElementsElementalHealingTitle	Elemental Healing
 Feature/&DruidSubclassCircleOfElementsElementalHealingDescription	While you are transformed into an elemental shape, you can use a bonus action to expend one spell slot to regain 1d8 hit points per level of the spell slot expended.
 Feature/&DruidSubclassCircleOfElementsElementalFormFeatureSetTitle	Elemental Form
-Feature/&DruidSubclassCircleOfElementsElementalFormFeatureSetDescription	When you choose this circle at 2nd level, you gain the ability to use Wild Shape to turn into an elemental being. At first, you can only turn into a fire jester.\nAt 6th level you can assume the form of a skarn ghoul or a wind snake. At 8th level, you can turn into a fire osprey. At 12th level, you gain ability to assume the form of a fire spider. Finally at 14th level, you can turn into air, earth or fire elemental.
+Feature/&DruidSubclassCircleOfElementsElementalFormFeatureSetDescription	When you choose this circle at 2nd level, you gain the ability to use Wild Shape as bonus action to turn into an elemental being. At first, you can only turn into a fire jester.\nAt 6th level you can assume the form of a skarn ghoul or a wind snake. At 8th level, you can turn into a fire osprey. At 12th level, you gain ability to assume the form of a fire spider. Finally at 14th level, you can turn into air, earth or fire elemental.
 Feature/&DruidSubclassCircleOfElementsFireJesterUnitFeatureTitle	Fire Jester Form
 Feature/&DruidSubclassCircleOfElementsFireJesterUnitFeatureDescription	You take the form of the fire jester. \nSTR 8, DEX 12, CON 16, AC 12, HP 27, Speed 30 ft.\nFeatures:\nDarkvision\nFire Immunity\nPoison Immunity\nCold vulnerability\nImmunity to Petrified, Grappled, Restrained and Paralyzed conditions.\nAttacks:\nBurning Touch: Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 4 (1d4 + 2) fire damage.\nFirebolt: Range Weapon Attack: +4 to hit, reach 100 ft., one target. Hit: 6 (1d10) fire damage.
 Feature/&DruidSubclassCircleOfElementsGargoyleUnitFeatureTitle	Gargoyle Form
@@ -60,15 +60,15 @@ Feature/&DruidSubclassCircleOfElementsFireOspreyUnitFeatureTitle	Fire Osprey For
 Feature/&DruidSubclassCircleOfElementsFireOspreyUnitFeatureDescription	You take the form of the fire osprey. \nSTR 10, DEX 18, CON 16, AC 13, HP 60, Speed 30 ft, fly 60 ft.\nFeatures:\nDarkvision\nFire Immunity\nPoison Immunity\nImmunity to Petrified, Grappled, Restrained and Paralyzed conditions.\nMultiattack: The fire osprey makes two attacks with its touch.\nAttacks:\nBurning Touch: Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 11 (3d6 + 1) fire damage, target is put on fire if it fails a DC 12 Constitution saving throw.
 Feature/&DruidSubclassCircleOfElementsPrimalAttacksTitle	Enhanced Elemental Attacks
 Feature/&DruidSubclassCircleOfElementsPrimalAttacksDescription	Starting at 6th level, your attacks in elemental form count as magical for the purpose of overcoming resistance and immunity to nonmagical attacks and damage.
-Feature/&DruidSubclassCircleOfElementsElementalStrikeTitle	Elemental Strike
+Feature/&DruidSubclassCircleOfElementsElementalStrikeTitle	Elemental Smite
 Feature/&DruidSubclassCircleOfElementsElementalStrikeDescription	Once per turn when you hit a creature while in elemental form, you can expend a druid spell slot to deal an extra 1d8 damage to the target, plus another 1d8 per level of the spell slot.
-Feedback/&AdditionalDamageDruidSubclassCircleOfElementsElementalStrikeFormat	Elemental Strike
-Feedback/&AdditionalDamageDruidSubclassCircleOfElementsElementalStrikeLine	Elemental Strike
-Reaction/&SpendSpellSlotDruidSubclassCircleOfElementsElementalStrikeDescription	{0} can strike the target for additional damage by spending a spell slot.
+Feedback/&AdditionalDamageDruidSubclassCircleOfElementsElementalStrikeFormat	Elemental Smite
+Feedback/&AdditionalDamageDruidSubclassCircleOfElementsElementalStrikeLine	Elemental Smite
+Reaction/&SpendSpellSlotDruidSubclassCircleOfElementsElementalStrikeDescription	{0} can smite the target for additional damage by spending a spell slot.
 Reaction/&SpendSpellSlotDruidSubclassCircleOfElementsElementalStrikeReactDescription	Click to spend a spell slot and increase damage to the target.
-Reaction/&SpendSpellSlotDruidSubclassCircleOfElementsElementalStrikeReactTitle	Strike
-Reaction/&SpendSpellSlotDruidSubclassCircleOfElementsElementalStrikeTitle	Elemental Strike
-Reaction/&SubitemSelectDruidSubclassCircleOfElementsElementalStrikeDescription	Select a slot level to consume for your Elemental Strike
+Reaction/&SpendSpellSlotDruidSubclassCircleOfElementsElementalStrikeReactTitle	Smite
+Reaction/&SpendSpellSlotDruidSubclassCircleOfElementsElementalStrikeTitle	Elemental Smite
+Reaction/&SubitemSelectDruidSubclassCircleOfElementsElementalStrikeDescription	Select a slot level to consume for your Elemental Smite
 Reaction/&SubitemSelectDruidSubclassCircleOfElementsElementalStrikeTitle	Slot Level
 Subclass/&DruidSubclassCircleOfSpiritsTitle	Circle of the Spirits
 Subclass/&DruidSubclassCircleOfSpiritsDescription	Certain druids develop a particular relationship with the guardian spirits of nature. Holders of secular shamanic traditions, such druids can call upon these powerful allies, though only under certain conditions. Usually enigmatic, sometimes troubling, members of the Circle of the Spirits are respected and feared by those able to see in them beings who can communicate with the dangerous spirit world.

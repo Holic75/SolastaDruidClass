@@ -271,6 +271,7 @@ namespace SolastaDruidClass
                                                     NewFeatureDefinitions.SpellData.getSpell("AirBlastSpell"),
                                                     NewFeatureDefinitions.SpellData.getSpell("ThunderStrikeSpell"),
                                                     NewFeatureDefinitions.SpellData.getSpell("IceStrikeSpell"),
+                                                    NewFeatureDefinitions.SpellData.getSpell("ConjureSpiritAnimalSpell"),
                                                     NewFeatureDefinitions.SpellData.getSpell("FlameBladeSpell"),
                                                     NewFeatureDefinitions.SpellData.getSpell("HeatMetalSpell"),
                                                     NewFeatureDefinitions.SpellData.getSpell("CallLightningSpell")
@@ -503,12 +504,12 @@ namespace SolastaDruidClass
                 {wildshape_giant_eagle,  (8, -1)}
             };
 
-            wildshapes = createWildshapeFeatures("Wildshape", shapes, 2, 1);
+            wildshapes = createWildshapeFeatures("Wildshape", shapes, 2);
             wildshapes[2].featureSet.Add(base_wildshape_power);
         }
 
 
-        static Dictionary<int, FeatureDefinitionFeatureSet> createWildshapeFeatures(string prefix, Dictionary<MonsterDefinition, (int, int)> shapes, int min_level, int max_level = 20, int cost_per_use = 1)
+        static Dictionary<int, FeatureDefinitionFeatureSet> createWildshapeFeatures(string prefix, Dictionary<MonsterDefinition, (int, int)> shapes, int min_level, int max_level = 20, int cost_per_use = 1, RuleDefinitions.ActivationTime activation_time = RuleDefinitions.ActivationTime.Action)
         {
             var powers = new Dictionary<MonsterDefinition, List<NewFeatureDefinitions.PowerWithRestrictions>>();
             foreach (var s in shapes)
@@ -568,7 +569,7 @@ namespace SolastaDruidClass
                                                                                                 "Feature/&" + s.Key.name + "FeatureDescription",
                                                                                                 s.Key.GuiPresentation.SpriteReference,
                                                                                                 effect,
-                                                                                                RuleDefinitions.ActivationTime.Action,
+                                                                                                activation_time,
                                                                                                 2,
                                                                                                 RuleDefinitions.UsesDetermination.Fixed,
                                                                                                 RuleDefinitions.RechargeRate.ShortRest,
@@ -816,7 +817,7 @@ namespace SolastaDruidClass
                 {
                     var spell_group = new FeatureDefinitionAutoPreparedSpells.AutoPreparedSpellsGroup()
                     {
-                        classLevel = i * 2 + 1,
+                        classLevel = i * 2 + 3,
                         spellsList = kv.Value[i].ToList()
                     };
                     autoprepared_spells.autoPreparedSpellsGroups.Add(spell_group);
@@ -900,7 +901,7 @@ namespace SolastaDruidClass
             monsters["FireJester"].AttackIterations[1].monsterAttackDefinition.guiPresentation.title = DatabaseHelper.SpellDefinitions.FireBolt.guiPresentation.title;
             monsters["WindSnake"].AttackIterations[1].monsterAttackDefinition.projectile = DatabaseHelper.ItemDefinitions.Arrow_Alchemy_Flash.name;
 
-            elemental_forms = createWildshapeFeatures("DruidSubclassCircleOfElementsElementalForm", shapes, 2, 1);
+            elemental_forms = createWildshapeFeatures("DruidSubclassCircleOfElementsElementalForm", shapes, 2, activation_time: RuleDefinitions.ActivationTime.BonusAction);
         }
 
 
