@@ -169,7 +169,7 @@ namespace SolastaDruidClass
                                                                           "Feature/&DruidArmorProficienciesDescription",
                                                                           DatabaseHelper.FeatureDefinitionProficiencys.ProficiencyClericArmor
                                                                           );
-            armor_proficiency.proficiencies = new List<string> { Helpers.ArmorProficiencies.LeatherArmor, Helpers.ArmorProficiencies.PaddedArmor, Helpers.ArmorProficiencies.HideArmor };
+            armor_proficiency.proficiencies = new List<string> { Helpers.ArmorProficiencies.LeatherArmor, Helpers.ArmorProficiencies.HideArmor, Helpers.ArmorProficiencies.Shield };
 
             var skills = Helpers.PoolBuilder.createSkillProficiency("DruidClassSkillPointPool",
                                                                     "8f2cb82d-6bf9-4a72-a3e1-286a1e2b5662",
