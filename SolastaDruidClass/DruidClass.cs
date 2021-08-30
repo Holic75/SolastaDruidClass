@@ -1152,8 +1152,8 @@ namespace SolastaDruidClass
         {
             var condition = Helpers.ConditionBuilder.createCondition(name + "AreaCondition",
                                                                     "",
-                                                                    title,
-                                                                    Common.common_no_title,
+                                                                    title.Replace("Feature/&", "Rules/&Condition"),
+                                                                    description.Replace("Feature/&", "Rules/&Condition"),
                                                                     null,
                                                                     DatabaseHelper.ConditionDefinitions.ConditionBlessed,
                                                                     features

@@ -14,7 +14,7 @@ Feature/&DruidCastingAbilityDescription	Drawing on the divine essence of nature 
 Feature/&WildshapeFeatureSetTitle	Wildshape
 Feature/&WildshapeFeatureSetDescription	Starting at 2nd level, you can use your action to magically assume the shape of a wolf. You can use this feature twice. You regain expended uses when you finish a short or long rest.\nAt 4th level you can additionally assume the shape of a spider, and at 8th level you can assume the shape of the dire wolf or the giant eagle.\nYou can revert to your normal form earlier by using a bonus action on your turn. You can stay in a beast shape for a number of hours equal to half your druid level (rounded down). You automatically revert if you fall unconscious, drop to 0 hit points, or die.
 Rules/&CasterWhileWildshapedConditionTitle Wildshaped
-Rules/&CasterWhileWildshapedConditionDescription Character cannot cast spells or use equipment while wildshaped
+Rules/&CasterWhileWildshapedConditionDescription Character is transforemd into another creature and cannot cast spells or use equipment
 Feature/&WildshapeWolfUnitFeatureTitle	Wildshape Wolf
 Feature/&WildshapeWolfUnitFeatureDescription	You take the shape of the wolf.\nSTR 12, DEX 15, CON 12, AC 13, HP 11, Speed 40 ft.\nFeatures:\nKeen Hearing and Smell: The wolf has advantage on Wisdom (Perception) checks.\nPack Tactics: The wolf has advantage on an attack roll against a creature if at least one of the wolf's allies is within 5 ft. of the creature and the ally isn't incapacitated.\nAttacks:\nBite: Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: (2d4 + 2) piercing damage. If the target is a creature, it must succeed on a DC 11 Strength saving throw or be knocked prone.
 Feature/&WildshapeDireWolfUnitFeatureTitle	Wildshape Dire Wolf
@@ -28,9 +28,9 @@ Subclass/&DruidSubclassCircleOfLandTitle Circle of the Land
 Feature/&DruidSubclassCircleOfLandExtraCantripTitle Bonus Cantrip
 Feature/&DruidSubclassCircleOfLandExtraCantripDescription You learn one additional druid cantrip of your choice.
 Feature/&DruidSubclassCircleOfLandNaturalRecoveryTitle	Natural Recovery
-Feature/&DruidSubclassCircleOfLandNaturalRecoveryDescription	Starting at 2nd Level, you can regain some of your magical energy by sitting in meditation and communing with Nature. During a Short Rest, you choose expended Spell Slots to recover. The Spell Slots can have a combined level that is equal to or less than half your druid level (rounded up), and none of the slots can be 6th level or higher. You can't use this feature again until you finish a Long Rest.
+Feature/&DruidSubclassCircleOfLandNaturalRecoveryDescription	You can regain some of your magical energy by sitting in meditation and communing with Nature. During a Short Rest, you choose expended Spell Slots to recover. The Spell Slots can have a combined level that is equal to or less than half your druid level (rounded up), and none of the slots can be 6th level or higher. You can't use this feature again until you finish a Long Rest.
 Feature/&DruidSubclassCircleOfLandLandsStrideFeatureSetTitle	Land's Stride
-Feature/&DruidSubclassCircleOfLandLandsStrideFeatureSetDescription	Starting at 6th level, moving through nonmagical difficult terrain costs you no extra movement. You can also pass through nonmagical plants without being slowed by them and without taking damage from them if they have thorns, spines, or a similar hazard. In addition, you have advantage on saving throws against plants that are magically created or manipulated to impede movement, such those created by the entangle spell.
+Feature/&DruidSubclassCircleOfLandLandsStrideFeatureSetDescription	Moving through nonmagical difficult terrain costs you no extra movement. You can also pass through nonmagical plants without being slowed by them and without taking damage from them if they have thorns, spines, or a similar hazard. In addition, you have advantage on saving throws against plants that are magically created or manipulated to impede movement, such those created by the entangle spell.
 Feature/&DruidSubclassCircleOfLandNaturesWardFeatureSetTitle Nature's Ward 
 Feature/&DruidSubclassCircleOfLandNaturesWardFeatureSetDescription	When you reach 10th level, you can't be charmed or frightened by elementals or fey, and you are immune to poison and disease.
 Feature/&DruidSubclassCircleOfLandCircleSpellsTitle	Circle Spells
@@ -77,15 +77,21 @@ Feature/&DruidSubclassCircleOfSpiritsSpiritsFeatureSetDescription	Starting at 2n
 Feature/&DruidSubclassCircleOfSpiritProxyTitle	Spirit
 Feature/&DruidSubclassCircleOfSpiritsProtectionSpiritTitle Call Protection Spirit
 Feature/&DruidSubclassCircleOfSpiritsProtectionSpiritDescription	This spirit protects you and your allies from enemies. Each ally in the aura receives +1 bonus to AC, saving throws and has an advantage on Constitution checks to maintain concentration.
+Rules/&ConditionDruidSubclassCircleOfSpiritsProtectionSpiritTitle	Empowered by Protection Spirit
+Rules/&ConditionDruidSubclassCircleOfSpiritsProtectionSpiritDescription	Gain +1 bonus to AC, saving throws and an advantage on Constitution checks to maintain concentration.
 Feature/&DruidSubclassCircleOfSpiritsHuntSpiritTitle Call Hunt Spirit
 Feature/&DruidSubclassCircleOfSpiritsHuntSpiritDescription This spirit helps you and your allies to strike your opponents. Each ally in the aura receives +1 bonus to attack and damage rolls and has advantage on Wisdom (Perception) checks.
+Rules/&ConditionDruidSubclassCircleOfSpiritsHuntSpiritTitle Empowered by Hunt Spirit
+Rules/&ConditionDruidSubclassCircleOfSpiritsHuntSpiritDescription	Gain +1 bonus to attack and damage rolls and advantage on Wisdom (Perception) checks.
 Feature/&DruidSubclassCircleOfSpiritsHealingSpiritTitle	Call Healing Spirit
 Feature/&DruidSubclassCircleOfSpiritsHealingSpiritDescription	This spirit takes care of your allies' wounds. Each ally in the aura has advantage on death saving throws, and regains the maximum number of hit points possible from any healing.
+Rules/&ConditionDruidSubclassCircleOfSpiritsHealingSpiritTitle	Empowered by Healing Spirit
+Rules/&ConditionDruidSubclassCircleOfSpiritsHealingSpiritDescription	Gain advantage on death saving throws, and regain the maximum number of hit points possible from any healing.
 Feature/&DruidSubclassCircleOfSpiritsSpiritSummonerTitle	Spirit Summoner
-Feature/&DruidSubclassCircleOfSpiritsSpiritSummonerDescription	At 6th level, the creatures you summon are infused with the power of spirits. They receive 2 extra hit points per Hit Die they have and their attacks are considered magical for the purpose of overcoming immunity and resistance to nonmagical attacks and damage.
+Feature/&DruidSubclassCircleOfSpiritsSpiritSummonerDescription	The creatures you summon are infused with the power of spirits. They receive 2 extra hit points per Hit Die they have and their attacks are considered magical for the purpose of overcoming immunity and resistance to nonmagical attacks and damage.
 Rules/&DruidSubclassCircleOfSpiritsSpiritSummonerConditionDescription	This summoned creature has increased Hit Points and its attacks count as magical for purpose of overcoming damage resistance.
 Feature/&DruidSubclassCircleOfSpiritsGuardianSpiritsTitle	Guardian Spirits
-Feature/&DruidSubclassCircleOfSpiritsGuardianSpiritsDescription	Beginning at 10th level, the spirits safeguard the creatures you summon with your magic. When the creature you summoned ends its turn in your spirit area, that creature regains a number of hit points equal to half your druid level.
+Feature/&DruidSubclassCircleOfSpiritsGuardianSpiritsDescription	The spirits safeguard the creatures you summon with your magic. When the creature you summoned ends its turn in your spirit area, that creature regains a number of hit points equal to half your druid level.
 Rules/&DruidSubclassCircleOfSpiritsGuardianSpiritsConditionDescription	The creature regains a number of hit points equal to half its summoner's druid level if it ends its turn in the summoners's spirit area.
 Screen/&CircleSpellDescription	This circle spell is always considered prepared. \nIt does not count towards your spell preparation limit. 
 Screen/&CircleSpellTitle	Circle
