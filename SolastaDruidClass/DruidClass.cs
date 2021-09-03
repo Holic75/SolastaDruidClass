@@ -366,7 +366,7 @@ namespace SolastaDruidClass
         {
             //lvl 2 - wolf cr 0.25
             //lvl 4 - badlands spider  cr 0.5
-            //lvl 8 - dire wolf, giant eagle - cr 1
+            //lvl 8 - dire wolf, giant eagle - cr 1, deep spider
             base_wildshape_power = Helpers.GenericPowerBuilder<NewFeatureDefinitions.HiddenPower>
                                                             .createPower("DruidBaseWildshapePower",
                                                                             "",
@@ -500,12 +500,19 @@ namespace SolastaDruidClass
                                                                     "");
             wildshape_giant_eagle.groupAttacks = true;
 
+            var wildshape_deep_spider = Common.createPolymoprhUnit(DatabaseHelper.MonsterDefinitions.DeepSpider,
+                                                                    "WildshapeDeepSpiderUnit",
+                                                                    "",
+                                                                    "",
+                                                                    "");
+
             var shapes = new Dictionary<MonsterDefinition, (int, int)>
             {
                 {wildshape_wolf, (0, 8)},
-                {wildshape_spider, (4, -1)},
+                {wildshape_spider, (4, 8)},
                 {wildshape_dire_wolf,  (8, -1)},
-                {wildshape_giant_eagle,  (8, -1)}
+                {wildshape_giant_eagle,  (8, -1)},
+                {wildshape_deep_spider, (8, -1)},
             };
 
             wildshapes = createWildshapeFeatures("Wildshape", shapes, 2);
@@ -668,6 +675,8 @@ namespace SolastaDruidClass
                                                                                                                     }
                                                                                                                     );
 
+
+
             var difficult_terrain_immunty = Helpers.CopyFeatureBuilder<FeatureDefinitionMovementAffinity>.createFeatureCopy("DruidSubclassCircleOfLandMovementAffinity",
                                                                                                                             "9edd2200-4e0c-4f1e-a21e-edac6532e2b9",
                                                                                                                             Common.common_no_title,
@@ -691,6 +700,24 @@ namespace SolastaDruidClass
                                                                                     difficult_terrain_immunty,
                                                                                     entangle_immunty
                                                                                     );
+
+            var spike_growth_condition = DatabaseRepository.GetDatabase<ConditionDefinition>().GetElement("SpikeGrowthDamageCondition", true);
+            if (spike_growth_condition != null)
+            {
+                var spike_growth_immunty = Helpers.CopyFeatureBuilder<FeatureDefinitionConditionAffinity>.createFeatureCopy("DruidSubclassCircleOfLandSpikeGrowthImmunity",
+                                                                                                        "f0236ae0-d29c-47ed-876b-64088c1ee24d",
+                                                                                                        Common.common_no_title,
+                                                                                                        Common.common_no_title,
+                                                                                                        null,
+                                                                                                        DatabaseHelper.FeatureDefinitionConditionAffinitys.ConditionAffinityRestrainedmmunity,
+                                                                                                        a =>
+                                                                                                        {
+                                                                                                            a.conditionType = spike_growth_condition.Name;
+                                                                                                            a.conditionAffinityType = RuleDefinitions.ConditionAffinityType.Immunity;
+                                                                                                        }
+                                                                                                        );
+            }
+
         }
 
 
