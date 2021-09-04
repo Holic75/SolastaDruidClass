@@ -44,8 +44,10 @@ namespace SolastaDruidClass
         static public FeatureDefinitionFeatureSet spirit_summoner;
         static public NewFeatureDefinitions.AddExtraConditionToTargetOnConditionApplication guardian_spirits;
 
-        //protection spirit
-        //healing spirit
+        //circle of storms - bonus spells + wind blast/shocking grasp cantrip
+        //cast wind blast as bonus action
+        //+ level to lightning/thunder spells
+        //ability to fly without concentration
         //
 
 
@@ -775,7 +777,7 @@ namespace SolastaDruidClass
             Dictionary<string, SpellDefinition[][]> extra_spells
                 = new Dictionary<string, SpellDefinition[][]>()
                 {
-                    {"Arctic", new SpellDefinition[][]{new SpellDefinition[]{DatabaseHelper.SpellDefinitions.HoldPerson, DatabaseHelper.SpellDefinitions.RayOfEnfeeblement},
+                    {"Arctic", new SpellDefinition[][]{new SpellDefinition[]{DatabaseHelper.SpellDefinitions.HoldPerson, NewFeatureDefinitions.SpellData.getSpell("SpikeGrowthSpell") ?? DatabaseHelper.SpellDefinitions.RayOfEnfeeblement},
                                                        new SpellDefinition[]{DatabaseHelper.SpellDefinitions.SleetStorm, DatabaseHelper.SpellDefinitions.Slow},
                                                        new SpellDefinition[]{DatabaseHelper.SpellDefinitions.FreedomOfMovement, DatabaseHelper.SpellDefinitions.IceStorm},
                                                        new SpellDefinition[]{DatabaseHelper.SpellDefinitions.HoldMonster, DatabaseHelper.SpellDefinitions.ConeOfCold},
@@ -800,7 +802,7 @@ namespace SolastaDruidClass
                                                           }
                     },
                     {"Mountain", new SpellDefinition[][]{new SpellDefinition[]{DatabaseHelper.SpellDefinitions.SpiderClimb, DatabaseHelper.SpellDefinitions.Shatter},
-                                                         new SpellDefinition[]{DatabaseHelper.SpellDefinitions.LightningBolt, DatabaseHelper.SpellDefinitions.WindWall},
+                                                         new SpellDefinition[]{DatabaseHelper.SpellDefinitions.LightningBolt, NewFeatureDefinitions.SpellData.getSpell("EarthTremorSpell") ?? DatabaseHelper.SpellDefinitions.WindWall},
                                                          new SpellDefinition[]{DatabaseHelper.SpellDefinitions.FreedomOfMovement, DatabaseHelper.SpellDefinitions.Stoneskin},
                                                          new SpellDefinition[]{DatabaseHelper.SpellDefinitions.ConjureElemental, DatabaseHelper.SpellDefinitions.GreaterRestoration},
                                                         }
@@ -887,6 +889,11 @@ namespace SolastaDruidClass
 
         static void createElementalForms()
         {
+            DatabaseHelper.MonsterDefinitions.SkarnGhoul.armorClass = 15;
+            DatabaseHelper.MonsterDefinitions.SkarnGhoul.features.Add(DatabaseHelper.FeatureDefinitionDamageAffinitys.DamageAffinityBludgeoningResistance);
+            DatabaseHelper.MonsterDefinitions.SkarnGhoul.features.Add(DatabaseHelper.FeatureDefinitionDamageAffinitys.DamageAffinityPiercingResistance);
+            DatabaseHelper.MonsterDefinitions.SkarnGhoul.features.Add(DatabaseHelper.FeatureDefinitionDamageAffinitys.DamageAffinitySlashingResistance);
+
             elemental_form_mark = Helpers.OnlyDescriptionFeatureBuilder.createOnlyDescriptionFeature("DruidSubclassCircleOfElementsElementalFormMark",
                                                                                                      "",
                                                                                                      Common.common_no_title,
@@ -1162,6 +1169,18 @@ namespace SolastaDruidClass
                                                   death_saves_advantage
                                                   );
 
+
+            var spirit_watcher = Helpers.FeatureBuilder<NewFeatureDefinitions.TerminateEffectsOnPowerUse>.createFeature("DruidSubclassCircleOfSpiritsSpiritWatcher",
+                                                                                                                        "",
+                                                                                                                        Common.common_no_title,
+                                                                                                                        Common.common_no_title,
+                                                                                                                        Common.common_no_icon,
+                                                                                                                        a =>
+                                                                                                                        {
+                                                                                                                            a.powers = new List<FeatureDefinitionPower> { hunt_spirit, healing_spirit, protection_spirit };
+                                                                                                                            a.effectsToTerminate = a.powers.Cast<FeatureDefinition>().ToList();
+                                                                                                                        }
+                                                                                                                        );
             spirits = Helpers.FeatureSetBuilder.createFeatureSet("DruidSubclassCircleOfSpiritsSpiritsFeatureSet",
                                                                 "",
                                                                 "Feature/&DruidSubclassCircleOfSpiritsSpiritsFeatureSetTitle",
@@ -1171,7 +1190,8 @@ namespace SolastaDruidClass
                                                                 false,
                                                                 healing_spirit,
                                                                 hunt_spirit,
-                                                                protection_spirit
+                                                                protection_spirit,
+                                                                spirit_watcher
                                                                 );
         }
 
@@ -1187,6 +1207,7 @@ namespace SolastaDruidClass
                                                                     features
                                                                     );
             condition.parentCondition = inside_spirit_area_condition;
+            condition.allowMultipleInstances = false;
 
             var effect = new EffectDescription();
             effect.Copy(DatabaseHelper.SpellDefinitions.Silence.effectDescription);
@@ -1208,6 +1229,7 @@ namespace SolastaDruidClass
             summon_form.summonForm.number = 1;
             effect.effectForms.Add(summon_form);
             effect.targetSide = RuleDefinitions.Side.Ally;
+            effect.canBePlacedOnCharacter = true;
 
             var power = Helpers.GenericPowerBuilder<NewFeatureDefinitions.LinkedPower>.createPower(name + "Power",
                                                                                                    "",

@@ -272,3 +272,4 @@ WildshapeDeepSpiderUnit7Power	bc80ded2-21e6-4dc6-8812-9f31b290f653
 WildshapeDeepSpiderUnit8Power	04d8c7e2-9eb7-45b1-a346-933d21493bb3
 WildshapeDeepSpiderUnit9Power	b188671a-8828-4e96-8251-c242bb8713ed
 WildshapeDeepSpiderUnit10Power	d979a067-d1d3-4f75-ad6b-a3419e81bf27
+DruidSubclassCircleOfSpiritsSpiritWatcher	0f1642ca-b48c-4285-9baf-1b2fecd0e757
